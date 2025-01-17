@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "605570058735",
+    "project_id": "healthcar-app",
+    "storage_bucket": "healthcar-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605570058735:android:8b8602928562c2210a8e1a",
+        "android_client_info": {
+          "package_name": "com.example.healthcare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOHBvyBL8srMSCNpr5OZKlVCQZ1mYveFI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
