@@ -22,6 +22,11 @@ class ThemesModeData {
       surface: Color(0xFFF5FAFB),
       onSurface: Color(0xFF171D1E),
     ),
+
+    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    //   backgroundColor: Colors.transparent,
+    //   selectedItemColor: Colors.black,
+    // ),
     appBarTheme: const AppBarTheme(
       color: Color(0xFF0D70E6),
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
@@ -96,7 +101,7 @@ class ThemesModeData {
     ),
   );
 
-// // todo: whether app
+
 
 //   // todo: -------------------------LIGHT MODE------------------------------------
 //   final ThemeData lightMode = ThemeData(

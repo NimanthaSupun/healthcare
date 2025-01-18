@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/firebase_options.dart';
+import 'package:healthcare/router/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,14 +17,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      // theme: Provider.of<ThemeProvide>(context).getThemeData,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Hello world"),
-        ),
-      ),
+      routerConfig: RouterClass().router,
     );
   }
 }

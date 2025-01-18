@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/app_constants.dart';
 
 class ResponsiveLayoutSreen extends StatefulWidget {
   final Widget mobileScreenLayout;
@@ -16,6 +17,14 @@ class ResponsiveLayoutSreen extends StatefulWidget {
 class _ResponsiveLayoutSreenState extends State<ResponsiveLayoutSreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth > webSreenMinWidth) {
+          return widget.webSreenLayout;
+        } else {
+          return widget.mobileScreenLayout;
+        }
+      },
+    );
   }
 }
