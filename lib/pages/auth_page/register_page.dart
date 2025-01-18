@@ -45,7 +45,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> _createUser(BuildContext context) async {
     try {
-
       // if (_imageFile != null) {
       //   final imageUrl = await UserProfileStorage().uploadImage(
       //     profileImage: _imageFile!,
@@ -193,8 +192,22 @@ class _RegisterPageState extends State<RegisterPage> {
                     //     ),
                     //   ),
                     // ),
-
-
+                    Positioned(
+                      child: FadeInDown(
+                          duration: const Duration(milliseconds: 1600),
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 50),
+                            child: const Center(
+                              child: Text(
+                                "Register",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          )),
+                    ),
                   ],
                 ),
               ),
@@ -281,14 +294,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 20,
                     ),
-                    _isLoading ? CircularProgressIndicator() : FadeInUp(
-                      duration: const Duration(milliseconds: 1900),
-                      child: CustomButton(
-                        title: "Sign Up",
-                        width: MediaQuery.of(context).size.width,
-                        onPressed: () => _createUser(context),
-                      ),
-                    ),
+                    _isLoading
+                        ? CircularProgressIndicator()
+                        : FadeInUp(
+                            duration: const Duration(milliseconds: 1900),
+                            child: CustomButton(
+                              title: "Sign Up",
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: () => _createUser(context),
+                            ),
+                          ),
                     const SizedBox(
                       height: 10,
                     ),
