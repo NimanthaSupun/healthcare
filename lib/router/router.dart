@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/pages/auth_page/login_page.dart';
 import 'package:healthcare/pages/auth_page/register_page.dart';
-import 'package:healthcare/pages/main_sscreens/main_screen.dart';
+import 'package:healthcare/pages/main_screen.dart';
 import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 
 class RouterClass {
   final router = GoRouter(
-    initialLocation: "/register",
+    initialLocation: "/",
     errorPageBuilder: (context, state) {
       return MaterialPage(
         child: Scaffold(
