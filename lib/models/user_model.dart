@@ -4,7 +4,7 @@ class UserModel {
   final String userId;
   final String name;
   final String email;
-  final String imageUrl;
+  final String? imageUrl;
   final DateTime createdAt;
   final DateTime updatedAt;
   final String password;
@@ -13,7 +13,7 @@ class UserModel {
     required this.userId,
     required this.name,
     required this.email,
-    required this.imageUrl,
+    this.imageUrl,
     required this.createdAt,
     required this.updatedAt,
     required this.password,

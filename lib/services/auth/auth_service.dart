@@ -132,7 +132,6 @@ class AuthService {
           userId: user.uid,
           name: user.displayName ?? "No name",
           email: user.email ?? "No",
-          imageUrl:  "",
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
           password: "",

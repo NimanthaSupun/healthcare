@@ -64,7 +64,6 @@ class _RegisterPageState extends State<RegisterPage> {
         userId: "",
         name: _nameController.text,
         email: _emailController.text,
-        imageUrl: "",
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         password: _passwordController.text,
