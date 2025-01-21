@@ -67,9 +67,11 @@ class _RegisterPageState extends State<RegisterPage> {
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         password: _passwordController.text,
+        dateOfBirth: DateTime.now()
       );
 
       await UserService().saveUser(newUser);
+      
       if (context.mounted) {
         UtilFunctions().showSnackBarWdget(
           context,
@@ -189,8 +191,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     //         ),
                     //       ),
                     //     ),
+
                     //   ),
                     // ),
+
                     Positioned(
                       child: FadeInDown(
                           duration: const Duration(milliseconds: 1600),

@@ -34,7 +34,7 @@ class UserService {
   }
 
   // get userBy id
-   //get user details by id
+  //get user details by id
   Future<UserModel?> getUserById(String userId) async {
     try {
       final doc = await userCollection.doc(userId).get();
@@ -47,4 +47,13 @@ class UserService {
     return null;
   }
 
+  // update User
+  Future<void> updateUser(String userId, UserModel updateUser) async {
+    try {
+      final Map<String, dynamic> updateJsonUser = updateUser.toJson();
+      await userCollection.doc(userId).update(updateJsonUser);
+    } catch (error) {
+      print("Error updating user on service: ${error}");
+    }
+  }
 }

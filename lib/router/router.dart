@@ -4,6 +4,7 @@ import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/auth_page/login_page.dart';
 import 'package:healthcare/pages/auth_page/register_page.dart';
 import 'package:healthcare/pages/main_screen.dart';
+import 'package:healthcare/pages/main_sscreens/home_page.dart';
 import 'package:healthcare/pages/main_sscreens/profile_page.dart';
 import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
@@ -88,6 +89,15 @@ class RouterClass {
         path: "/profile-page",
         builder: (context, state) {
           return ProfilePage();
+        },
+      ),
+
+      // home page
+      GoRoute(
+        name: "home screen",
+        path: "/home-screen",
+        builder: (context, state) {
+          return HomePage();
         },
       ),
     ],

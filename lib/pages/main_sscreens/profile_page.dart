@@ -4,10 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/services/auth/auth_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
+import 'package:healthcare/widgets/reusable/custom_profile_card.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -39,9 +41,15 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 10,
+            ),
             child: Column(
               children: [
+                SizedBox(
+                  height: 30,
+                ),
                 StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("users")
@@ -74,25 +82,32 @@ class _ProfilePageState extends State<ProfilePage> {
                               height: 90,
                               child: Row(
                                 children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
                                   Container(
                                     width: 80,
                                     height: 80,
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 5,
-                                      vertical: 5,
+                                      horizontal: 1,
+                                      vertical: 1,
                                     ),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                        color: mobileBackgroundColor,
+                                        width: 1,
+                                      ),
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
-
                                       child: user.imageUrl != null &&
                                               user.imageUrl!.isNotEmpty
                                           ? Image.memory(
                                               base64Decode(
                                                 user.imageUrl!,
                                               ),
+                                              fit: BoxFit.cover,
                                             )
                                           : Image.network(
                                               "https://i.stack.imgur.com/l60Hf.png",
@@ -106,7 +121,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 5,
+                                    width: 8,
                                   ),
                                   Column(
                                     crossAxisAlignment:
@@ -135,10 +150,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                   IconButton(
                                     onPressed: () {
                                       GoRouter.of(context).pushReplacement(
-                                          '/update-profile',
-                                          extra: user);
+                                        '/update-profile',
+                                        extra: user,
+                                      );
                                     },
-                                    icon: Icon(Icons.edit),
+                                    icon: Icon(
+                                      Icons.edit,
+                                      size: 30,
+                                      color: mainOrangeColor,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -151,6 +171,17 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(
                   height: 50,
+                ),
+                CustomProfileCard(
+                  icon: Icons.date_range,
+                  titile: "user details",
+                ),
+                CustomProfileCard(
+                  icon: Icons.settings,
+                  titile: "setting",
+                ),
+                SizedBox(
+                  height: 40,
                 ),
                 CustomButton(
                   title: "Log out",

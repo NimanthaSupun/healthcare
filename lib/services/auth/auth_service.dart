@@ -134,6 +134,7 @@ class AuthService {
           email: user.email ?? "No",
           createdAt: DateTime.now(),
           updatedAt: DateTime.now(),
+          dateOfBirth: DateTime.now(),
           password: "",
         );
 

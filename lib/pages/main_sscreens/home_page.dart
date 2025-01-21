@@ -81,7 +81,10 @@ class _HomePageState extends State<HomePage> {
                               height: 50,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: mainBlueColor),
+                                border: Border.all(
+                                  color: mainOrangeColor,
+                                  width: 2,
+                                ),
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(100),
@@ -92,6 +95,7 @@ class _HomePageState extends State<HomePage> {
                                         base64Decode(
                                           user.imageUrl!,
                                         ),
+                                        fit: BoxFit.cover,
                                       )
                                     : Image.network(
                                         "https://i.stack.imgur.com/l60Hf.png",
