@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
+import 'package:healthcare/pages/main_sscreens/profile_page.dart';
+import 'package:healthcare/widgets/animation/custom_page_transition.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,9 +17,35 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final DateFormat formatter = DateFormat('EEEE,MMMM');
   final DateFormat dayFormat = DateFormat('dd');
+
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+    controller.addListener(() {
+      if (controller.isCompleted) {
+        Navigator.of(context).push(
+          MyCustomRouteTransition(
+            route: ProfilePage(),
+          ),
+        );
+        Timer(Duration(milliseconds: 500), () {
+          controller.reset();
+        });
+      }
+    });
+    scaleAnimation = Tween<double>(begin: 1, end: 10).animate(controller);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +105,11 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ],
                           ),
-                          Container(
+                          GestureDetector(
+                            onTap: () {
+                              controller.forward();
+                            },
+                            child: Container(
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
@@ -106,9 +139,10 @@ class _HomePageState extends State<HomePage> {
                                 //   "https://i.stack.imgur.com/l60Hf.png",
                                 //   fit: BoxFit.cover,
                                 // ),
-                              )
-                              // child: Icon(Icons.person),
                               ),
+                              // child: Icon(Icons.person),
+                            ),
+                          ),
                         ],
                       ),
                     ],

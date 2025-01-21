@@ -38,6 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -48,7 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -96,7 +97,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       borderRadius: BorderRadius.circular(100),
                                       border: Border.all(
                                         color: mobileBackgroundColor,
-                                        width: 1,
+                                        width: 2,
                                       ),
                                     ),
                                     child: ClipRRect(
@@ -141,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         user.email,
                                         style: TextStyle(
                                           fontSize: 15,
-                                          fontWeight: FontWeight.w400,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ],
