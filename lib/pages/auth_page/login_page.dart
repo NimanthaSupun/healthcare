@@ -18,12 +18,18 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  bool _isLoading = false;
+
   // todo: method to sing with email and password
   Future<void> _signInWithEmailAndPassword(BuildContext context) async {
     try {
       if (!_formKey.currentState!.validate()) {
         return;
       }
+      setState(() {
+        _isLoading = true;
+      });
+
       await AuthService().signInWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
@@ -32,23 +38,25 @@ class _LoginPageState extends State<LoginPage> {
     } catch (error) {
       print(error.toString());
 
-    if(context.mounted) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("Error"),
-          content: Text("${error}"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text("ok"),
-            ),
-          ],
-        ),
-      );
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text("Error"),
+            content: Text("${error}"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text("ok"),
+              ),
+            ],
+          ),
+        );
+      }
+    } finally {
+      _isLoading = false;
     }
-   }
- }
+  }
 
   // todo: sing in with google
   Future<void> _signInWithGoogle(BuildContext context) async {
@@ -122,7 +130,6 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    
                     Positioned(
                       child: FadeInDown(
                           duration: const Duration(milliseconds: 1600),
@@ -144,107 +151,113 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               // todo: background navigator is END
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Column(
-                  children: <Widget>[
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 1800),
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
                       child: Column(
-                        children: [
-                          CustomInput(
-                            controller: _emailController,
-                            labelText: "email",
-                            icon: Icons.email,
-                            obsecureText: false,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                                return 'Please enter a valid email address';
-                              }
-                              return null;
-                            },
+                        children: <Widget>[
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1800),
+                            child: Column(
+                              children: [
+                                CustomInput(
+                                  controller: _emailController,
+                                  labelText: "email",
+                                  icon: Icons.email,
+                                  obsecureText: false,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter your email';
+                                    }
+                                    if (!RegExp(r'\S+@\S+\.\S+')
+                                        .hasMatch(value)) {
+                                      return 'Please enter a valid email address';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                CustomInput(
+                                  controller: _passwordController,
+                                  labelText: "Password",
+                                  icon: Icons.lock,
+                                  obsecureText: true,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return "please enter your password";
+                                    }
+                                    if (value.length < 6) {
+                                      return "password must be at least 6 characters long";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ],
+                            ),
+                            // todo:button
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1900),
+                            child: CustomButton(
+                              title: "Log in",
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: () =>
+                                  _signInWithEmailAndPassword(context),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 2000),
+                            child: Text(
+                              "Sign in with Google to access the app's features",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 1900),
+                            child: CustomButton(
+                              title: "Sign in with Google",
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: () => _signInWithGoogle(context),
+                            ),
                           ),
                           SizedBox(
                             height: 15,
                           ),
-                          CustomInput(
-                            controller: _passwordController,
-                            labelText: "Password",
-                            icon: Icons.lock,
-                            obsecureText: true,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "please enter your password";
-                              }
-                              if (value.length < 6) {
-                                return "password must be at least 6 characters long";
-                              }
-                              return null;
-                            },
+                          FadeInUp(
+                            duration: const Duration(milliseconds: 2000),
+                            child: TextButton(
+                              onPressed: () {
+                                GoRouter.of(context).go("/register");
+                              },
+                              child: Text(
+                                "Don't have an account? Sign up",
+                                style: TextStyle(
+                                  color: mainBlueColor,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                      // todo:button
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 1900),
-                      child: CustomButton(
-                        title: "Log in",
-                        width: MediaQuery.of(context).size.width,
-                        onPressed: () => _signInWithEmailAndPassword(context),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 2000),
-                      child: Text(
-                        "Sign in with Google to access the app's features",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 1900),
-                      child: CustomButton(
-                        title: "Sign in with Google",
-                        width: MediaQuery.of(context).size.width,
-                        onPressed: () => _signInWithGoogle(context),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    FadeInUp(
-                      duration: const Duration(milliseconds: 2000),
-                      child: TextButton(
-                        onPressed: () {
-                          GoRouter.of(context).go("/register");
-                        },
-                        child: Text(
-                          "Don't have an account? Sign up",
-                          style: TextStyle(
-                            color: mainBlueColor,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
             ],
           ),
         ),

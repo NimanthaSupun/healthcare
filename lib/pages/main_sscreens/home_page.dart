@@ -34,11 +34,13 @@ class _HomePageState extends State<HomePage>
     );
     controller.addListener(() {
       if (controller.isCompleted) {
-        Navigator.of(context).push(
-          MyCustomRouteTransition(
-            route: ProfilePage(),
-          ),
-        );
+        if (mounted) {
+          Navigator.of(context).push(
+            MyCustomRouteTransition(
+              route: ProfilePage(), // Ensure ProfilePage is not null
+            ),
+          );
+        }
         Timer(Duration(milliseconds: 500), () {
           controller.reset();
         });
@@ -156,3 +158,5 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
+
+

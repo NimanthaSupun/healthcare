@@ -9,6 +9,7 @@ import 'package:healthcare/pages/main_sscreens/profile_page.dart';
 import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
+import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/pages/update_profile_page.dart';
 
 class RouterClass {
@@ -98,6 +99,14 @@ class RouterClass {
         path: "/home-screen",
         builder: (context, state) {
           return HomePage();
+        },
+      ),
+
+      GoRoute(
+        name: "setting page",
+        path: "/setting-page",
+        builder: (context, state) {
+          return SettingPage();
         },
       ),
     ],
