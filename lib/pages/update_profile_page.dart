@@ -25,7 +25,7 @@ class UpdateProfilePage extends StatefulWidget {
 class _UpdateProfilePageState extends State<UpdateProfilePage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController = TextEditingController();
-  late TextEditingController _emailController = TextEditingController();
+  // late TextEditingController _emailController = TextEditingController();
 
   DateTime selectedDate = DateTime(2003, 5, 9);
   String selectedSex = 'Male';
@@ -66,14 +66,12 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.user.name);
-    _emailController = TextEditingController(text: widget.user.email);
     selectedSex = widget.user.sex!;
     selectedFeet = widget.user.heightFeet as int;
     selectedInches = widget.user.heightInches as int;
     selectedWeight = widget.user.weight as int;
     selectedBloodGroup = widget.user.bloodGroup!;
     _base64Image = widget.user.imageUrl;
-    // selectedDate = widget.user.dateOfBirth!;
   }
 
   bool _isLoading = false;
@@ -90,7 +88,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       final UserModel updateUser = UserModel(
         userId: widget.user.userId,
         name: _nameController.text,
-        email: _emailController.text,
+        email: widget.user.email,
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
         password: widget.user.password,
@@ -213,24 +211,6 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     },
                   ),
                   SizedBox(
-                    height: 15,
-                  ),
-                  CustomInput(
-                    controller: _emailController,
-                    labelText: "email",
-                    icon: Icons.email,
-                    obsecureText: false,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
-                      }
-                      if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                        return 'Please enter a valid email address';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
                     height: 25,
                   ),
                   _buildInfoRow(
@@ -263,7 +243,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                     onTap: _showBloodGroupPicker,
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 25,
                   ),
                   _isLoading
                       ? Center(
@@ -299,12 +279,14 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
                 label,
                 style: TextStyle(
                   fontSize: 17,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
               Text(
                 value,
                 style: TextStyle(
                   fontSize: 17,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],
