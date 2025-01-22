@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:healthcare/constants/colors.dart';
 
 class ThemesModeData {
   final ThemeData lightMode = ThemeData(
@@ -17,16 +18,29 @@ class ThemesModeData {
       onSecondary: Color(0xFFFFFFFF),
       error: Color(0xFFBA1A1A),
       onError: Color(0xFFFFFFFF),
-      background: Color(0xFFF5FAFB),
-      onBackground: Color(0xFF171D1E),
       surface: Color(0xFFF5FAFB),
       onSurface: Color(0xFF171D1E),
     ),
+    cardTheme: CardTheme(
+      color: Color.fromRGBO(222, 255, 255, 1),
+    ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedLabelStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+       ),
+       unselectedLabelStyle: TextStyle(
+        fontWeight: FontWeight.w600,
+       ),
+       selectedItemColor: blueColor,
+       unselectedItemColor: Colors.grey,
+      ),
 
-    // bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    //   backgroundColor: Colors.transparent,
-    //   selectedItemColor: Colors.black,
-    // ),
+      snackBarTheme: SnackBarThemeData(
+        contentTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     appBarTheme: const AppBarTheme(
       color: Color(0xFF0D70E6),
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
@@ -59,6 +73,7 @@ class ThemesModeData {
     primaryColor: const Color(0xFF111418),
     scaffoldBackgroundColor: const Color(0xFF111418),
     cardColor: const Color(0xFF111418),
+    // cardColor: const Color.fromARGB(255, 129, 163, 207),
     dividerColor: const Color(0x1FE1E2E8),
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
@@ -68,17 +83,35 @@ class ThemesModeData {
       onSecondary: Color(0xFF253140),
       error: Color(0xFFFFB4AB),
       onError: Color(0xFF690005),
-      background: Color(0xFF111418),
-      onBackground: Color(0xFFE1E2E8),
       surface: Color(0xFF111418),
       onSurface: Color(0xFFE1E2E8),
     ),
+    cardTheme: CardTheme(
+      // color: Colors.grey.withAlpha(1),
+      color: Color.fromRGBO(0, 0, 0, 1),
 
+    ),
+     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      selectedLabelStyle: TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
+       ),
+       unselectedLabelStyle: TextStyle(
+        fontWeight: FontWeight.w600,
+       ),
+       selectedItemColor: blueColor,
+       unselectedItemColor: mainWhiteColor,
+      ),
+       snackBarTheme: SnackBarThemeData(
+        contentTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black
+        ),
+      ),
     appBarTheme: const AppBarTheme(
       color: Color(0xFF111418),
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
     ),
-
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
         color: Color(0xFFE1E2E8),
@@ -101,9 +134,8 @@ class ThemesModeData {
     ),
   );
 
-
-
 //   // todo: -------------------------LIGHT MODE------------------------------------
+
 //   final ThemeData lightMode = ThemeData(
 
 //     brightness: Brightness.light,

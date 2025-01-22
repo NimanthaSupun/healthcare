@@ -1,14 +1,11 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
-import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/user_model.dart';
-import 'package:healthcare/services/auth/auth_service.dart';
-import 'package:healthcare/widgets/reusable/custom_button.dart';
+import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/widgets/reusable/custom_profile_card.dart';
 import 'package:intl/intl.dart';
 
@@ -29,16 +26,17 @@ class _ProfilePageState extends State<ProfilePage> {
     // String formattedDate = formatter.format(now);
     // String formatterDay = dayFormat.format(now);
 
-    void singOut(BuildContext context) async {
-      await AuthService().signOut();
-      // ignore: use_build_context_synchronously
-      GoRouter.of(context).go('/login');
-      // ignore: use_build_context_synchronously
-      UtilFunctions().showSnackBarWdget(context, "sign out");
-    }
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "Profile",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -82,88 +80,100 @@ class _ProfilePageState extends State<ProfilePage> {
                           Card(
                             child: SizedBox(
                               width: double.infinity,
-                              height: 90,
-                              child: Row(
-                                children: [
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                    width: 80,
-                                    height: 80,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 1,
-                                      vertical: 1,
+                              height: 100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    SizedBox(
+                                      width: 2,
                                     ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(100),
-                                      border: Border.all(
-                                        color: mobileBackgroundColor,
-                                        width: 2,
+                                    Container(
+                                      width: 75,
+                                      height: 75,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 1,
+                                        vertical: 1,
                                       ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: user.imageUrl != null &&
-                                              user.imageUrl!.isNotEmpty
-                                          ? Image.memory(
-                                              base64Decode(
-                                                user.imageUrl!,
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        border: Border.all(
+                                          color: mobileBackgroundColor,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: user.imageUrl != null &&
+                                                user.imageUrl!.isNotEmpty
+                                            ? Image.memory(
+                                                base64Decode(
+                                                  user.imageUrl!,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.network(
+                                                "https://i.stack.imgur.com/l60Hf.png",
+                                                fit: BoxFit.cover,
                                               ),
-                                              fit: BoxFit.cover,
-                                            )
-                                          : Image.network(
-                                              "https://i.stack.imgur.com/l60Hf.png",
-                                              fit: BoxFit.cover,
-                                            ),
 
-                                      // child: Image.network(
-                                      //   "https://i.stack.imgur.com/l60Hf.png",
-                                      //   fit: BoxFit.cover,
-                                      // ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: 10,
+                                        // child: Image.network(
+                                        //   "https://i.stack.imgur.com/l60Hf.png",
+                                        //   fit: BoxFit.cover,
+                                        // ),
                                       ),
-                                      Text(
-                                        user.name,
-                                        style: TextStyle(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.w400,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Text(
+                                            user.name,
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.w500,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Text(
+                                            user.email,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      child: IconButton(
+                                        onPressed: () {
+                                          GoRouter.of(context).pushReplacement(
+                                            '/update-profile',
+                                            extra: user,
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          size: 30,
+                                          color: mainOrangeColor,
                                         ),
                                       ),
-                                      Text(
-                                        user.email,
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  IconButton(
-                                    onPressed: () {
-                                      GoRouter.of(context).pushReplacement(
-                                        '/update-profile',
-                                        extra: user,
-                                      );
-                                    },
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 30,
-                                      color: mainOrangeColor,
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -173,23 +183,36 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
-                CustomProfileCard(
-                  icon: Icons.date_range,
-                  titile: "user details",
-                ),
-                CustomProfileCard(
-                  icon: Icons.settings,
-                  titile: "setting",
-                ),
+                Divider(),
                 SizedBox(
                   height: 40,
                 ),
-                CustomButton(
-                  title: "Log out",
-                  width: double.infinity,
-                  onPressed: () => singOut(context),
+                CustomProfileCard(
+                  onTap: () {},
+                  icon: Icons.date_range,
+                  titile: "user details",
+                ),
+                Divider(),
+                SizedBox(
+                  height: 10,
+                ),
+                CustomProfileCard(
+                  onTap: () {
+                    // GoRouter.of(context).pushReplacement("/setting-page");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingPage(),
+                      ),
+                    );
+                  },
+                  icon: Icons.settings,
+                  titile: "settings",
+                ),
+                SizedBox(
+                  height: 40,
                 ),
               ],
             ),

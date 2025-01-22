@@ -147,6 +147,14 @@ class _HomePageState extends State<HomePage>
                           ),
                         ],
                       ),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: mainOrangeColor,
+                        ),
+                        child: Text("hello"),
+                      )
                     ],
                   );
                 }
@@ -158,5 +166,3 @@ class _HomePageState extends State<HomePage>
     );
   }
 }
-
-

@@ -270,7 +270,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
         child: Padding(
           padding: EdgeInsets.symmetric(
             vertical: 15,
-            horizontal: 5,
+            horizontal: 10,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
