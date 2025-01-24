@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/auth_page/login_page.dart';
 import 'package:healthcare/pages/auth_page/register_page.dart';
+import 'package:healthcare/pages/daily_update_page.dart';
 import 'package:healthcare/pages/main_screen.dart';
 import 'package:healthcare/pages/main_sscreens/home_page.dart';
 import 'package:healthcare/pages/main_sscreens/profile_page.dart';
@@ -102,11 +103,21 @@ class RouterClass {
         },
       ),
 
+      // stting page
       GoRoute(
         name: "setting page",
         path: "/setting-page",
         builder: (context, state) {
           return SettingPage();
+        },
+      ),
+
+      // daily update page
+      GoRoute(
+        name: "daily update",
+        path: "/daily-update",
+        builder: (context, state) {
+          return DailyUpdatePage();
         },
       ),
     ],

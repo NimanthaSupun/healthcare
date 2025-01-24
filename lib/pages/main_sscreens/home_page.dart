@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_sscreens/profile_page.dart';
@@ -56,6 +57,18 @@ class _HomePageState extends State<HomePage>
     String formatterDay = dayFormat.format(now);
 
     return Scaffold(
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+              GoRouter.of(context).go("/daily-update");
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -147,14 +160,6 @@ class _HomePageState extends State<HomePage>
                           ),
                         ],
                       ),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: mainOrangeColor,
-                        ),
-                        child: Text("hello"),
-                      )
                     ],
                   );
                 }

@@ -13,6 +13,7 @@ const mainPurpleColor = Color(0xFFC913B9);
 const mainOrangeColor = Color(0xFFF9373F);
 const mainYellowColor = Color(0xFFFECD00);
 const mainWhiteColor = Color(0xFFFFFFFF);
+const mainGreenColor = Color.fromARGB(255, 60, 255, 0);
 // const button1 = Color.fromRGBO(143, 148, 251, 1);
 const button1 = Color.fromRGBO(0, 79, 255, 1);
 // const button2 = Color.fromRGBO(143, 148, 251, .6);

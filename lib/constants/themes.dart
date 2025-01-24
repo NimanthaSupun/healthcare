@@ -22,28 +22,30 @@ class ThemesModeData {
       onSurface: Color(0xFF171D1E),
     ),
     cardTheme: CardTheme(
-      color: Color.fromRGBO(222, 255, 255, 1),
+      color: Color.fromRGBO(241, 255, 255, 1),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedLabelStyle: TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w600,
-       ),
-       unselectedLabelStyle: TextStyle(
+      ),
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w600,
-       ),
-       selectedItemColor: blueColor,
-       unselectedItemColor: Colors.grey,
       ),
-
-      snackBarTheme: SnackBarThemeData(
-        contentTextStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
+      selectedItemColor: blueColor,
+      unselectedItemColor: Colors.grey,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      contentTextStyle: TextStyle(
+        fontWeight: FontWeight.bold,
       ),
+    ),
     appBarTheme: const AppBarTheme(
-      color: Color(0xFF0D70E6),
-      iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
+      // color: Color.fromARGB(255, 255, 255, 255),
+      color: blueColor,
+      iconTheme: IconThemeData(
+        color: Color(0xFFFFFFFF),
+      ),
     ),
     textTheme: const TextTheme(
       bodyLarge: TextStyle(
@@ -89,25 +91,22 @@ class ThemesModeData {
     cardTheme: CardTheme(
       // color: Colors.grey.withAlpha(1),
       color: Color.fromRGBO(0, 0, 0, 1),
-
     ),
-     bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedLabelStyle: TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w600,
-       ),
-       unselectedLabelStyle: TextStyle(
+      ),
+      unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w600,
-       ),
-       selectedItemColor: blueColor,
-       unselectedItemColor: mainWhiteColor,
       ),
-       snackBarTheme: SnackBarThemeData(
-        contentTextStyle: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black
-        ),
-      ),
+      selectedItemColor: blueColor,
+      unselectedItemColor: mainWhiteColor,
+    ),
+    snackBarTheme: SnackBarThemeData(
+      contentTextStyle:
+          TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+    ),
     appBarTheme: const AppBarTheme(
       color: Color(0xFF111418),
       iconTheme: IconThemeData(color: Color(0xFFFFFFFF)),
