@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:healthcare/pages/main_sscreens/home_page.dart';
-import 'package:healthcare/pages/main_sscreens/library_page.dart';
-import 'package:healthcare/pages/main_sscreens/profile_page.dart';
+import 'package:healthcare/pages/main_screens/home_page.dart';
+import 'package:healthcare/pages/main_screens/library_page.dart';
+import 'package:healthcare/pages/main_screens/profile_page.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

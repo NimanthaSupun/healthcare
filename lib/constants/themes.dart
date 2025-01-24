@@ -22,7 +22,7 @@ class ThemesModeData {
       onSurface: Color(0xFF171D1E),
     ),
     cardTheme: CardTheme(
-      color: Color.fromRGBO(241, 255, 255, 1),
+      color: Color.fromRGBO(249, 255, 255, 1),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       selectedLabelStyle: TextStyle(
@@ -41,10 +41,9 @@ class ThemesModeData {
       ),
     ),
     appBarTheme: const AppBarTheme(
-      // color: Color.fromARGB(255, 255, 255, 255),
-      color: blueColor,
+      color: Color(0xFFF5FAFB),
       iconTheme: IconThemeData(
-        color: Color(0xFFFFFFFF),
+        color: Color.fromRGBO(0, 0, 0, 1),
       ),
     ),
     textTheme: const TextTheme(

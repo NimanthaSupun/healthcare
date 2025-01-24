@@ -27,16 +27,7 @@ class _ProfilePageState extends State<ProfilePage> {
     // String formatterDay = dayFormat.format(now);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
+      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -185,7 +176,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   height: 10,
                 ),
-                Divider(),
                 SizedBox(
                   height: 40,
                 ),

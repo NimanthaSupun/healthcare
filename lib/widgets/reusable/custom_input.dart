@@ -6,6 +6,8 @@ class CustomInput extends StatelessWidget {
   final IconData icon;
   final bool obsecureText;
   final String? Function(String?)? validator;
+  final String? hintText;
+  final TextInputType? keyboardType;
 
   const CustomInput({
     super.key,
@@ -14,6 +16,7 @@ class CustomInput extends StatelessWidget {
     required this.icon,
     required this.obsecureText,
     this.validator,
+    this.hintText, this.keyboardType,
   });
 
   @override
@@ -22,8 +25,10 @@ class CustomInput extends StatelessWidget {
       validator: validator,
       obscureText: obsecureText,
       controller: controller,
+      keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
+        hintText: hintText,
         labelStyle: TextStyle(
           fontSize: 18,
         ),
