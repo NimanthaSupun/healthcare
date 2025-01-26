@@ -9,7 +9,6 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/widgets/animation/custom_page_transition.dart';
-import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -173,20 +172,19 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 40,
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 200,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                    color: mainOrangeColor,
-                  )),
-                  child: ShowBloodSugerChart(),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 200,
+                //   decoration: BoxDecoration(
+                //       border: Border.all(
+                //           // color: mainOrangeColor,
+                //           ),
+                //     ),
+                //   child: ShowBloodSugerChart(),
+                // ),
+                // HomePageStackCard()
               ],
             ),
           ),
