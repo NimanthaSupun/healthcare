@@ -23,6 +23,15 @@ class ProfileDataPage extends StatelessWidget {
           ),
         ),
       ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

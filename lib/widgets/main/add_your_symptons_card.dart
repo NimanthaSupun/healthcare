@@ -23,7 +23,7 @@ class AddYourSymptonsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
                 // "assets/images/undraw_track-and-field_i2au.png",
-                "assets/images/close-up-hands-holding-stethoscope.jpg",
+                "assets/images/frame-medical-equipment-desk.jpg",
                 fit: BoxFit.cover,
                 height: 150,
                 width: double.infinity,
