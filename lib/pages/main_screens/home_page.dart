@@ -9,6 +9,8 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/widgets/animation/custom_page_transition.dart';
+import 'package:healthcare/widgets/main/add_your_symptons_card.dart';
+import 'package:healthcare/widgets/main/show_user_profile_card.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -54,6 +56,12 @@ class _HomePageState extends State<HomePage>
   }
 
   @override
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String formattedDate = formatter.format(now);
@@ -174,17 +182,18 @@ class _HomePageState extends State<HomePage>
                 SizedBox(
                   height: 40,
                 ),
-                // Container(
-                //   width: double.infinity,
-                //   height: 200,
-                //   decoration: BoxDecoration(
-                //       border: Border.all(
-                //           // color: mainOrangeColor,
-                //           ),
-                //     ),
-                //   child: ShowBloodSugerChart(),
-                // ),
-                // HomePageStackCard()
+                AddYourSymptonsCard(),
+                SizedBox(
+                  height: 20,
+                ),
+                ShowUserProfileCard(
+                  onPresed: () {
+                    GoRouter.of(context).go(
+                      "/prfile-data-page",
+                      extra: getUser,
+                    );
+                  },
+                )
               ],
             ),
           ),

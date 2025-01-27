@@ -7,6 +7,7 @@ import 'package:healthcare/pages/daily_update_page.dart';
 import 'package:healthcare/pages/main_screen.dart';
 import 'package:healthcare/pages/main_screens/home_page.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
+import 'package:healthcare/pages/profile_data_page.dart';
 import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
@@ -118,6 +119,15 @@ class RouterClass {
         path: "/daily-update",
         builder: (context, state) {
           return DailyUpdatePage();
+        },
+      ),
+
+      GoRoute(
+        name: "user profile data page",
+        path: "/prfile-data-page",
+        builder: (context, state) {
+          final UserModel user = state.extra as UserModel;
+          return ProfileDataPage(user: user);
         },
       ),
     ],
