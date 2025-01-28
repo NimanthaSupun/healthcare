@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
+import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:healthcare/widgets/profile_data_page/single_profile_data_card.dart';
 
 class ProfileDataPage extends StatelessWidget {
@@ -27,8 +29,9 @@ class ProfileDataPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "Personalize Fitness and Health",
@@ -56,12 +59,13 @@ class ProfileDataPage extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     // color: subLandMarksCardBg.withOpacity(0.9),
-                    color: Colors.black.withOpacity(0.5),
+                    // ignore: deprecated_member_use
+                    color: Colors.black.withOpacity(0.4),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
-                      horizontal: 8,
+                      horizontal: 10,
                     ),
                     child: Column(
                       children: [
@@ -99,6 +103,37 @@ class ProfileDataPage extends StatelessWidget {
                       ],
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Text(
+                  "Analytics about blood suger level",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: mainLandMarksColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 212,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: mainYellowColor.withOpacity(0.1),
+                        // color: mainPurpleColor.withOpacity(0.1),
+                      ),
+                    ),
+                    ShowBloodSugerChart(),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
               ],
             ),

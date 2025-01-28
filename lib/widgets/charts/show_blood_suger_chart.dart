@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/blood_suger_data_model.dart';
 import 'package:healthcare/services/health_tracker_service.dart';
 
@@ -30,21 +31,26 @@ class ShowBloodSugerChart extends StatelessWidget {
           return AspectRatio(
             aspectRatio: 1.7,
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10),
               child: LineChart(
                 LineChartData(
+                  lineTouchData: LineTouchData(
+                    handleBuiltInTouches: true,
+                  ),
                   lineBarsData: [
                     LineChartBarData(
-                      spots: _convertEntriesToSpots(entries),
+                      spots: _convertEntriesToSpots(
+                        entries,
+                      ),
                       isCurved: true,
-                      color: Colors.blue,
+                      color: selectionColor,
                       barWidth: 3,
                       belowBarData: BarAreaData(
                         show: true,
                         gradient: LinearGradient(
                           colors: [
-                            Colors.blue.withOpacity(0.5),
-                            Colors.transparent
+                            selectionColor.withOpacity(0.5),
+                            Colors.transparent,
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -81,10 +87,14 @@ class ShowBloodSugerChart extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             final index = value.toInt();
             if (index < 0 || index >= entries.length) return Container();
-            
+
             return Text(
               _formatDate(entries[index].date),
-              style: const TextStyle(fontSize: 10, color: Colors.grey),
+              style: const TextStyle(
+                fontSize: 12,
+                // color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             );
           },
         ),
@@ -97,7 +107,11 @@ class ShowBloodSugerChart extends StatelessWidget {
           getTitlesWidget: (value, meta) {
             return Text(
               value.toStringAsFixed(0),
-              style: const TextStyle(fontSize: 10, color: Colors.grey),
+              style: const TextStyle(
+                fontSize: 12,
+                // color: Colors.grey,
+                fontWeight: FontWeight.bold,
+              ),
             );
           },
         ),
