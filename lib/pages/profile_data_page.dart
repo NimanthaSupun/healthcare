@@ -27,7 +27,7 @@ class ProfileDataPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: Column(
               children: [
                 Text(
@@ -38,6 +38,9 @@ class ProfileDataPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   "This information ensures Fitnes and Health data are as accurate as possible",
                   style: TextStyle(
@@ -45,10 +48,57 @@ class ProfileDataPage extends StatelessWidget {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SingleProfileDataCard(
-                  title: "Name",
-                  userData: user.name,
-                  imageUrl: "assets/images/card_16581871.png",
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    // color: subLandMarksCardBg.withOpacity(0.9),
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 8,
+                    ),
+                    child: Column(
+                      children: [
+                        SingleProfileDataCard(
+                          title: "Name",
+                          userData: user.name,
+                          imageUrl: "assets/images/card_16581871.png",
+                        ),
+                        SingleProfileDataCard(
+                          title: "Sex",
+                          userData: user.sex!,
+                          imageUrl: "assets/images/sex_5625548.png",
+                        ),
+                        SingleProfileDataCard(
+                          title: "Day of Birth",
+                          userData:
+                              "${_getMonthName(user.dateOfBirth.month)} ${user.dateOfBirth.day}, ${user.dateOfBirth.year}",
+                          imageUrl: "assets/images/open_9181809.png",
+                        ),
+                        SingleProfileDataCard(
+                          title: "Height",
+                          userData: "${user.heightFeet} ${user.heightInches}\"",
+                          imageUrl: "assets/images/height_5474787.png",
+                        ),
+                        SingleProfileDataCard(
+                          title: "Weight",
+                          userData: "${user.weight} lb",
+                          imageUrl: "assets/images/body-scale_17488088.png",
+                        ),
+                        SingleProfileDataCard(
+                          title: "Blood Group",
+                          userData: "${user.bloodGroup}",
+                          imageUrl: "assets/images/check-list_5535285.png",
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -56,5 +106,23 @@ class ProfileDataPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getMonthName(int month) {
+    const months = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ];
+    return months[month - 1];
   }
 }
