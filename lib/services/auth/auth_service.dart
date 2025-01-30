@@ -13,17 +13,17 @@ class AuthService {
   // Sign in anonymously
 
   //This methode is not used in the app but it is a good example of how to sign in anonymously
-  Future<void> signInAnonymously() async {
-    try {
-      final userCredential = await _auth.signInAnonymously();
-      final user = userCredential.user;
-      if (user != null) {
-        print('Signed in anonymously: ${user.uid}');
-      }
-    } catch (e) {
-      print('Error signing in anonymously: $e');
-    }
-  }
+  // Future<void> signInAnonymously() async {
+  //   try {
+  //     final userCredential = await _auth.signInAnonymously();
+  //     final user = userCredential.user;
+  //     if (user != null) {
+  //       print('Signed in anonymously: ${user.uid}');
+  //     }
+  //   } catch (e) {
+  //     print('Error signing in anonymously: $e');
+  //   }
+  // }
 
   //sign in anonymously with auth exceptions ( this is the one used in the app)
   Future<void> signInAnonymouslywithExceptions() async {
