@@ -26,6 +26,7 @@ class AuthService {
   // }
 
   //sign in anonymously with auth exceptions ( this is the one used in the app)
+  
   Future<void> signInAnonymouslywithExceptions() async {
     try {
       final userCredential = await _auth.signInAnonymously();
