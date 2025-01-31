@@ -182,7 +182,9 @@ class _HomePageState extends State<HomePage>
                 SizedBox(
                   height: 40,
                 ),
-                AddYourSymptonsCard(),
+                AddYourSymptonsCard(
+                  onPresed: () {},
+                ),
                 SizedBox(
                   height: 20,
                 ),

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
 
 class AddYourSymptonsCard extends StatelessWidget {
-  const AddYourSymptonsCard({super.key});
+  final VoidCallback onPresed;
+  const AddYourSymptonsCard({super.key, required this.onPresed,});
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +48,47 @@ class AddYourSymptonsCard extends StatelessWidget {
                   height: 35,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      "Add Your Symptons",
-                      style: TextStyle(
-                        fontSize: 30,
-                        // color: mainWhiteColor.withOpacity(1),
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            "Personalize",
+                            style: TextStyle(
+                              fontSize: 30,
+                              // color: mainWhiteColor.withOpacity(1),
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            "Your Categories",
+                            style: TextStyle(
+                              fontSize: 30,
+                              // color: mainWhiteColor.withOpacity(1),
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        color: Colors.white,
-                      ),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.black,
+                    GestureDetector(
+                      onTap: onPresed,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white,
+                        ),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                   ],
