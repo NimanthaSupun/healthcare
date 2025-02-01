@@ -104,7 +104,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       await UserService().updateUser(
         widget.user.userId,
         updateUser,
-      );
+      ); 
 
       if (context.mounted) {
         UtilFunctions().showSnackBarWdget(

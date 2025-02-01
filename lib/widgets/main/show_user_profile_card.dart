@@ -17,7 +17,7 @@ class ShowUserProfileCard extends StatelessWidget {
         height: 70,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: subLandMarksCardBg.withOpacity(0.9),
+          color: subLandMarksCardBg.withOpacity(0.2),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

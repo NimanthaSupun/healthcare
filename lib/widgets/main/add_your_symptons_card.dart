@@ -3,7 +3,10 @@ import 'package:healthcare/constants/colors.dart';
 
 class AddYourSymptonsCard extends StatelessWidget {
   final VoidCallback onPresed;
-  const AddYourSymptonsCard({super.key, required this.onPresed,});
+  const AddYourSymptonsCard({
+    super.key,
+    required this.onPresed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +19,8 @@ class AddYourSymptonsCard extends StatelessWidget {
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: subLandMarksCardBg.withOpacity(0.3),
+              // ignore: deprecated_member_use
+              color: subLandMarksCardBg.withOpacity(0.9),
             ),
           ),
           Center(
@@ -36,7 +40,8 @@ class AddYourSymptonsCard extends StatelessWidget {
             height: 150,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: subLandMarksCardBg.withOpacity(0.5),
+              // ignore: deprecated_member_use
+              color: subLandMarksCardBg.withOpacity(0.1),
             ),
           ),
           Padding(

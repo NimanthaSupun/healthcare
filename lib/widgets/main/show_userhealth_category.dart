@@ -1,6 +1,7 @@
 // import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/constants/images/health_category_image.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
@@ -61,7 +62,7 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 GridView.builder(
                   shrinkWrap: true,
@@ -79,42 +80,50 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                     // final randomImage =
                     //     imagePaths[Random().nextInt(imagePaths.length)];
                     final randomImage = imagePaths[index];
-                    return Card(
-                      // color: subLandMarksCardBg,
-                      // shadowColor: subLandMarksCardBg,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Text(
-                              healthcategory.name,
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
+                    return GestureDetector(
+                      onTap: () {
+                        GoRouter.of(context).go(
+                          "/single-category-page",
+                          extra: healthcategory,
+                        );
+                      },
+                      child: Card(
+                        // color: subLandMarksCardBg,
+                        // shadowColor: subLandMarksCardBg,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            children: [
+                              Text(
+                                healthcategory.name,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Image.asset(
+                                randomImage,
+                                height: 80,
+                                width: 80,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                healthcategory.description,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 15,
+                                ),
+                                textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Image.asset(
-                              randomImage,
-                              height: 80,
-                              width: 80,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              healthcategory.description,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 15,
-                              ),
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     );

@@ -189,7 +189,7 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
                 ShowUserProfileCard(
                   onPresed: () {
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 35,
                 ),
                 ShowUserhealthCategory(),
               ],
