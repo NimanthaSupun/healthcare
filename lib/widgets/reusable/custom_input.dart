@@ -16,7 +16,8 @@ class CustomInput extends StatelessWidget {
     required this.icon,
     required this.obsecureText,
     this.validator,
-    this.hintText, this.keyboardType,
+    this.hintText,
+    this.keyboardType,
   });
 
   @override
@@ -31,6 +32,7 @@ class CustomInput extends StatelessWidget {
         hintText: hintText,
         labelStyle: TextStyle(
           fontSize: 18,
+          fontWeight: FontWeight.w400,
         ),
         filled: true,
         prefixIcon: Icon(
@@ -38,16 +40,22 @@ class CustomInput extends StatelessWidget {
           size: 20,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: Divider.createBorderSide(context),
-        ),
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              width: 2,
+            )),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.blue),
+          borderSide: BorderSide(
+            color: Colors.blue,
+            width: 2,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: Divider.createBorderSide(context),
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(
+            width: 1,
+          ),
         ),
       ),
     );

@@ -11,6 +11,7 @@ import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/widgets/animation/custom_page_transition.dart';
 import 'package:healthcare/widgets/main/add_your_symptons_card.dart';
 import 'package:healthcare/widgets/main/show_user_profile_card.dart';
+import 'package:healthcare/widgets/main/show_userhealth_category.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
@@ -180,10 +181,12 @@ class _HomePageState extends State<HomePage>
                   },
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 30,
                 ),
                 AddYourSymptonsCard(
-                  onPresed: () {},
+                  onPresed: () {
+                    GoRouter.of(context).go("/person-category-page");
+                  },
                 ),
                 SizedBox(
                   height: 20,
@@ -195,7 +198,11 @@ class _HomePageState extends State<HomePage>
                       extra: getUser,
                     );
                   },
-                )
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                ShowUserhealthCategory(),
               ],
             ),
           ),
