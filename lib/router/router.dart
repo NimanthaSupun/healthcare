@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/auth_page/login_page.dart';
 import 'package:healthcare/pages/auth_page/register_page.dart';
@@ -13,6 +14,7 @@ import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/pages/setting_page.dart';
+import 'package:healthcare/pages/single_health_category_page.dart';
 import 'package:healthcare/pages/update_profile_page.dart';
 
 class RouterClass {
@@ -137,6 +139,16 @@ class RouterClass {
         path: "/person-category-page",
         builder: (context, state) {
           return PersonCategoryPage();
+        },
+      ),
+
+      // signle category page
+      GoRoute(
+        name: "single category page",
+        path: "/single-category-page",
+        builder: (context, state) {
+          final HealthCategory healthCategory = state.extra as HealthCategory;
+          return SingleHealthCategoryPage(healthCategory: healthCategory);
         },
       ),
     ],
