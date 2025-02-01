@@ -47,12 +47,12 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                   "Your Health Categories >",
                   style: TextStyle(
                     fontSize: 22,
-                    color: mainBlueColor,
+                    color: mainLandMarksColor,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: 2,
+                  height: 5,
                 ),
                 Text(
                   "View and manage all your health categories.",
@@ -80,6 +80,8 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                     //     imagePaths[Random().nextInt(imagePaths.length)];
                     final randomImage = imagePaths[index];
                     return Card(
+                      // color: subLandMarksCardBg,
+                      // shadowColor: subLandMarksCardBg,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
