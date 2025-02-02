@@ -31,4 +31,38 @@ class SymtonService {
       print("error add symptons on servie: ${error}");
     }
   }
+
+  // get symptons
+  Stream<List<SymptonModel>> getSympton(String userId, String categoryId) {
+    try {
+      final CollectionReference symptonCollection = userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(categoryId)
+          .collection("symptons");
+
+      return symptonCollection.snapshots().map((snapshot) {
+        return snapshot.docs
+            .map((doc) =>
+                SymptonModel.fromJson(doc.data() as Map<String, dynamic>))
+            .toList();
+      });
+    } catch (error) {
+      print("Error fetch Symptons: ${error}");
+      return Stream.empty();
+    }
+  }
+
+  // Future<void> updateSymton(
+  //     String userId, String categoryId, SymptonModel symptonModel) async {
+  //   try {
+  //     final CollectionReference symptonCollection = userCollection
+  //         .doc(userId)
+  //         .collection("healthCategory")
+  //         .doc(categoryId)
+  //         .collection("symptons");
+  //   } catch (error) {
+  //     print("error update symptons on servie: ${error}");
+  //   }
+  // }
 }
