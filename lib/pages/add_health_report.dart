@@ -62,7 +62,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
         _isLoading = true;
       });
 
-
       final SymptonModel symptonModel = SymptonModel(
         id: "",
         name: _symptonsController.text,
@@ -83,9 +82,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
         context,
         "Your sympton record has been created!",
       );
-
+      setState(() {});
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
+      // Navigator.of(context).pop();
     } catch (error) {
       print("Error: ${error}");
       showDialog(
@@ -249,5 +248,4 @@ class _AddHealthReportState extends State<AddHealthReport> {
           base64Encode(_clinicNoteImage!.readAsBytesSync());
     });
   }
-
 }

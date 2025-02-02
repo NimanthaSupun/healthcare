@@ -31,7 +31,6 @@ class SymtonService {
       print("error add symptons on servie: ${error}");
     }
   }
-
   // get symptons
   Stream<List<SymptonModel>> getSympton(String userId, String categoryId) {
     try {
