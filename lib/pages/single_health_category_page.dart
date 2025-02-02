@@ -154,7 +154,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                       },
                       child: AddHealthRecordCard(
                         imageUrl: "assets/images/statistics_14659998.png",
-                        title: "Add Health Record",
+                        title: " Add new Symptom ",
                       ),
                     ),
                     AddHealthRecordCard(

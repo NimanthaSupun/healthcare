@@ -59,7 +59,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
             child: Column(
               children: [
                 Text(
-                  "Upload Your Health Record",
+                  "Upload Your symptom Records",
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                     children: [
                       CustomInput(
                         controller: _symptonsController,
-                        labelText: "add your symptoms",
+                        labelText: "symptoms Name",
                         icon: Icons.description,
                         obsecureText: false,
                       ),
