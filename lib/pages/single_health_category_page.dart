@@ -148,7 +148,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => AddHealthReport(),
+                            builder: (context) => AddHealthReport(healthCategory: widget.healthCategory),
                           ),
                         );
                       },

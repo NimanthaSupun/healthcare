@@ -1,4 +1,5 @@
 class SymptonModel {
+  final String id;
   final String name;
   final String? medicalReportImage;
   final String? doctorNoteImage;
@@ -6,6 +7,7 @@ class SymptonModel {
   final String? clinicNoteImage;
 
   SymptonModel({
+    required this.id,
     required this.name,
     this.medicalReportImage,
     this.doctorNoteImage,
@@ -16,6 +18,7 @@ class SymptonModel {
   // convert to dart
   factory SymptonModel.fromJson(Map<String, dynamic> json) {
     return SymptonModel(
+      id:json['id'] ?? '',
       name: json['name'] ?? '',
       medicalReportImage: json['medicalReportImage'] ?? '',
       doctorNoteImage: json['doctorNoteImage'] ?? '',
@@ -26,6 +29,7 @@ class SymptonModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id':id,
       'name': name,
       'medicalReportImage': medicalReportImage,
       'doctorNoteImage': doctorNoteImage,

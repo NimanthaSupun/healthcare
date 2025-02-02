@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 import 'package:healthcare/widgets/single_category/single_category_image_card.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddHealthReport extends StatefulWidget {
-  const AddHealthReport({super.key});
+  final HealthCategory healthCategory;
+
+  const AddHealthReport({super.key, required this.healthCategory});
 
   @override
   State<AddHealthReport> createState() => _AddHealthReportState();
@@ -34,20 +37,10 @@ class _AddHealthReportState extends State<AddHealthReport> {
   File? _prescriptionImage;
   File? _clinicNoteImage;
 
-  // Future<void> _pickedImage(ImageSource gallery) async {
-  //   final XFile? image =
-  //       await imagePicker.pickImage(source: ImageSource.gallery);
+  bool _isLoading = false;
 
-  //   setState(() {
-  //     _selectedmedicalReportImage = image;
-  //     _selectedDoctorNoteImage = image;
-  //     _selectedPrescriptionImage = image;
-  //     _selectedClinicNoteImage = image;
 
-  //     _image = File(image!.path);
-  //     _base64Image = base64Encode(_image!.readAsBytesSync());
-  //   });
-  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,6 +71,12 @@ class _AddHealthReportState extends State<AddHealthReport> {
                         labelText: "symptoms Name",
                         icon: Icons.description,
                         obsecureText: false,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "please enter symptoms name";
+                          }
+                          return null;
+                        },
                       ),
                       SizedBox(
                         height: 25,
