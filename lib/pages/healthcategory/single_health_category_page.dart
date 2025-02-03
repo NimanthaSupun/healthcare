@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/models/health_category_model.dart';
-import 'package:healthcare/pages/add_health_report.dart';
+import 'package:healthcare/pages/healthcategory/add_health_report.dart';
 import 'package:healthcare/pages/test_code_page.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
 

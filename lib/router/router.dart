@@ -4,18 +4,18 @@ import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/auth_page/login_page.dart';
 import 'package:healthcare/pages/auth_page/register_page.dart';
-import 'package:healthcare/pages/daily_update_page.dart';
+import 'package:healthcare/pages/userprofile/daily_update_page.dart';
 import 'package:healthcare/pages/main_screen.dart';
 import 'package:healthcare/pages/main_screens/home_page.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
-import 'package:healthcare/pages/person_category_page.dart';
-import 'package:healthcare/pages/profile_data_page.dart';
+import 'package:healthcare/pages/healthcategory/person_category_page.dart';
+import 'package:healthcare/pages/userprofile/profile_data_page.dart';
 import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/pages/setting_page.dart';
-import 'package:healthcare/pages/single_health_category_page.dart';
-import 'package:healthcare/pages/update_profile_page.dart';
+import 'package:healthcare/pages/healthcategory/single_health_category_page.dart';
+import 'package:healthcare/pages/userprofile/update_profile_page.dart';
 
 class RouterClass {
   final router = GoRouter(
