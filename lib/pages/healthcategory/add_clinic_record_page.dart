@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/functions/function_dart';
+import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
@@ -44,6 +48,58 @@ class AddClinicRecordPage extends StatelessWidget {
     );
     if (picked != null && picked != _selectTime.value) {
       _selectTime.value = picked;
+    }
+  }
+
+  // todo: submit form
+  void _submitForm(BuildContext context) async {
+    try {
+      if (!_formKey.currentState!.validate()) {
+        return;
+      }
+
+      final Clinic clinic = Clinic(
+        id: "",
+        reason: _reasonController.text,
+        note: _noteController.text,
+        dueDate: _selectDate.value,
+        dueTime: _selectTime.value,
+      );
+
+      await ClinicService().addNewClinic(
+        FirebaseAuth.instance.currentUser!.uid,
+        healthCategory.id,
+        clinic,
+      );
+
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "new Clinic added",
+      );
+
+      Future.delayed(
+        Duration(seconds: 2),
+      );
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    } catch (error) {
+      print("Error: ${error}");
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text("$error"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("ok"),
+            ),
+          ],
+        ),
+      );
     }
   }
 
@@ -194,7 +250,7 @@ class AddClinicRecordPage extends StatelessWidget {
                 CustomButton(
                   title: "Done",
                   width: double.infinity,
-                  onPressed: () {},
+                  onPressed:() => _submitForm(context),
                 ),
                 SizedBox(
                   height: 30,
