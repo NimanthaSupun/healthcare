@@ -7,6 +7,7 @@ class HealthCategoryService {
 
   Future<void> createNewCateGory(String userId, HealthCategory category) async {
     try {
+      
       final CollectionReference healthCategory =
           userCollection.doc(userId).collection("healthCategory");
 
