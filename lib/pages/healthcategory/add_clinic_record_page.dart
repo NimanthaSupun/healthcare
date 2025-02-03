@@ -4,22 +4,20 @@ import 'package:healthcare/models/health_category_model.dart';
 class AddClinicRecordPage extends StatelessWidget {
   final HealthCategory healthCategory;
 
-  
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _reasonController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
 
-    final ValueNotifier<DateTime> _selectDate =
+  final ValueNotifier<DateTime> _selectDate =
       ValueNotifier<DateTime>(DateTime.now());
   final ValueNotifier<TimeOfDay> _selectTime =
       ValueNotifier<TimeOfDay>(TimeOfDay.now());
-  
 
-   AddClinicRecordPage({
+  AddClinicRecordPage({
     super.key,
     required this.healthCategory,
-  }){
-      _selectDate.value = DateTime.now();
+  }) {
+    _selectDate.value = DateTime.now();
     _selectTime.value = TimeOfDay.now();
   }
 
@@ -58,7 +56,30 @@ class AddClinicRecordPage extends StatelessWidget {
           child: Form(
             key: _formKey,
             child: Column(
-              children: [],
+              children: [
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Stay on Track with Your Health",
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(
+                  "Set reminders for upcoming medical appointments,or follow-up visits. You can customize reminders with dates, times, and notes to ensure you never miss a critical health event.",
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
           ),
         )),
