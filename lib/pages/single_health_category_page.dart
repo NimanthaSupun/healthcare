@@ -108,11 +108,13 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
         ],
       ),
       floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             child: Icon(Icons.add),
-            
           ),
         ],
       ),
@@ -157,7 +159,8 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => AddHealthReport(healthCategory: widget.healthCategory),
+                            builder: (context) => AddHealthReport(
+                                healthCategory: widget.healthCategory),
                           ),
                         );
                       },
