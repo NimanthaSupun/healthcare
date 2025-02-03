@@ -23,6 +23,29 @@ class AddClinicRecordPage extends StatelessWidget {
     _selectTime.value = TimeOfDay.now();
   }
 
+  //todo:- date Pikecr
+  Future<void> _onSelectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2026),
+      initialDate: _selectDate.value,
+    );
+    if (picked != null && picked != _selectDate.value) {
+      _selectDate.value = picked;
+    }
+  }
+
+  //todo: time picker
+  Future<void> _onSelectTIme(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectTime.value,
+    );
+    if (picked != null && picked != _selectTime.value) {
+      _selectTime.value = picked;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
