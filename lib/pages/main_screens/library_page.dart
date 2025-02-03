@@ -9,8 +9,13 @@ class LibraryPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Library page"),
       ),
-      body: Column(
-        children: [],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+            ],
+          ),
+        ),
       ),
     );
   }

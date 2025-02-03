@@ -82,6 +82,8 @@ class SymtonService {
             precriptionsImage: images2Data['precriptionsImage'] ?? '',
           ));
         }
+
+        
         return symptoms;
       });
     } catch (error) {

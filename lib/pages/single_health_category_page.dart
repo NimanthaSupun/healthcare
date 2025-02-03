@@ -107,6 +107,15 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
           ),
         ],
       ),
+      floatingActionButton: Row(
+        children: [
+          FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
+            
+          ),
+        ],
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
