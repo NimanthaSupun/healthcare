@@ -100,6 +100,12 @@ class AddClinicRecordPage extends StatelessWidget {
                   hintText: "reason for set remainder",
                   icon: Icons.local_hospital_outlined,
                   obsecureText: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "please enter reason for set a remainder";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 15,
@@ -110,6 +116,12 @@ class AddClinicRecordPage extends StatelessWidget {
                   hintText: "Add a note",
                   icon: Icons.note_alt_outlined,
                   obsecureText: false,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "please enter a some note";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: 16,
