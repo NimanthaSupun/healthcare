@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/models/health_category_model.dart';
 
 class AddClinicRecordPage extends StatefulWidget {
-  const AddClinicRecordPage({super.key});
+  final HealthCategory healthCategory;
+  const AddClinicRecordPage({
+    super.key,
+    required this.healthCategory,
+  });
 
   @override
   State<AddClinicRecordPage> createState() => _AddClinicRecordPageState();
@@ -10,6 +15,8 @@ class AddClinicRecordPage extends StatefulWidget {
 class _AddClinicRecordPageState extends State<AddClinicRecordPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(),
+    );
   }
 }

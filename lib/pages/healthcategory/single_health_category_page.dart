@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
 import 'package:healthcare/pages/test_code_page.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
@@ -175,9 +176,20 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                         title: " Add new Symptom ",
                       ),
                     ),
-                    AddHealthRecordCard(
-                      imageUrl: "assets/images/caduceus_6916165.png",
-                      title: "Add Clinic Record",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => AddClinicRecordPage(
+                              healthCategory: widget.healthCategory,
+                            ),
+                          ),
+                        );
+                      },
+                      child: AddHealthRecordCard(
+                        imageUrl: "assets/images/caduceus_6916165.png",
+                        title: "Add Clinic Record",
+                      ),
                     ),
                   ],
                 ),
