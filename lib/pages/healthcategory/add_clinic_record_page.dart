@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/widgets/reusable/custom_button.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddClinicRecordPage extends StatelessWidget {
   final HealthCategory healthCategory;
@@ -52,7 +54,7 @@ class AddClinicRecordPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           child: Form(
             key: _formKey,
             child: Column(
@@ -78,6 +80,112 @@ class AddClinicRecordPage extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                   ),
                   textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ClipRRect(
+                  child: Image.asset(
+                    "assets/images/hospital_8852535.png",
+                    height: 180,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomInput(
+                  controller: _reasonController,
+                  labelText: "Reason",
+                  hintText: "reason for set remainder",
+                  icon: Icons.whatshot,
+                  obsecureText: false,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                CustomInput(
+                  controller: _noteController,
+                  labelText: "Note",
+                  hintText: "Add a note",
+                  icon: Icons.note,
+                  obsecureText: false,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ValueListenableBuilder<DateTime>(
+                  valueListenable: _selectDate,
+                  builder: (context, date, child) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 5,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Date: ${date.toLocal().toString().split(" ")[0]}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => _onSelectDate(context),
+                            icon: Icon(
+                              Icons.calendar_today,
+                              size: 30,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                ValueListenableBuilder<TimeOfDay>(
+                  valueListenable: _selectTime,
+                  builder: (context, time, child) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 5,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Time: ${time.format(context)}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () => _onSelectTIme(context),
+                            icon: Icon(
+                              Icons.access_time,
+                              size: 30,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                CustomButton(
+                  title: "Done",
+                  width: double.infinity,
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  height: 30,
                 ),
               ],
             ),
