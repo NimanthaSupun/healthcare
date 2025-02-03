@@ -25,11 +25,13 @@ class SymtonService {
       await docRef.update({'id': docRef.id});
 
       await docRef.collection("images1").add({
+        'name':symptonModel.name,
         'medicalReportImage': symptonModel.medicalReportImage,
         'doctorNoteImage': symptonModel.doctorNoteImage,
       });
 
       await docRef.collection("images2").add({
+        'name':symptonModel.name,
         'clinicNoteImage': symptonModel.clinicNoteImage,
         'precriptionsImage': symptonModel.precriptionsImage,
       });
