@@ -98,7 +98,7 @@ class AddClinicRecordPage extends StatelessWidget {
                   controller: _reasonController,
                   labelText: "Reason",
                   hintText: "reason for set remainder",
-                  icon: Icons.whatshot,
+                  icon: Icons.local_hospital_outlined,
                   obsecureText: false,
                 ),
                 SizedBox(
@@ -108,7 +108,7 @@ class AddClinicRecordPage extends StatelessWidget {
                   controller: _noteController,
                   labelText: "Note",
                   hintText: "Add a note",
-                  icon: Icons.note,
+                  icon: Icons.note_alt_outlined,
                   obsecureText: false,
                 ),
                 SizedBox(
