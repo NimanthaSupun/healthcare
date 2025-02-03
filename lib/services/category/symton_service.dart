@@ -40,66 +40,77 @@ class SymtonService {
     }
   }
 
-  Future<Map<String, dynamic>> getSymptomWithImages(
-      String userId, String categoryId, String symptomId) async {
+  // todo:---------------------------get All the sympto's with their category name------------------------------------------------------
+
+
+   Stream<List<SymptonModel>> getSymptoms(String userId, String categoryId) {
     try {
-      // Reference to the symptom document
-      final DocumentReference symptomDocRef = userCollection
+      final CollectionReference symptonCollection = userCollection
           .doc(userId)
           .collection("healthCategory")
           .doc(categoryId)
-          .collection("symptons")
-          .doc(symptomId);
+          .collection("symptons");
 
-      // Fetch the main symptom document
-      final DocumentSnapshot symptomDocSnapshot = await symptomDocRef.get();
+      return symptonCollection.snapshots().asyncMap((snapshot) async {
 
-      if (!symptomDocSnapshot.exists) {
-        print("Symptom not found!");
-        return {};
-      }
+        List<SymptonModel> symptoms = [];
+        
+        for (var doc in snapshot.docs) {
+          // Get base symptom data
+          Map<String, dynamic> symptomData = doc.data() as Map<String, dynamic>;
+          String symptomId = doc.id;
 
-      // Fetch `images1` subcollection
-      final QuerySnapshot images1Snapshot =
-          await symptomDocRef.collection("images1").get();
+          // Get images1 data
+          var images1Snapshot = await doc.reference.collection('images1').get();
+          var images1Data = images1Snapshot.docs.isNotEmpty 
+              ? images1Snapshot.docs.first.data() 
+              : {};
 
-      // Fetch `images2` subcollection
-      final QuerySnapshot images2Snapshot =
-          await symptomDocRef.collection("images2").get();
+          // Get images2 data
+          var images2Snapshot = await doc.reference.collection('images2').get();
+          var images2Data = images2Snapshot.docs.isNotEmpty 
+              ? images2Snapshot.docs.first.data() 
+              : {};
 
-      // Initialize image data
-      String medicalReportImage = "";
-      String doctorNoteImage = "";
-      String clinicNoteImage = "";
-      String prescriptionsImage = "";
-
-      // Extract `images1` data
-      if (images1Snapshot.docs.isNotEmpty) {
-        final image1Doc = images1Snapshot.docs.first;
-        medicalReportImage = image1Doc['medicalReportImage'] ?? "";
-        doctorNoteImage = image1Doc['doctorNoteImage'] ?? "";
-      }
-
-      // Extract `images2` data
-      if (images2Snapshot.docs.isNotEmpty) {
-        final image2Doc = images2Snapshot.docs.first;
-        clinicNoteImage = image2Doc['clinicNoteImage'] ?? "";
-        prescriptionsImage = image2Doc['precriptionsImage'] ?? "";
-      }
-
-      // Combine all data
-      return {
-        'id': symptomDocSnapshot['id'],
-        'name': symptomDocSnapshot['name'],
-        'medicalReportImage': medicalReportImage,
-        'doctorNoteImage': doctorNoteImage,
-        'clinicNoteImage': clinicNoteImage,
-        'prescriptionsImage': prescriptionsImage,
-      };
+          // Combine all data
+          symptoms.add(SymptonModel(
+            id: symptomId,
+            name: symptomData['name'] ?? '',
+            medicalReportImage: images1Data['medicalReportImage'] ?? '',
+            doctorNoteImage: images1Data['doctorNoteImage'] ?? '',
+            clinicNoteImage: images2Data['clinicNoteImage'] ?? '',
+            precriptionsImage: images2Data['precriptionsImage'] ?? '',
+          ));
+        }
+        return symptoms;
+      });
     } catch (error) {
-      print("Error fetching symptom with images: $error");
-      return {};
+      print("Error getting symptoms: $error");
+      return Stream.value([]);
     }
   }
 
+  // Get all symptoms with their category names
+  Future<Map<String, List<SymptonModel>>> getSymptomsWithCategoryName(String userId) async {
+    try {
+      final healthCategoryCollection = userCollection.doc(userId).collection("healthCategory");
+      final QuerySnapshot categorySnapshot = await healthCategoryCollection.get();
+      
+      final Map<String, List<SymptonModel>> symptomMap = {};
+      
+      for (final doc in categorySnapshot.docs) {
+        String categoryId = doc.id;
+        String categoryName = doc['name'] ?? 'Unknown Category';
+        
+        // Get symptoms for this category
+        final List<SymptonModel> symptoms = await getSymptoms(userId, categoryId).first;
+        symptomMap[categoryName] = symptoms;
+      }
+      
+      return symptomMap;
+    } catch (error) {
+      print("Error fetching symptoms with categories: $error");
+      return {};
+    }
+  }
 }
