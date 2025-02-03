@@ -72,7 +72,7 @@ class AddClinicRecordPage extends StatelessWidget {
                   height: 5,
                 ),
                 Text(
-                  "Set reminders for upcoming medical appointments,or follow-up visits. You can customize reminders with dates, times, and notes to ensure you never miss a critical health event.",
+                  "You can customize reminders with dates, times, and notes to ensure you never miss a critical health event.",
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w900,
