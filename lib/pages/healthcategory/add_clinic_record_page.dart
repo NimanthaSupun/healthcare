@@ -55,8 +55,11 @@ class AddClinicRecordPage extends StatelessWidget {
         child: SingleChildScrollView(
             child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [],
+            ),
           ),
         )),
       ),
