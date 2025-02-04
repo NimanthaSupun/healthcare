@@ -65,7 +65,11 @@ class HealthCategoryService {
   Future<void> deleteHealthCategory(
       String userId, String healthCategoryId) async {
     try {
-          await userCollection.doc(userId).collection("healthCategory").doc(healthCategoryId).delete();
+      await userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(healthCategoryId)
+          .delete();
     } catch (error) {
       print("Error deleting category on service: ${error}");
     }
@@ -73,7 +77,8 @@ class HealthCategoryService {
 
   // todo: delete healthcategory with their subcollection
 
-  Future<void> deleteHealthCategoryWithSubCollection(String userId, String healthCategoryId) async {
+  Future<void> deleteHealthCategoryWithSubCollection(
+      String userId, String healthCategoryId) async {
     try {
       // Get reference to the health category document
       final categoryDoc = userCollection
@@ -81,19 +86,19 @@ class HealthCategoryService {
           .collection("healthCategory")
           .doc(healthCategoryId);
 
-      // Get all symptoms in this category
+      // 1. Delete all symptoms and their subcollections
       final symptonSnapshot = await categoryDoc.collection("symptons").get();
-
-      // Delete each symptom and its subcollections
       for (var symptonDoc in symptonSnapshot.docs) {
         // Delete images1 collection for this symptom
-        final images1Snapshot = await symptonDoc.reference.collection("images1").get();
+        final images1Snapshot =
+            await symptonDoc.reference.collection("images1").get();
         for (var imageDoc in images1Snapshot.docs) {
           await imageDoc.reference.delete();
         }
 
         // Delete images2 collection for this symptom
-        final images2Snapshot = await symptonDoc.reference.collection("images2").get();
+        final images2Snapshot =
+            await symptonDoc.reference.collection("images2").get();
         for (var imageDoc in images2Snapshot.docs) {
           await imageDoc.reference.delete();
         }
@@ -102,12 +107,17 @@ class HealthCategoryService {
         await symptonDoc.reference.delete();
       }
 
-      // Finally delete the health category document
+      // 2. Delete all clinics
+      final clinicSnapshot = await categoryDoc.collection("clinc").get();
+      for (var clinicDoc in clinicSnapshot.docs) {
+        await clinicDoc.reference.delete();
+      }
+
+      // 3. Finally delete the health category document
       await categoryDoc.delete();
-      
     } catch (error) {
       print("Error deleting category on service: $error");
-      rethrow; // Rethrow the error to handle it in the UI
+      rethrow;
     }
   }
 }
