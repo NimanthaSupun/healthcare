@@ -29,7 +29,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
       setState(() {
         _isLoading = true;
       });
-      await HealthCategoryService().deleteHealthCategory(
+      await HealthCategoryService().deleteHealthCategoryWithSubCollection(
         FirebaseAuth.instance.currentUser!.uid,
         widget.healthCategory.id,
       );
