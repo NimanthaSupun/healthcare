@@ -43,7 +43,10 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return CategoryBottonSheet();
+                  return CategoryBottonSheet(
+                    deleteCallback: (){},
+                    editCallback: (){},
+                  );
                 },
               );
 
