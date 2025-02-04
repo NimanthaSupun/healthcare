@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
+import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
@@ -20,6 +22,24 @@ class SingleHealthCategoryPage extends StatefulWidget {
 }
 
 class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
+  bool _isLoading = false;
+
+  void _deleteCategory(BuildContext context) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await HealthCategoryService().deleteHealthCategory(
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.healthCategory.id,
+      );
+    } catch (error) {
+      print("error: ${error}");
+    } finally {
+      _isLoading = false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +96,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                                           .textTheme
                                           .labelLarge,
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () => _deleteCategory(context),
                                     child: Text(
                                       "Ok",
                                       style: TextStyle(

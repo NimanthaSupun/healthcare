@@ -5,8 +5,6 @@ import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
 import 'package:provider/provider.dart';
 
-
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
