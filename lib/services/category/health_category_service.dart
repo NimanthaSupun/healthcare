@@ -7,7 +7,6 @@ class HealthCategoryService {
 
   Future<void> createNewCateGory(String userId, HealthCategory category) async {
     try {
-      
       final CollectionReference healthCategory =
           userCollection.doc(userId).collection("healthCategory");
 
@@ -27,6 +26,7 @@ class HealthCategoryService {
     }
   }
 
+  // todo: get healthcategory as Streeam
   Stream<List<HealthCategory>> healthCategories(String userId) {
     try {
       final CollectionReference healthCategory =
@@ -41,6 +41,25 @@ class HealthCategoryService {
     } catch (error) {
       print("Error fetching category on service: ${error}");
       return Stream.empty();
+    }
+  }
+
+  // todo: get health category as Future
+  Future<List<HealthCategory>> getHealthCategories(String userId) async {
+    try {
+      final CollectionReference healthCategory =
+          userCollection.doc(userId).collection("healthCategory");
+
+      final QuerySnapshot snapshot = await healthCategory.get();
+
+      return snapshot.docs.map((doc) {
+        return HealthCategory.fromJson(doc.data() as Map<String, dynamic>);
+      }).toList();
+
+      
+    } catch (error) {
+      print("Error feching category on service: ${error}");
+      return [];
     }
   }
 }
