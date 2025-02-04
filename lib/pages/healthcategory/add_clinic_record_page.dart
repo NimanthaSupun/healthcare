@@ -250,7 +250,7 @@ class AddClinicRecordPage extends StatelessWidget {
                 CustomButton(
                   title: "Done",
                   width: double.infinity,
-                  onPressed:() => _submitForm(context),
+                  onPressed: () => _submitForm(context),
                 ),
                 SizedBox(
                   height: 30,
