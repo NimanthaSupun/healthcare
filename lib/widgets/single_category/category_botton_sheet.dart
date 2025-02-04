@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 
 class CategoryBottonSheet extends StatelessWidget {
   final VoidCallback deleteCallback;
@@ -13,13 +14,18 @@ class CategoryBottonSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 150,
-      decoration: BoxDecoration(),
+      height: 200,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(1),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(
+              height: 20,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -34,7 +40,8 @@ class CategoryBottonSheet extends StatelessWidget {
                   onPressed: deleteCallback,
                   icon: Icon(
                     Icons.delete,
-                    size: 30,
+                    size: 25,
+                    color: mainOrangeColor,
                   ),
                 ),
               ],
@@ -60,7 +67,8 @@ class CategoryBottonSheet extends StatelessWidget {
                   onPressed: editCallback,
                   icon: Icon(
                     Icons.edit,
-                    size: 30,
+                    size: 25,
+                    color: blueColor,
                   ),
                 ),
               ],
