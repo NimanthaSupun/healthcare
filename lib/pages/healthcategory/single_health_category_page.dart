@@ -5,6 +5,7 @@ import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
 import 'package:healthcare/pages/test_code_page.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
+import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
 class SingleHealthCategoryPage extends StatefulWidget {
   final HealthCategory healthCategory;
@@ -39,71 +40,78 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
         actions: [
           IconButton(
             onPressed: () {
-              showDialog(
+              showModalBottomSheet(
                 context: context,
                 builder: (context) {
-                  return Dialog(
-                    child: Container(
-                      width: 50,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(1),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Edit Categoty",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.edit,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Divider(),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "Delete Category",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.delete,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
+                  return CategoryBottonSheet();
                 },
               );
+
+              // showDialog(
+              //   context: context,
+              //   builder: (context) {
+              //     return Dialog(
+              //       child: Container(
+              //         width: 50,
+              //         height: 150,
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(1),
+              //         ),
+              //         child: Padding(
+              //           padding: const EdgeInsets.all(8.0),
+              //           child: Column(
+              //             mainAxisAlignment: MainAxisAlignment.center,
+              //             children: [
+              //               Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //                 children: [
+              //                   Text(
+              //                     "Edit Categoty",
+              //                     style: TextStyle(
+              //                       fontSize: 16,
+              //                       fontWeight: FontWeight.bold,
+              //                     ),
+              //                   ),
+              //                   IconButton(
+              //                     onPressed: () {},
+              //                     icon: Icon(
+              //                       Icons.edit,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //               SizedBox(
+              //                 height: 5,
+              //               ),
+              //               Divider(),
+              //               SizedBox(
+              //                 height: 5,
+              //               ),
+              //               Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //                 children: [
+              //                   Text(
+              //                     "Delete Category",
+              //                     style: TextStyle(
+              //                       fontSize: 16,
+              //                       fontWeight: FontWeight.bold,
+              //                     ),
+              //                   ),
+              //                   IconButton(
+              //                     onPressed: () {},
+              //                     icon: Icon(
+              //                       Icons.delete,
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   },
+              // );
             },
             icon: Icon(Icons.more_vert),
           ),

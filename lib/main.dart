@@ -4,11 +4,15 @@ import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
 import 'package:provider/provider.dart';
+
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(
     ChangeNotifierProvider(
       child: MyApp(),
@@ -16,6 +20,7 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
