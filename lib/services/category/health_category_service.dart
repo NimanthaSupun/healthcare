@@ -55,11 +55,59 @@ class HealthCategoryService {
       return snapshot.docs.map((doc) {
         return HealthCategory.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
-
-      
     } catch (error) {
       print("Error feching category on service: ${error}");
       return [];
+    }
+  }
+
+  // todo: delete health category as Future
+  Future<void> deleteHealthCategory(
+      String userId, String healthCategoryId) async {
+    try {
+          await userCollection.doc(userId).collection("healthCategory").doc(healthCategoryId).delete();
+    } catch (error) {
+      print("Error deleting category on service: ${error}");
+    }
+  }
+
+  // todo: delete healthcategory with their subcollection
+
+  Future<void> deleteHealthCategoryWithSubCollection(String userId, String healthCategoryId) async {
+    try {
+      // Get reference to the health category document
+      final categoryDoc = userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(healthCategoryId);
+
+      // Get all symptoms in this category
+      final symptonSnapshot = await categoryDoc.collection("symptons").get();
+
+      // Delete each symptom and its subcollections
+      for (var symptonDoc in symptonSnapshot.docs) {
+        // Delete images1 collection for this symptom
+        final images1Snapshot = await symptonDoc.reference.collection("images1").get();
+        for (var imageDoc in images1Snapshot.docs) {
+          await imageDoc.reference.delete();
+        }
+
+        // Delete images2 collection for this symptom
+        final images2Snapshot = await symptonDoc.reference.collection("images2").get();
+        for (var imageDoc in images2Snapshot.docs) {
+          await imageDoc.reference.delete();
+        }
+
+        // Delete the symptom document itself
+        await symptonDoc.reference.delete();
+      }
+
+      // Finally delete the health category document
+      await categoryDoc.delete();
+      
+    } catch (error) {
+      print("Error deleting category on service: $error");
+      rethrow; // Rethrow the error to handle it in the UI
     }
   }
 }
