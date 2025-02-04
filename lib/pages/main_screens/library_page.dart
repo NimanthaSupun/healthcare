@@ -82,7 +82,15 @@ class LibraryPage extends StatelessWidget {
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: healthCategories.length,
                   itemBuilder: (context, index) {
-                    
+                    final healthCategory = healthCategories[index];
+                    final categorySymptons =
+                        symptonMap[healthCategory.name] ?? [];
+                    final categoryClinics =
+                        clinicMap[healthCategory.name] ?? [];
+
+                    return Card(
+                      child: Text(healthCategory.name),
+                    );
                   },
                 );
               }
