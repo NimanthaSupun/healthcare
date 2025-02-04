@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
@@ -33,10 +34,24 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
         FirebaseAuth.instance.currentUser!.uid,
         widget.healthCategory.id,
       );
+
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "category deleted successfully",
+      );
+
+      Future.delayed(
+        Duration(seconds: 2),
+      );
+      // ignore: use_build_context_synchronously
+      GoRouter.of(context).go("/");
     } catch (error) {
       print("error: ${error}");
     } finally {
-      _isLoading = false;
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -65,69 +80,74 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                 builder: (context) {
                   return CategoryBottonSheet(
                     deleteCallback: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              "Delete category",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            content: Text(
-                              "If you delete a category, then all associated symptoms and clinic records should also be deleted",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                color: mainOrangeColor,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            actions: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge,
+                      _isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : showDialog(
+                              context: context,
+                              builder: (context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    "Delete category",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    onPressed: () => _deleteCategory(context),
-                                    child: Text(
-                                      "Ok",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge,
+                                  content: Text(
+                                    "If you delete a category, then all associated symptoms and clinic records should also be deleted",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 14,
+                                      color: mainOrangeColor,
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text(
-                                      "Cancel",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
+                                    textAlign: TextAlign.center,
                                   ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          onPressed: () =>
+                                              _deleteCategory(context),
+                                          child: Text(
+                                            "Ok",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            "Cancel",
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                     },
                     editCallback: () {},
                   );
