@@ -4,7 +4,6 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
-import 'package:healthcare/pages/test_code_page.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
@@ -116,22 +115,6 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
               );
             },
             icon: Icon(Icons.more_vert),
-          ),
-        ],
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TestCodePage(healthCategory: widget.healthCategory),
-                ),
-              );
-            },
-            child: Icon(Icons.add),
           ),
         ],
       ),

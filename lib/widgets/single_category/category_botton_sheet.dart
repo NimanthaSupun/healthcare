@@ -68,7 +68,7 @@ class CategoryBottonSheet extends StatelessWidget {
                   icon: Icon(
                     Icons.edit,
                     size: 25,
-                    color: blueColor,
+                    color: button1,
                   ),
                 ),
               ],
