@@ -41,9 +41,6 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
         "category deleted successfully",
       );
 
-      Future.delayed(
-        Duration(seconds: 2),
-      );
       // ignore: use_build_context_synchronously
       GoRouter.of(context).go("/");
     } catch (error) {
@@ -80,31 +77,29 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                 builder: (context) {
                   return CategoryBottonSheet(
                     deleteCallback: () {
-                      _isLoading
-                          ? Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : showDialog(
-                              context: context,
-                              builder: (context) {
-                                return AlertDialog(
-                                  title: Text(
-                                    "Delete category",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  content: Text(
-                                    "If you delete a category, then all associated symptoms and clinic records should also be deleted",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14,
-                                      color: mainOrangeColor,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  actions: [
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              "Delete category",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                              "If you delete a category, then all associated symptoms and clinic records should also be deleted",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 14,
+                                color: mainOrangeColor,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            actions: _isLoading
+                                ? []
+                                : [
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -145,9 +140,9 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                                       ],
                                     ),
                                   ],
-                                );
-                              },
-                            );
+                          );
+                        },
+                      );
                     },
                     editCallback: () {},
                   );
