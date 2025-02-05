@@ -87,9 +87,35 @@ class LibraryPage extends StatelessWidget {
                         symptonMap[healthCategory.name] ?? [];
                     final categoryClinics =
                         clinicMap[healthCategory.name] ?? [];
-
                     return Card(
-                      child: Text(healthCategory.name),
+                      margin: EdgeInsets.only(
+                        bottom: 16,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              healthCategory.name,
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              healthCategory.description,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     );
                   },
                 );
