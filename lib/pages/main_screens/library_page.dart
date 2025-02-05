@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/sympton_model.dart';
@@ -90,9 +91,15 @@ class LibraryPage extends StatelessWidget {
                     return Card(
                       margin: EdgeInsets.only(
                         bottom: 16,
+                        left: 8,
+                        right: 8,
                       ),
+                      color: subLandMarksCardBg,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 10,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -110,7 +117,7 @@ class LibraryPage extends StatelessWidget {
                               healthCategory.description,
                               style: TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                           ],
