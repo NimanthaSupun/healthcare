@@ -132,6 +132,43 @@ class LibraryPage extends StatelessWidget {
                                   color: mainGreenColor,
                                 ),
                               ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Column(
+                                children: categorySymptons.map((sympton) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 10,
+                                    ),
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: subLandMarksCardBg,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8,
+                                        horizontal: 16,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            sympton.name,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              )
                             ],
                             if (categoryClinics.isNotEmpty) ...[
                               SizedBox(
