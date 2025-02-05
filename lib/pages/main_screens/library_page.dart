@@ -91,14 +91,14 @@ class LibraryPage extends StatelessWidget {
                     return Card(
                       margin: EdgeInsets.only(
                         bottom: 16,
-                        left: 5,
-                        right: 5,
+                        left: 8,
+                        right: 8,
                       ),
                       // color: subLandMarksCardBg,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 15,
+                          vertical: 20,
+                          horizontal: 12,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,7 +117,7 @@ class LibraryPage extends StatelessWidget {
                               healthCategory.description,
                               style: TextStyle(
                                 fontSize: 15,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             if (categorySymptons.isNotEmpty) ...[
@@ -168,7 +168,7 @@ class LibraryPage extends StatelessWidget {
                                     ),
                                   );
                                 }).toList(),
-                              )
+                              ),
                             ],
                             if (categoryClinics.isNotEmpty) ...[
                               SizedBox(
@@ -182,7 +182,44 @@ class LibraryPage extends StatelessWidget {
                                   color: button1,
                                 ),
                               ),
-                            ]
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Column(
+                                children: categoryClinics.map((clinic) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 10,
+                                    ),
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: subLandMarksCardBg,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8,
+                                        horizontal: 16,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            clinic.reason,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              )
+                            ],
                           ],
                         ),
                       ),
