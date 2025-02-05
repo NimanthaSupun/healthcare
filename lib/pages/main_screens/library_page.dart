@@ -8,32 +8,58 @@ import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/services/category/symton_service.dart';
 
-class LibraryPage extends StatelessWidget {
+class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
+
+  @override
+  State<LibraryPage> createState() => _LibraryPageState();
+}
+
+class _LibraryPageState extends State<LibraryPage> {
+  final TextEditingController _searchController = TextEditingController();
+
+  String _searchQuery = '';
+  Map<String, dynamic>? _allData;
 
   Future<Map<String, dynamic>> _fetchData() async {
     try {
+      if (_allData != null) return _allData!;
+
       final healthCategories = await HealthCategoryService()
           .getHealthCategories(FirebaseAuth.instance.currentUser!.uid);
       final symptons = await SymtonService()
           .getSymptomsWithCategoryName(FirebaseAuth.instance.currentUser!.uid);
-
       final clinics = await ClinicService()
           .getClinicWithCategoryName(FirebaseAuth.instance.currentUser!.uid);
 
-      return {
+      _allData = {
         'healthCategories': healthCategories,
         'symptons': symptons,
         'clinics': clinics,
       };
+      return _allData!;
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       return {
-        'healthCategories': {},
-        'symptons': [],
-        'clinics': [],
+        'healthCategories': <HealthCategory>[],
+        'symptons': <String, List<SymptonModel>>{},
+        'clinics': <String, List<Clinic>>{},
       };
     }
+  }
+
+  List<HealthCategory> _filterCategories(List<HealthCategory> categories) {
+    if (_searchQuery.isEmpty) return categories;
+    return categories
+        .where((category) =>
+            category.name.toLowerCase().contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -47,9 +73,10 @@ class LibraryPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(10),
                 child: TextField(
+                  controller: _searchController,
                   decoration: InputDecoration(
                     filled: true,
-                    labelText: "Search",
+                    labelText: "Search categories",
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: Divider.createBorderSide(context)),
@@ -58,14 +85,30 @@ class LibraryPage extends StatelessWidget {
                       borderSide: Divider.createBorderSide(context),
                     ),
                     prefixIcon: const Icon(Icons.search),
+                    suffixIcon: _searchQuery.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear),
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                                _searchQuery = '';
+                              });
+                            },
+                          )
+                        : null,
                   ),
+                  onChanged: (value) {
+                    setState(() {
+                      _searchQuery = value;
+                    });
+                  },
                 ),
               ),
               FutureBuilder(
                 future: _fetchData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else if (snapshot.hasError) {
@@ -82,24 +125,35 @@ class LibraryPage extends StatelessWidget {
                             Image.asset(
                               "assets/images/undraw_medical-research_pze7.png",
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text("No health record available yet!"),
+                            const SizedBox(height: 20),
+                            const Text("No health record available yet!"),
                           ],
                         ),
                       ),
                     );
                   } else {
-                    final healthCategories = snapshot.data!['healthCategories']
-                        as List<HealthCategory>;
+                    final healthCategories = _filterCategories(snapshot
+                        .data!['healthCategories'] as List<HealthCategory>);
                     final symptonMap = snapshot.data!['symptons']
                         as Map<String, List<SymptonModel>>;
                     final clinicMap =
                         snapshot.data!['clinics'] as Map<String, List<Clinic>>;
+
+                    if (healthCategories.isEmpty) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Text(
+                            'No categories found matching "${_searchController.text}"',
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      );
+                    }
+
                     return ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: healthCategories.length,
                       itemBuilder: (context, index) {
                         final healthCategory = healthCategories[index];
@@ -108,12 +162,11 @@ class LibraryPage extends StatelessWidget {
                         final categoryClinics =
                             clinicMap[healthCategory.name] ?? [];
                         return Card(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                             bottom: 16,
                             left: 8,
                             right: 8,
                           ),
-                          // color: subLandMarksCardBg,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
                               vertical: 20,
@@ -124,26 +177,22 @@ class LibraryPage extends StatelessWidget {
                               children: [
                                 Text(
                                   healthCategory.name,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 27,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                const SizedBox(height: 10),
                                 Text(
                                   healthCategory.description,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
                                 if (categorySymptons.isNotEmpty) ...[
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Text(
+                                  const SizedBox(height: 16),
+                                  const Text(
                                     "Symptons",
                                     style: TextStyle(
                                       fontSize: 21,
@@ -151,16 +200,15 @@ class LibraryPage extends StatelessWidget {
                                       color: mainGreenColor,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
+                                  const SizedBox(height: 16),
                                   Column(
                                     children: categorySymptons.map((sympton) {
                                       return Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                           vertical: 10,
                                         ),
-                                        margin: EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: subLandMarksCardBg,
@@ -172,18 +220,12 @@ class LibraryPage extends StatelessWidget {
                                             vertical: 8,
                                             horizontal: 16,
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                sympton.name,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                            ],
+                                          child: Text(
+                                            sympton.name,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 17,
+                                            ),
                                           ),
                                         ),
                                       );
@@ -191,10 +233,8 @@ class LibraryPage extends StatelessWidget {
                                   ),
                                 ],
                                 if (categoryClinics.isNotEmpty) ...[
-                                  SizedBox(
-                                    height: 16,
-                                  ),
-                                  Text(
+                                  const SizedBox(height: 16),
+                                  const Text(
                                     "Clinic",
                                     style: TextStyle(
                                       fontSize: 21,
@@ -202,16 +242,15 @@ class LibraryPage extends StatelessWidget {
                                       color: button1,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 16,
-                                  ),
+                                  const SizedBox(height: 16),
                                   Column(
                                     children: categoryClinics.map((clinic) {
                                       return Container(
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                           vertical: 10,
                                         ),
-                                        margin: EdgeInsets.only(bottom: 10),
+                                        margin:
+                                            const EdgeInsets.only(bottom: 10),
                                         width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: subLandMarksCardBg,
@@ -223,18 +262,12 @@ class LibraryPage extends StatelessWidget {
                                             vertical: 8,
                                             horizontal: 16,
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                clinic.reason,
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 17,
-                                                ),
-                                              ),
-                                            ],
+                                          child: Text(
+                                            clinic.reason,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 17,
+                                            ),
                                           ),
                                         ),
                                       );
