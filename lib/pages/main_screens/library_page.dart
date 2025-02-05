@@ -106,7 +106,7 @@ class LibraryPage extends StatelessWidget {
                             Text(
                               healthCategory.name,
                               style: TextStyle(
-                                fontSize: 25,
+                                fontSize: 27,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -120,6 +120,32 @@ class LibraryPage extends StatelessWidget {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
+                            if (categorySymptons.isNotEmpty) ...[
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                "Symptons",
+                                style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w700,
+                                  color: mainGreenColor,
+                                ),
+                              ),
+                            ],
+                            if (categoryClinics.isNotEmpty) ...[
+                              SizedBox(
+                                height: 16,
+                              ),
+                              Text(
+                                "Clinic",
+                                style: TextStyle(
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w700,
+                                  color: button1,
+                                ),
+                              ),
+                            ]
                           ],
                         ),
                       ),
