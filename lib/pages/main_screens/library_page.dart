@@ -91,14 +91,14 @@ class LibraryPage extends StatelessWidget {
                     return Card(
                       margin: EdgeInsets.only(
                         bottom: 16,
-                        left: 8,
-                        right: 8,
+                        left: 5,
+                        right: 5,
                       ),
-                      color: subLandMarksCardBg,
+                      // color: subLandMarksCardBg,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                          vertical: 10,
-                          horizontal: 10,
+                          vertical: 15,
+                          horizontal: 15,
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
