@@ -4,6 +4,7 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/sympton_model.dart';
+import 'package:healthcare/pages/healthcategory/single_sympton_page.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/services/category/symton_service.dart';
@@ -208,7 +209,15 @@ class _LibraryPageState extends State<LibraryPage> {
                                   Column(
                                     children: categorySymptons.map((sympton) {
                                       return GestureDetector(
-                                        
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SingleSymptonPage(
+                                                      sympton: sympton),
+                                            ),
+                                          );
+                                        },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
                                             vertical: 10,

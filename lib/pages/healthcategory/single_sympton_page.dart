@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/models/sympton_model.dart';
 
 class SingleSymptonPage extends StatelessWidget {
-  const SingleSymptonPage({super.key});
+  final SymptonModel sympton;
+  const SingleSymptonPage({super.key, required this.sympton});
 
   @override
   Widget build(BuildContext context) {
