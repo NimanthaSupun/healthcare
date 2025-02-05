@@ -7,6 +7,7 @@ import 'package:healthcare/models/sympton_model.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/services/category/symton_service.dart';
+import 'package:intl/intl.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
@@ -77,9 +78,13 @@ class _LibraryPageState extends State<LibraryPage> {
                   decoration: InputDecoration(
                     filled: true,
                     labelText: "Search categories",
+                    labelStyle: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: Divider.createBorderSide(context)),
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: Divider.createBorderSide(context),
+                    ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: Divider.createBorderSide(context),
@@ -150,7 +155,6 @@ class _LibraryPageState extends State<LibraryPage> {
                         ),
                       );
                     }
-
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -203,28 +207,31 @@ class _LibraryPageState extends State<LibraryPage> {
                                   const SizedBox(height: 16),
                                   Column(
                                     children: categorySymptons.map((sympton) {
-                                      return Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 10,
-                                        ),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 10),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: subLandMarksCardBg,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
+                                      return GestureDetector(
+                                        
+                                        child: Container(
                                           padding: const EdgeInsets.symmetric(
-                                            vertical: 8,
-                                            horizontal: 16,
+                                            vertical: 10,
                                           ),
-                                          child: Text(
-                                            sympton.name,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 17,
+                                          margin:
+                                              const EdgeInsets.only(bottom: 10),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: subLandMarksCardBg,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 8,
+                                              horizontal: 16,
+                                            ),
+                                            child: Text(
+                                              sympton.name,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 17,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -262,12 +269,28 @@ class _LibraryPageState extends State<LibraryPage> {
                                             vertical: 8,
                                             horizontal: 16,
                                           ),
-                                          child: Text(
-                                            clinic.reason,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 17,
-                                            ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                clinic.reason,
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                'Due Date: ${DateFormat.yMMMd().format(clinic.dueDate)}',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  color: mainOrangeColor,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       );
