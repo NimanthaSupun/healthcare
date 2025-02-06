@@ -51,6 +51,9 @@ dependencies:
   firebase_messaging: ^15.2.0
   lottie: ^3.3.1
   fl_chart: ^0.70.2
+  permission_handler: ^11.3.1
+  dio: ^5.8.0+1
+  # image_gallery_saver: ^2.0.3
 
 dev_dependencies:
   flutter_test:

@@ -110,6 +110,9 @@ class _LibraryPageState extends State<LibraryPage> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
               FutureBuilder(
                 future: _fetchData(),
                 builder: (context, snapshot) {
@@ -214,7 +217,8 @@ class _LibraryPageState extends State<LibraryPage> {
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   SingleSymptonPage(
-                                                      sympton: sympton),
+                                                sympton: sympton,
+                                              ),
                                             ),
                                           );
                                         },
