@@ -12,6 +12,19 @@ class SingleClinicPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            Center(
+              child: Image.asset(
+                "assets/images/alarm_4782138.png",
+                width: 200,
+              ),
+            ),
+          ],
+        )),
+      ),
     );
   }
 }

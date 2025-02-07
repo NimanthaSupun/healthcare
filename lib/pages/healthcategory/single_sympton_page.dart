@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/sympton_model.dart';
 import 'package:healthcare/services/category/image_saver_service.dart';
@@ -19,31 +18,25 @@ class SingleSymptonPage extends StatefulWidget {
 class _SingleSymptonPageState extends State<SingleSymptonPage> {
   bool _downloading = false;
 
-  Future<void> _downloadImage(String imageUrl, String imageName) async {
-    if (imageUrl.isEmpty) {
+  Future<void> _downloadBase64Image(
+      String base64String, String fileName) async {
+    if (base64String.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No image available to download')),
+        const SnackBar(content: Text('No image available')),
       );
       return;
     }
 
+    setState(() => _downloading = true);
     try {
-      setState(() => _downloading = true);
-
-      final savedPath = await ImageService.saveImage(imageUrl, imageName);
-
-      if (savedPath != null) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Image saved successfully')),
-        );
-      } else {
-        throw 'Failed to save image';
-      }
-    } catch (e) {
-      // ignore: use_build_context_synchronously
+      final bytes = base64Decode(base64String);
+      await ImageService.saveBytes(bytes, fileName);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to download image: $e')),
+        const SnackBar(content: Text('Image saved successfully')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save image: $e')),
       );
     } finally {
       setState(() => _downloading = false);
@@ -54,6 +47,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     required String title,
     required String imageUrl,
     required String downloadName,
+    required String type,
   }) {
     return Card(
       elevation: 4,
@@ -65,10 +59,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
             padding: const EdgeInsets.all(12),
             child: Text(
               title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           if (imageUrl.isNotEmpty)
@@ -78,15 +69,9 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               child: Image.memory(
                 base64Decode(imageUrl),
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(
-                      Icons.error_outline,
-                      size: 40,
-                      color: Colors.red,
-                    ),
-                  );
-                },
+                errorBuilder: (context, error, stackTrace) => const Center(
+                  child: Icon(Icons.error_outline, size: 40, color: Colors.red),
+                ),
               ),
             )
           else
@@ -94,9 +79,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               height: 200,
               width: double.infinity,
               color: Colors.grey[200],
-              child: const Center(
-                child: Text('No image available'),
-              ),
+              child: const Center(child: Text('No image available')),
             ),
           ButtonBar(
             alignment: MainAxisAlignment.end,
@@ -105,35 +88,15 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                 icon: const Icon(Icons.remove_red_eye),
                 label: const Text('View'),
                 onPressed: imageUrl.isNotEmpty
-                    ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Scaffold(
-                              appBar: AppBar(
-                                title: Text(title),
-                              ),
-                              body: InteractiveViewer(
-                                minScale: 0.5,
-                                maxScale: 4.0,
-                                child: Center(
-                                  child: Image.memory(
-                                    base64Decode(imageUrl),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }
+                    ? () => _viewImage(context, title, imageUrl)
                     : null,
               ),
               TextButton.icon(
                 icon: const Icon(Icons.download),
                 label: const Text('Download'),
-                 onPressed: _downloading || imageUrl.isEmpty
-                    ? null
-                    : () => _downloadImage(imageUrl, downloadName),
+                onPressed: imageUrl.isNotEmpty && !_downloading
+                    ? () => _downloadBase64Image(imageUrl, downloadName)
+                    : null,
               ),
             ],
           ),
@@ -142,12 +105,28 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     );
   }
 
+  void _viewImage(BuildContext context, String title, String base64Image) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: Text(title)),
+          body: InteractiveViewer(
+            minScale: 0.5,
+            maxScale: 4.0,
+            child: Center(
+              child: Image.memory(base64Decode(base64Image)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Symptom Details'),
-      ),
+      appBar: AppBar(title: const Text('Symptom Details')),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -186,21 +165,25 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               title: 'Medical Report',
               imageUrl: widget.sympton.medicalReportImage ?? '',
               downloadName: 'medical_report_${widget.sympton.name}',
+              type: 'medical',
             ),
             _buildImageCard(
               title: 'Doctor\'s Note',
               imageUrl: widget.sympton.doctorNoteImage ?? '',
               downloadName: 'doctor_note_${widget.sympton.name}',
+              type: 'doctor',
             ),
             _buildImageCard(
               title: 'Clinic Note',
               imageUrl: widget.sympton.clinicNoteImage ?? '',
               downloadName: 'clinic_note_${widget.sympton.name}',
+              type: 'clinic',
             ),
             _buildImageCard(
               title: 'Prescriptions',
               imageUrl: widget.sympton.precriptionsImage ?? '',
               downloadName: 'prescription_${widget.sympton.name}',
+              type: 'prescription',
             ),
             const SizedBox(height: 16),
           ],
