@@ -63,6 +63,8 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
   //   }
   // }
 
+
+
   Widget _buildImageCard({
     required String title,
     required String imageUrl,
@@ -155,10 +157,11 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               TextButton.icon(
                 icon: const Icon(Icons.download),
                 label: const Text('Download'),
-                onPressed:() {
-                  // _downloading || imageUrl.isEmpty
-                  //   ? null
-                  //   : () => _downloadImage(imageUrl, downloadName) 
+                onPressed:(){
+                    //   _downloading || imageUrl.isEmpty
+                    // ? null
+                    // : () => _downloadImage(imageUrl, downloadName) 
+                
                 }
               ),
             ],
