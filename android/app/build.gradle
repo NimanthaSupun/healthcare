@@ -48,3 +48,9 @@ android {
 flutter {
     source = "../.."
 }
+// todo: new
+
+dependencies {
+    implementation "androidx.core:core:1.10.0"
+    // other dependencies...
+}
