@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/sympton_model.dart';
+import 'package:healthcare/services/category/image_saver_service.dart';
 
 class SingleSymptonPage extends StatefulWidget {
   final SymptonModel sympton;
@@ -18,52 +19,36 @@ class SingleSymptonPage extends StatefulWidget {
 class _SingleSymptonPageState extends State<SingleSymptonPage> {
   bool _downloading = false;
 
-  // Future<void> _downloadImage(String imageUrl, String imageName) async {
-  //   if (imageUrl.isEmpty) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('No image available to download')),
-  //     );
-  //     return;
-  //   }
+  Future<void> _downloadImage(String imageUrl, String imageName) async {
+    if (imageUrl.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No image available to download')),
+      );
+      return;
+    }
 
-  //   try {
-  //     setState(() => _downloading = true);
+    try {
+      setState(() => _downloading = true);
 
-  //     // Request storage permission
-  //     var status = await Permission.storage.request();
-  //     if (!status.isGranted) {
-  //       throw 'Storage permission denied';
-  //     }
+      final savedPath = await ImageService.saveImage(imageUrl, imageName);
 
-  //     // Download image
-  //     var response = await Dio().get(
-  //       imageUrl,
-  //       options: Options(responseType: ResponseType.bytes),
-  //     );
-
-  //     // Save to gallery
-  //     final result = await ImageGallerySaver.saveImage(
-  //       Uint8List.fromList(response.data),
-  //       name: imageName,
-  //     );
-
-  //     if (result['isSuccess']) {
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         const SnackBar(content: Text('Image saved to gallery successfully')),
-  //       );
-  //     } else {
-  //       throw 'Failed to save image';
-  //     }
-  //   } catch (e) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(content: Text('Failed to download image: $e')),
-  //     );
-  //   } finally {
-  //     setState(() => _downloading = false);
-  //   }
-  // }
-
-
+      if (savedPath != null) {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Image saved successfully')),
+        );
+      } else {
+        throw 'Failed to save image';
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to download image: $e')),
+      );
+    } finally {
+      setState(() => _downloading = false);
+    }
+  }
 
   Widget _buildImageCard({
     required String title,
@@ -102,17 +87,6 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                     ),
                   );
                 },
-                // loadingBuilder: (context, child, loadingProgress) {
-                //   if (loadingProgress == null) return child;
-                //   return Center(
-                //     child: CircularProgressIndicator(
-                //       value: loadingProgress.expectedTotalBytes != null
-                //           ? loadingProgress.cumulativeBytesLoaded /
-                //               loadingProgress.expectedTotalBytes!
-                //           : null,
-                //     ),
-                //   );
-                // },
               ),
             )
           else
@@ -157,12 +131,9 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               TextButton.icon(
                 icon: const Icon(Icons.download),
                 label: const Text('Download'),
-                onPressed:(){
-                    //   _downloading || imageUrl.isEmpty
-                    // ? null
-                    // : () => _downloadImage(imageUrl, downloadName) 
-                
-                }
+                 onPressed: _downloading || imageUrl.isEmpty
+                    ? null
+                    : () => _downloadImage(imageUrl, downloadName),
               ),
             ],
           ),
