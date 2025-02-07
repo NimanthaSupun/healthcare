@@ -4,6 +4,7 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/sympton_model.dart';
+import 'package:healthcare/pages/healthcategory/single_clinic_page.dart';
 import 'package:healthcare/pages/healthcategory/single_sympton_page.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
@@ -265,45 +266,57 @@ class _LibraryPageState extends State<LibraryPage> {
                                   const SizedBox(height: 16),
                                   Column(
                                     children: categoryClinics.map((clinic) {
-                                      return Container(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 10,
-                                        ),
-                                        margin:
-                                            const EdgeInsets.only(bottom: 10),
-                                        width: double.infinity,
-                                        decoration: BoxDecoration(
-                                          color: subLandMarksCardBg,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Padding(
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SingleClinicPage(
+                                                clinic: clinic,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
                                           padding: const EdgeInsets.symmetric(
-                                            vertical: 8,
-                                            horizontal: 16,
+                                            vertical: 10,
                                           ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                clinic.reason,
-                                                style: const TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 18,
+                                          margin:
+                                              const EdgeInsets.only(bottom: 10),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: subLandMarksCardBg,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              vertical: 8,
+                                              horizontal: 16,
+                                            ),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  clinic.reason,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    fontSize: 18,
+                                                  ),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(
-                                                'Due Date: ${DateFormat.yMMMd().format(clinic.dueDate)}',
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.w600,
-                                                  color: mainOrangeColor,
+                                                SizedBox(
+                                                  height: 10,
                                                 ),
-                                              ),
-                                            ],
+                                                Text(
+                                                  'Due Date: ${DateFormat.yMMMd().format(clinic.dueDate)}',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w600,
+                                                    color: mainOrangeColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       );
