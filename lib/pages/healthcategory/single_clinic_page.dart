@@ -27,7 +27,6 @@ class SingleClinicPage extends StatelessWidget {
         healthCategory.id,
         clinic.id,
       );
-
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
         context,
