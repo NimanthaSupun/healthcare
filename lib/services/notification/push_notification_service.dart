@@ -29,5 +29,11 @@ class PushNotificationsService {
     print('FCM Token: $token');
   }
 
-  
+  //funtion that will listen for incoming messages in background
+  static Future<void> onBackgroundMessage(RemoteMessage message) async {
+    if (message.notification != null) {
+      print('Background message: ${message.notification!.title}');
+    }
+  }
+
 }
