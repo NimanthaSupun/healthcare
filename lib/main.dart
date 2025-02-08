@@ -5,6 +5,7 @@ import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
 import 'package:healthcare/services/notification/local_notification_service.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +15,8 @@ void main() async {
   );
 
   // initialize the notification(Loacal notification)
-  await  LocalNotificationsService.init();
+  await LocalNotificationsService.init();
+  tz.initializeTimeZones();
 
   runApp(
     ChangeNotifierProvider(

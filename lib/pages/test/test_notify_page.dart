@@ -31,6 +31,7 @@ class TestNotifyPage extends StatelessWidget {
                     DateTime durationSample = DateTime.now().add(
                       Duration(seconds: 5),
                     );
+                    print(durationSample);
 
                     LocalNotificationsService.scheduleNotification(
                       title: "Shedule",
