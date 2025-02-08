@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/pages/responsive/mobile_layout.dart';
+import 'package:healthcare/pages/responsive/responsive_layout.dart';
+import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/widgets/single_category/countdown_timmer.dart';
 import 'package:healthcare/widgets/single_category/single_clinic_card.dart';
@@ -20,7 +22,6 @@ class SingleClinicPage extends StatelessWidget {
 
   void _deleteClinic(BuildContext context) async {
     try {
-      print("Ok");
       await ClinicService().deleteClinic(
         FirebaseAuth.instance.currentUser!.uid,
         healthCategory.id,
@@ -30,11 +31,17 @@ class SingleClinicPage extends StatelessWidget {
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
         context,
-        "Clinic record delete successfully",
+        "Clinic record deleted successfully",
       );
-
       // ignore: use_build_context_synchronously
-      GoRouter.of(context).go("/");
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ResponsiveLayoutSreen(
+            mobileScreenLayout: MobileSreenLayout(),
+            webSreenLayout: WebSreenLayout(),
+          ),
+        ),
+      ); // Pass true to indicate deletion
     } catch (error) {
       print("${error}");
     }

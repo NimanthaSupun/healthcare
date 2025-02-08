@@ -268,12 +268,16 @@ class _LibraryPageState extends State<LibraryPage> {
                                     children: categoryClinics.map((clinic) {
                                       return GestureDetector(
                                         onTap: () {
+                                          setState(() {});
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                               SingleClinicPage(clinic: clinic, healthCategory: healthCategory)
-                                            ),
+                                                builder: (context) =>
+                                                    SingleClinicPage(
+                                                        clinic: clinic,
+                                                        healthCategory:
+                                                            healthCategory)),
                                           );
+                                          setState(() {});
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
@@ -307,8 +311,8 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   height: 10,
                                                 ),
                                                 CountdownTimmer(
-                                                    dueDate: clinic.dueDate,
-                                                  ),
+                                                  dueDate: clinic.dueDate,
+                                                ),
                                               ],
                                             ),
                                           ),
