@@ -4,6 +4,7 @@ import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
 import 'package:healthcare/services/notification/local_notification_service.dart';
+import 'package:healthcare/services/notification/push_notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
 
@@ -14,7 +15,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  
+  //initialize the push notification service (PushNotificationsService)
+  await PushNotificationsService.init();
 
   // initialize the notification(Loacal notification)
   await LocalNotificationsService.init();
@@ -27,6 +29,7 @@ void main() async {
     ),
   );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

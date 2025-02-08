@@ -1,10 +1,11 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-class PushNotificationService {
-
+class PushNotificationsService {
+  //create an instance of the firebase messaging plugin
   static final _firebaseMessaging = FirebaseMessaging.instance;
 
-   //initialize the firebase messaging (request permission for notifications)
+  //initialize the firebase messaging (request permission for notifications)
 
   static Future<void> init() async {
     //request permission for notifications
@@ -28,8 +29,5 @@ class PushNotificationService {
     print('FCM Token: $token');
   }
 
-
-
-
-
+  
 }
