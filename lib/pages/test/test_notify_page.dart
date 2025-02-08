@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:healthcare/services/notification/local_notification_service.dart';
 
 class TestNotifyPage extends StatelessWidget {
@@ -17,7 +18,7 @@ class TestNotifyPage extends StatelessWidget {
             child: Column(
               children: [
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     LocalNotificationsService.showInstanceNotification(
                       title: "instance",
                       body: "this is instance notification",
@@ -29,11 +30,10 @@ class TestNotifyPage extends StatelessWidget {
                   height: 16,
                 ),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     DateTime durationSample = DateTime.now().add(
                       Duration(seconds: 5),
                     );
-                    print(durationSample);
 
                     LocalNotificationsService.scheduleNotification(
                       title: "Shedule",
@@ -42,6 +42,22 @@ class TestNotifyPage extends StatelessWidget {
                     );
                   },
                   child: Text("Shedule notifications"),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    LocalNotificationsService.showRecurringNotification(
+                      title: "Recurring",
+                      body: "this is Recurring notification",
+                      time: DateTime(DateTime.now().year, DateTime.now().month,
+                          DateTime.now().day, 17, 0), //5:00pm
+
+                      day: Day.monday,
+                    );
+                  },
+                  child: Text("Reccuring notifications"),
                 ),
                 SizedBox(
                   height: 16,

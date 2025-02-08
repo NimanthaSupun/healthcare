@@ -14,7 +14,7 @@ class UtilNotification {
       time.minute,
     );
 
-    if (sheduleDate.isBefore(now)) {
+    if (sheduleDate.isBefore(now) || sheduleDate.weekday != day.index + 1) {
      sheduleDate =  sheduleDate.add(const Duration(days: 1));
     }
     return sheduleDate;
