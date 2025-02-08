@@ -42,6 +42,7 @@ class LocalNotificationsService {
           onDidReceiveBackgroundNotificationResponse,
     );
 
+    // todo: request notification permission
     await _flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
