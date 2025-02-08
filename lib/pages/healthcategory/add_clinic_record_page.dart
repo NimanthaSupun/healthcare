@@ -23,6 +23,7 @@ class AddClinicRecordPage extends StatelessWidget {
     super.key,
     required this.healthCategory,
   }) {
+    
     _selectDate.value = DateTime.now();
     _selectTime.value = TimeOfDay.now();
   }

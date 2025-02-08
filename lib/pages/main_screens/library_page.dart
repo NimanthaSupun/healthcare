@@ -309,7 +309,8 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   height: 10,
                                                 ),
                                                 CountdownTimmer(
-                                                    dueDate: clinic.dueDate),
+                                                    dueDate: clinic.dueDate,
+                                                  ),
                                               ],
                                             ),
                                           ),
