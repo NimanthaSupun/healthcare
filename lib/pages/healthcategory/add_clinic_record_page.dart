@@ -68,8 +68,8 @@ class AddClinicRecordPage extends StatelessWidget {
       );
 
       LocalNotificationsService.scheduleNotification(
-        title: _reasonController.text,
-        body: _noteController.text,
+        title: "Clinic Appointment Now",
+        body: "Your clinic appointment for ${clinic.reason} is now",
         scheduledDate: DateTime(
           _selectDate.value.year,
           _selectDate.value.month,
