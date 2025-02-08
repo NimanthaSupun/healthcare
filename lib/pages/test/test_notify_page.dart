@@ -62,6 +62,19 @@ class TestNotifyPage extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
+                ElevatedButton(
+                  onPressed: () async {
+                    LocalNotificationsService.showBigPictureNotification(
+                      title: "big picture",
+                      body: "this is big picture",
+                      imageUrl: "@mipmap/ic_launcher",
+                    );
+                  },
+                  child: Text("Big picture notifications"),
+                ),
+                SizedBox(
+                  height: 16,
+                ),
               ],
             ),
           ),
