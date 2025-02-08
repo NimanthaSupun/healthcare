@@ -74,6 +74,13 @@ class _HomePageState extends State<HomePage>
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           FloatingActionButton(
+            onPressed: () {},
+            child: Icon(
+              Icons.notification_add,
+            ),
+          ),
+          SizedBox(width: 5,),
+          FloatingActionButton(
             onPressed: () {
               GoRouter.of(context).go("/daily-update");
             },
