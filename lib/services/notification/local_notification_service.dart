@@ -1,21 +1,21 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:healthcare/functions/notify_function.dart';
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter/material.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class LocalNotificationsService {
-
   static final FlutterLocalNotificationsPlugin
       _flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   static Future<void> onDidReceiveBackgroundNotificationResponse(
       NotificationResponse notificationResponse) async {
-         navigatorKey.currentState!.pushNamed(
+    navigatorKey.currentState!.pushNamed(
       '/data-screen',
       arguments: notificationResponse,
     );
-      }
+  }
 
   static Future<void> init() async {
     // android
@@ -122,6 +122,45 @@ class LocalNotificationsService {
     );
   }
 
+  // todo: Recurring notification
+  static Future<void> showRecurringNotification({
+    required String title,
+    required String body,
+    required DateTime time,
+    required Day day,
+  }) async {
+    // define notification details
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: AndroidNotificationDetails(
+        "channel_Id",
+        "channel_Name",
+        importance: Importance.max,
+        priority: Priority.high,
+      ),
+
+      //define the ios notification details
+      iOS: DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+    // schedule notification
+    await _flutterLocalNotificationsPlugin.zonedSchedule(
+      0,
+      title,
+      body,
+      UtilNotification().nextInstanceOfTime(time, day),
+      platformChannelSpecifics,
+      androidScheduleMode: AndroidScheduleMode.exact,
+
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+
+    );
+  }
+
   // todo: big picture notification
   static Future<void> showBigPictureNotification({
     required String title,
@@ -141,11 +180,13 @@ class LocalNotificationsService {
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
       //define the android notification details
-      android: AndroidNotificationDetails("channel_Id", "channel_Name",
-          importance: Importance.max,
-          priority: Priority.high,
-          styleInformation: bigPictureStyleInformation,
-        ),
+      android: AndroidNotificationDetails(
+        "channel_Id",
+        "channel_Name",
+        importance: Importance.max,
+        priority: Priority.high,
+        styleInformation: bigPictureStyleInformation,
+      ),
 
       //define the ios notification details
       iOS: DarwinNotificationDetails(
@@ -162,7 +203,8 @@ class LocalNotificationsService {
       platformChannelSpecifics,
     );
   }
-   Future imageNotification() async {
+
+  Future imageNotification() async {
     var bigPicture = const BigPictureStyleInformation(
         DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
         largeIcon: DrawableResourceAndroidBitmap("@mipmap/ic_launcher"),
