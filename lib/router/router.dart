@@ -151,6 +151,7 @@ class RouterClass {
           return SingleHealthCategoryPage(healthCategory: healthCategory);
         },
       ),
+      
     ],
   );
 }
