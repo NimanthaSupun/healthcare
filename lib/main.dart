@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
+import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+    await NotificationService().initialize();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
