@@ -153,11 +153,9 @@ class LocalNotificationsService {
       UtilNotification().nextInstanceOfTime(time, day),
       platformChannelSpecifics,
       androidScheduleMode: AndroidScheduleMode.exact,
-
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-
     );
   }
 
