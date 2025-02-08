@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
@@ -17,6 +18,10 @@ void main() async {
 
   //initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
+
+   //listen for incoming messages in background
+  FirebaseMessaging.onBackgroundMessage(
+      PushNotificationsService.onBackgroundMessage);
 
   // initialize the notification(Loacal notification)
   await LocalNotificationsService.init();
