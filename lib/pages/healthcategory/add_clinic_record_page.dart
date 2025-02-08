@@ -4,6 +4,7 @@ import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
+import 'package:healthcare/services/notification/local_notification_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
@@ -23,7 +24,6 @@ class AddClinicRecordPage extends StatelessWidget {
     super.key,
     required this.healthCategory,
   }) {
-    
     _selectDate.value = DateTime.now();
     _selectTime.value = TimeOfDay.now();
   }
@@ -65,6 +65,18 @@ class AddClinicRecordPage extends StatelessWidget {
         note: _noteController.text,
         dueDate: _selectDate.value,
         dueTime: _selectTime.value,
+      );
+
+      LocalNotificationsService.scheduleNotification(
+        title: _reasonController.text,
+        body: _noteController.text,
+        scheduledDate: DateTime(
+          _selectDate.value.year,
+          _selectDate.value.month,
+          _selectDate.value.day,
+          _selectTime.value.hour,
+          _selectTime.value.minute,
+        ),
       );
 
       await ClinicService().addNewClinic(

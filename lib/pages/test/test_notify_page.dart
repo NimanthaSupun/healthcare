@@ -7,7 +7,9 @@ class TestNotifyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Test Notify Page'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
