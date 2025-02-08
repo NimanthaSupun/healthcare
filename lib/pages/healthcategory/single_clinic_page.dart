@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/clinic_model.dart';
+import 'package:healthcare/widgets/single_category/countdown_timmer.dart';
 import 'package:healthcare/widgets/single_category/single_clinic_card.dart';
 import 'package:intl/intl.dart';
 
@@ -38,24 +39,22 @@ class SingleClinicPage extends StatelessWidget {
                 description: clinic.reason,
                 icon: Icons.assessment,
               ),
-             
               SingleClinicCard(
                 title: "Your note's",
                 description: clinic.note,
                 icon: Icons.note,
               ),
-             
               SingleClinicCard(
                 title: "Due date",
                 description: DateFormat.yMMMd().format(clinic.dueDate),
                 icon: Icons.today,
               ),
-             
               SingleClinicCard(
                 title: "Time",
                 description: clinic.dueTime.format(context),
                 icon: Icons.alarm,
               ),
+              CountdownTimmer(dueDate: clinic.dueDate)
             ],
           ),
         )),
