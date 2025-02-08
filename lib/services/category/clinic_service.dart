@@ -68,4 +68,20 @@ class ClinicService {
       return {};
     }
   }
+
+  // todo: delete Clinic
+  Future<void> deleteClinic(
+      String userId, String categoryId, String clinicId) async {
+    try {
+      await userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(categoryId)
+          .collection("clinc")
+          .doc(clinicId)
+          .delete();
+    } catch (error) {
+      print("Error deleting Clinic on service: ${error}");
+    }
+  }
 }

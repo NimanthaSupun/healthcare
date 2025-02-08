@@ -271,9 +271,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  SingleClinicPage(
-                                                clinic: clinic,
-                                              ),
+                                               SingleClinicPage(clinic: clinic, healthCategory: healthCategory)
                                             ),
                                           );
                                         },

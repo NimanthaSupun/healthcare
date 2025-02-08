@@ -25,13 +25,12 @@ class _CountdownTimmerState extends State<CountdownTimmer> {
   }
 
   void _updateRemainigTime() {
-    if (_remaninigTime.inSeconds > 0) {
-      setState(() {
-        _remaninigTime = _dueDate.difference(DateTime.now());
-      });
-    } else {
-      _timer.cancel();
-    }
+    setState(() {
+      _remaninigTime = _dueDate.difference(DateTime.now());
+      if (_remaninigTime.isNegative || _remaninigTime.inSeconds == 0) {
+        _timer.cancel();
+      }
+    });
   }
 
   String _formatDuration(Duration duration) {
