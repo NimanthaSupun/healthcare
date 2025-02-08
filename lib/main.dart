@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
-import 'package:healthcare/services/notification/notification_service.dart';
+import 'package:healthcare/services/notification/local_notification_service.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -13,7 +13,8 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-    await NotificationService().initialize();
+  // initialize the notification(Loacal notification)
+  await  LocalNotificationsService.init();
 
   runApp(
     ChangeNotifierProvider(
@@ -22,6 +23,7 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
