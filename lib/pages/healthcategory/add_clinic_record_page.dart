@@ -68,42 +68,40 @@ class AddClinicRecordPage extends StatelessWidget {
         dueTime: _selectTime.value,
       );
 
-      LocalNotificationsService.scheduleNotification(
-        title: "Clinic Appointment Now",
-        body: "Your clinic appointment for ${clinic.reason} is now",
-        scheduledDate: DateTime(
-          _selectDate.value.year,
-          _selectDate.value.month,
-          _selectDate.value.day,
-          _selectTime.value.hour,
-          _selectTime.value.minute,
-        ),
+      // LocalNotificationsService.scheduleNotification(
+      //   title: "Clinic Appointment Now",
+      //   body: "Your clinic appointment for ${clinic.reason} is now",
+      //   scheduledDate: DateTime(
+      //     _selectDate.value.year,
+      //     _selectDate.value.month,
+      //     _selectDate.value.day,
+      //     _selectTime.value.hour,
+      //     _selectTime.value.minute,
+      //   ),
+      // );
+
+      final DateTime scheduledDateTime = DateTime(
+        _selectDate.value.year,
+        _selectDate.value.month,
+        _selectDate.value.day,
+        _selectTime.value.hour,
+        _selectTime.value.minute,
       );
 
+      // Get the clinic ID from the addNewClinic method
+      final String clinicId = await ClinicService().addNewClinic(
+        FirebaseAuth.instance.currentUser!.uid,
+        healthCategory.id,
+        clinic,
+      );
 
-    final DateTime scheduledDateTime = DateTime(
-      _selectDate.value.year,
-      _selectDate.value.month,
-      _selectDate.value.day,
-      _selectTime.value.hour,
-      _selectTime.value.minute,
-    );
-
-     // Get the clinic ID from the addNewClinic method
-    final String clinicId = await ClinicService().addNewClinic(
-      FirebaseAuth.instance.currentUser!.uid,
-      healthCategory.id,
-      clinic,
-    );
-
-    // Now we can use the clinicId for notifications
-    await ClinicNotificationService.scheduleClinicReminder(
-      userId: FirebaseAuth.instance.currentUser!.uid,
-      clinicId: clinicId,
-      reason: clinic.reason,
-      scheduledDateTime: scheduledDateTime,
-    );
-
+      // Now we can use the clinicId for notifications
+      await ClinicNotificationService.scheduleClinicReminder(
+        userId: FirebaseAuth.instance.currentUser!.uid,
+        clinicId: clinicId,
+        reason: clinic.reason,
+        scheduledDateTime: scheduledDateTime,
+      );
 
       // await ClinicService().addNewClinic(
       //   FirebaseAuth.instance.currentUser!.uid,
