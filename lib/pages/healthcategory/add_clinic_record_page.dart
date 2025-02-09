@@ -4,7 +4,6 @@ import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
-import 'package:healthcare/services/notification/local_notification_service.dart';
 import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
