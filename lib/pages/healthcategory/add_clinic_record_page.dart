@@ -5,6 +5,7 @@ import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/notification/local_notification_service.dart';
+import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
@@ -79,11 +80,36 @@ class AddClinicRecordPage extends StatelessWidget {
         ),
       );
 
-      await ClinicService().addNewClinic(
-        FirebaseAuth.instance.currentUser!.uid,
-        healthCategory.id,
-        clinic,
-      );
+
+    final DateTime scheduledDateTime = DateTime(
+      _selectDate.value.year,
+      _selectDate.value.month,
+      _selectDate.value.day,
+      _selectTime.value.hour,
+      _selectTime.value.minute,
+    );
+
+     // Get the clinic ID from the addNewClinic method
+    final String clinicId = await ClinicService().addNewClinic(
+      FirebaseAuth.instance.currentUser!.uid,
+      healthCategory.id,
+      clinic,
+    );
+
+    // Now we can use the clinicId for notifications
+    await ClinicNotificationService.scheduleClinicReminder(
+      userId: FirebaseAuth.instance.currentUser!.uid,
+      clinicId: clinicId,
+      reason: clinic.reason,
+      scheduledDateTime: scheduledDateTime,
+    );
+
+
+      // await ClinicService().addNewClinic(
+      //   FirebaseAuth.instance.currentUser!.uid,
+      //   healthCategory.id,
+      //   clinic,
+      // );
 
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
