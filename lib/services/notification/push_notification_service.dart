@@ -1,4 +1,3 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationsService {
@@ -36,4 +35,16 @@ class PushNotificationsService {
     }
   }
 
+  // on background notification tapped function (pass the payload data to the message opener screen)
+  // Future<void> onBackgroundNotificationTapped(
+  //     RemoteMessage message, BuildContext context) async {
+  //   Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) => LibraryPage(
+  //         message: message,
+  //       ),
+  //     ),
+  //   );
+  // }
+  
 }
