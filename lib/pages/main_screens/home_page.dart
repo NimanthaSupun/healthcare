@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
-import 'package:healthcare/pages/test/test_notify_page.dart';
 import 'package:healthcare/widgets/animation/custom_page_transition.dart';
 import 'package:healthcare/widgets/main/add_your_symptons_card.dart';
 import 'package:healthcare/widgets/main/show_user_profile_card.dart';
@@ -64,6 +63,7 @@ class _HomePageState extends State<HomePage>
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String formattedDate = formatter.format(now);
@@ -74,21 +74,15 @@ class _HomePageState extends State<HomePage>
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => TestNotifyPage(),
-                ),
-              );
-            },
-            child: Icon(
-              Icons.notification_add,
-            ),
-          ),
-          SizedBox(
-            width: 5,
-          ),
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestNotifyPage(),),);
+          //   },
+          //   child: Icon(
+          //     Icons.notification_add,
+          //   ),
+          // ),
+          // SizedBox(width: 5,),
           FloatingActionButton(
             onPressed: () {
               GoRouter.of(context).go("/daily-update");
