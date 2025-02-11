@@ -23,8 +23,6 @@ class SingleHealthCategoryPage extends StatefulWidget {
 }
 
 class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
-
-  
   bool _isLoading = false;
 
   void _deleteCategory(BuildContext context) async {
@@ -78,6 +76,8 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                 context: context,
                 builder: (context) {
                   return CategoryBottonSheet(
+                    title1: "Delete Category",
+                    title2: "Edit Category",
                     deleteCallback: () {
                       Navigator.of(context).pop();
                       showDialog(

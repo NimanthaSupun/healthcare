@@ -4,10 +4,14 @@ import 'package:healthcare/constants/colors.dart';
 class CategoryBottonSheet extends StatelessWidget {
   final VoidCallback deleteCallback;
   final VoidCallback editCallback;
+  final String title1;
+  final String title2;
   const CategoryBottonSheet({
     super.key,
     required this.deleteCallback,
     required this.editCallback,
+    required this.title1,
+    required this.title2,
   });
 
   @override
@@ -30,7 +34,7 @@ class CategoryBottonSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "Delete Category",
+                  title1,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -57,7 +61,7 @@ class CategoryBottonSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  "Edit Category",
+                  title2,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,

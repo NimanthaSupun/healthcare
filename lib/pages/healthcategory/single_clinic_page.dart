@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/clinic_model.dart';
 import 'package:healthcare/models/health_category_model.dart';
@@ -7,6 +8,7 @@ import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
+import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 import 'package:healthcare/widgets/single_category/countdown_timmer.dart';
 import 'package:healthcare/widgets/single_category/single_clinic_card.dart';
 import 'package:intl/intl.dart';
@@ -40,7 +42,8 @@ class SingleClinicPage extends StatelessWidget {
             webSreenLayout: WebSreenLayout(),
           ),
         ),
-      ); // Pass true to indicate deletion
+      );
+      
     } catch (error) {
       print("${error}");
     }
@@ -52,8 +55,76 @@ class SingleClinicPage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () => _deleteClinic(context),
-            icon: Icon(Icons.delete),
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return CategoryBottonSheet(
+                    title1: "Delete clinic record",
+                    title2: "Edit clinic record",
+                    deleteCallback: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              "Delete",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                              "Delete Clinic record details",
+                              style: TextStyle(
+                                color: mainOrangeColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                              ),
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  TextButton(
+                                    onPressed: () => _deleteClinic(context),
+                                    child: Text(
+                                      "Ok",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    editCallback: () {},
+                  );
+                },
+              );
+            },
+            icon: Icon(
+              Icons.more_vert,
+            ),
           ),
         ],
       ),
