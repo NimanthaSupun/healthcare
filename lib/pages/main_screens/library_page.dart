@@ -280,9 +280,6 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   SingleClinicPage(
                                                 clinic: clinic,
                                                 healthCategory: healthCategory,
-                                                onDelete: () {
-                                                  setState(() {});
-                                                },
                                               ),
                                             ),
                                           );
@@ -319,8 +316,9 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   height: 10,
                                                 ),
                                                 CountdownTimer(
-                                                    dueDate: clinic.dueDate,
-                                                    time: clinic.dueTime)
+                                                  dueDate: clinic.dueDate,
+                                                  time: clinic.dueTime,
+                                                )
                                               ],
                                             ),
                                           ),

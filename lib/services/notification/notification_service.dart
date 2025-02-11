@@ -41,7 +41,7 @@ class ClinicNotificationService {
     required DateTime scheduledDateTime,
   }) async {
     // Store notification data in Firestore
-    await _firestore.collection('notifications').add({
+     _firestore.collection('notifications').add({
       'userId': userId,
       'clinicId': clinicId,
       'reason': reason,

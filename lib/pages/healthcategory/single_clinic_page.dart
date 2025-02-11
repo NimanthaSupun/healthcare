@@ -16,12 +16,10 @@ import 'package:intl/intl.dart';
 class SingleClinicPage extends StatelessWidget {
   final Clinic clinic;
   final HealthCategory healthCategory;
-  final VoidCallback onDelete;
   const SingleClinicPage({
     super.key,
     required this.clinic,
     required this.healthCategory,
-    required this.onDelete,
   });
 
   void _deleteClinic(BuildContext context) async {
@@ -49,7 +47,6 @@ class SingleClinicPage extends StatelessWidget {
           ),
         ),
       );
-      onDelete();
     } catch (error) {
       print("${error}");
     }
