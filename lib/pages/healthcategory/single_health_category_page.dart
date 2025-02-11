@@ -23,6 +23,8 @@ class SingleHealthCategoryPage extends StatefulWidget {
 }
 
 class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
+
+  
   bool _isLoading = false;
 
   void _deleteCategory(BuildContext context) async {
@@ -77,6 +79,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                 builder: (context) {
                   return CategoryBottonSheet(
                     deleteCallback: () {
+                      Navigator.of(context).pop();
                       showDialog(
                         context: context,
                         builder: (context) {
@@ -97,14 +100,16 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            actions: _isLoading
-                                ? []
-                                : [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        TextButton(
+                            actions: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  _isLoading
+                                      ? Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      : TextButton(
                                           style: TextButton.styleFrom(
                                             textStyle: Theme.of(context)
                                                 .textTheme
@@ -120,26 +125,26 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                                             ),
                                           ),
                                         ),
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelLarge,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text(
-                                            "Cancel",
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
                                     ),
-                                  ],
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           );
                         },
                       );
