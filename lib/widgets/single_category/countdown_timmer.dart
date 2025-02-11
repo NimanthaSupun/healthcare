@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 
 class CountdownTimmer extends StatefulWidget {
   final DateTime dueDate;
+  final TimeOfDay time;
   const CountdownTimmer({
     super.key,
-    required this.dueDate,
+    required this.dueDate, required this.time,
   });
 
   @override

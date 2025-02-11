@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
-import 'package:healthcare/pages/main_screens/profile_page.dart';
-import 'package:healthcare/widgets/animation/custom_page_transition.dart';
 import 'package:healthcare/widgets/main/add_your_symptons_card.dart';
 import 'package:healthcare/widgets/main/show_user_profile_card.dart';
 import 'package:healthcare/widgets/main/show_userhealth_category.dart';
@@ -21,8 +18,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> {
   final DateFormat formatter = DateFormat('EEEE,MMMM');
   final DateFormat dayFormat = DateFormat('dd');
 
@@ -32,36 +28,36 @@ class _HomePageState extends State<HomePage>
   // ignore: prefer_typing_uninitialized_variables
   late UserModel getUser;
 
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 500),
-    );
-    controller.addListener(() {
-      if (controller.isCompleted) {
-        if (mounted) {
-          Navigator.of(context).push(
-            MyCustomRouteTransition(
-              route: ProfilePage(), // Ensure ProfilePage is not null
-            ),
-          );
-        }
-        Timer(Duration(milliseconds: 500), () {
-          controller.reset();
-        });
-      }
-    });
-    scaleAnimation = Tween<double>(begin: 1, end: 10).animate(controller);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   controller = AnimationController(
+  //     vsync: this,
+  //     duration: Duration(milliseconds: 500),
+  //   );
+  //   controller.addListener(() {
+  //     if (controller.isCompleted) {
+  //       if (mounted) {
+  //         Navigator.of(context).push(
+  //           MyCustomRouteTransition(
+  //             route: ProfilePage(), // Ensure ProfilePage is not null
+  //           ),
+  //         );
+  //       }
+  //       Timer(Duration(milliseconds: 500), () {
+  //         controller.reset();
+  //       });
+  //     }
+  //   });
+  //   scaleAnimation = Tween<double>(begin: 1, end: 10).animate(controller);
+  // }
 
-  @override
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   controller.stop();
+  //   controller.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +70,6 @@ class _HomePageState extends State<HomePage>
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // FloatingActionButton(
-          //   onPressed: () {
-          //     Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestNotifyPage(),),);
-          //   },
-          //   child: Icon(
-          //     Icons.notification_add,
-          //   ),
-          // ),
-          // SizedBox(width: 5,),
           FloatingActionButton(
             onPressed: () {
               GoRouter.of(context).go("/daily-update");
@@ -147,7 +134,7 @@ class _HomePageState extends State<HomePage>
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  controller.forward();
+                                  // controller.forward();
                                 },
                                 child: Container(
                                   width: 50,
