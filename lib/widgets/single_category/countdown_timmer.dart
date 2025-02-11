@@ -1,73 +1,88 @@
-import 'dart:async';
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-class CountdownTimmer extends StatefulWidget {
+class CountdownTimer extends StatefulWidget {
   final DateTime dueDate;
   final TimeOfDay time;
-  const CountdownTimmer({
+  
+  const CountdownTimer({
     super.key,
-    required this.dueDate, required this.time,
+    required this.dueDate,
+    required this.time,
   });
 
   @override
-  State<CountdownTimmer> createState() => _CountdownTimmerState();
+  State<CountdownTimer> createState() => _CountdownTimerState();
 }
 
-class _CountdownTimmerState extends State<CountdownTimmer> {
-  late DateTime _dueDate;
-  late Duration _remaninigTime;
+class _CountdownTimerState extends State<CountdownTimer> {
+  late DateTime _targetDateTime;
+  late Duration _remainingTime;
   late Timer _timer;
 
-  void _calculateRemainigTime() {
-    setState(() {
-      _remaninigTime = _dueDate.difference(DateTime.now());
-    });
+  @override
+  void initState() {
+    super.initState();
+    // Combine date and time into a single DateTime
+    _targetDateTime = DateTime(
+      widget.dueDate.year,
+      widget.dueDate.month,
+      widget.dueDate.day,
+      widget.time.hour,
+      widget.time.minute,
+    );
+    _calculateRemainingTime();
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) => _calculateRemainingTime(),
+    );
   }
 
-  void _updateRemainigTime() {
+  void _calculateRemainingTime() {
+    final now = DateTime.now();
     setState(() {
-      _remaninigTime = _dueDate.difference(DateTime.now());
-      if (_remaninigTime.isNegative || _remaninigTime.inSeconds == 0) {
-        _timer.cancel();
-      }
+      _remainingTime = _targetDateTime.difference(now);
     });
   }
 
   String _formatDuration(Duration duration) {
     if (duration.isNegative) {
-      return "DeadLine passed";
+      return "Deadline passed";
     }
 
-    final hours = duration.inHours;
+    final days = duration.inDays;
+    final hours = duration.inHours % 24;
     final minutes = duration.inMinutes % 60;
     final seconds = duration.inSeconds % 60;
 
-    return "$hours h $minutes min $seconds s";
-  }
+    final parts = <String>[];
+    
+    if (days > 0) {
+      parts.add('$days d');
+    }
+    if (hours > 0 || days > 0) {
+      parts.add('$hours h');
+    }
+    if (minutes > 0 || hours > 0 || days > 0) {
+      parts.add('$minutes min');
+    }
+    parts.add('$seconds s');
 
-  @override
-  void initState() {
-    super.initState();
-    _dueDate = widget.dueDate;
-    _calculateRemainigTime();
-    _timer = Timer.periodic(
-      const Duration(seconds: 1),
-      (_) => _updateRemainigTime(),
-    );
+    return parts.join(' ');
   }
 
   @override
   void dispose() {
-    super.dispose();
     _timer.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final String formatterTime = _formatDuration(_remaninigTime);
+    final String formattedTime = _formatDuration(_remainingTime);
     return Text(
-      formatterTime,
+      formattedTime,
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,

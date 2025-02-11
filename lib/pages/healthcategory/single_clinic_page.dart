@@ -7,6 +7,7 @@ import 'package:healthcare/pages/responsive/mobile_layout.dart';
 import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/services/category/clinic_service.dart';
+import 'package:healthcare/widgets/single_category/countdown_timmer.dart';
 import 'package:healthcare/widgets/single_category/single_clinic_card.dart';
 import 'package:intl/intl.dart';
 
@@ -95,7 +96,7 @@ class SingleClinicPage extends StatelessWidget {
                 description: clinic.dueTime.format(context),
                 icon: Icons.alarm,
               ),
-              // CountdownTimer(dueDate: clinic.dueDate, time: clinic.dueTime)
+              CountdownTimer(dueDate: clinic.dueDate, time: clinic.dueTime)
             ],
           ),
         )),
