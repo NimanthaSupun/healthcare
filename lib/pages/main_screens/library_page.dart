@@ -66,6 +66,12 @@ class _LibraryPageState extends State<LibraryPage> {
   }
 
   @override
+  void initState() {
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -268,17 +274,18 @@ class _LibraryPageState extends State<LibraryPage> {
                                     children: categoryClinics.map((clinic) {
                                       return GestureDetector(
                                         onTap: () {
-                                          setState(() {});
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (context) =>
                                                   SingleClinicPage(
                                                 clinic: clinic,
                                                 healthCategory: healthCategory,
+                                                onDelete: () {
+                                                  setState(() {});
+                                                },
                                               ),
                                             ),
                                           );
-                                          setState(() {});
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(

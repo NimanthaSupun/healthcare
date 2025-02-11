@@ -16,10 +16,12 @@ import 'package:intl/intl.dart';
 class SingleClinicPage extends StatelessWidget {
   final Clinic clinic;
   final HealthCategory healthCategory;
+  final VoidCallback onDelete;
   const SingleClinicPage({
     super.key,
     required this.clinic,
     required this.healthCategory,
+    required this.onDelete,
   });
 
   void _deleteClinic(BuildContext context) async {
@@ -34,6 +36,10 @@ class SingleClinicPage extends StatelessWidget {
         context,
         "Clinic record deleted successfully",
       );
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+
       // ignore: use_build_context_synchronously
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -43,7 +49,7 @@ class SingleClinicPage extends StatelessWidget {
           ),
         ),
       );
-      
+      onDelete();
     } catch (error) {
       print("${error}");
     }
