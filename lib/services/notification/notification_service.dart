@@ -124,7 +124,6 @@ class ClinicNotificationService {
       );
     }
   }
-
   static void _handleNotificationTap(NotificationResponse response) {
     // Handle notification taps here
     // Navigate to appropriate screen based on payload
