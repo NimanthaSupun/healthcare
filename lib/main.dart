@@ -9,7 +9,6 @@ import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:healthcare/services/notification/push_notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
