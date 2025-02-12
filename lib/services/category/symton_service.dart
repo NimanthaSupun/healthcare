@@ -163,4 +163,36 @@ class SymtonService {
       print("error updating symptom: $error");
     }
   }
+
+  // todo: Delete Sympton
+  Future<void> deleteSympton(
+      String userId, String categoryId, String symptonId) async {
+    try {
+      final DocumentReference symptonDocRef = userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(categoryId)
+          .collection("symptons")
+          .doc(symptonId);
+
+      // Delete images in the first collection (images1)
+      final QuerySnapshot images1Snapshot =
+          await symptonDocRef.collection("images1").get();
+      for (final doc in images1Snapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // Delete images in the second collection (images2)
+      final QuerySnapshot images2Snapshot =
+          await symptonDocRef.collection("images2").get();
+      for (final doc in images2Snapshot.docs) {
+        await doc.reference.delete();
+      }
+
+      // Delete the symptom document
+      await symptonDocRef.delete();
+    } catch (error) {
+      print("error deleting symptom: $error");
+    }
+  }
 }
