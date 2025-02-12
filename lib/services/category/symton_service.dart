@@ -25,13 +25,13 @@ class SymtonService {
       await docRef.update({'id': docRef.id});
 
       await docRef.collection("images1").add({
-        'name':symptonModel.name,
+        'name': symptonModel.name,
         'medicalReportImage': symptonModel.medicalReportImage,
         'doctorNoteImage': symptonModel.doctorNoteImage,
       });
 
       await docRef.collection("images2").add({
-        'name':symptonModel.name,
+        'name': symptonModel.name,
         'clinicNoteImage': symptonModel.clinicNoteImage,
         'precriptionsImage': symptonModel.precriptionsImage,
       });
@@ -42,8 +42,7 @@ class SymtonService {
 
   // todo:---------------------------get All the sympto's with their category name------------------------------------------------------
 
-
-   Stream<List<SymptonModel>> getSymptoms(String userId, String categoryId) {
+  Stream<List<SymptonModel>> getSymptoms(String userId, String categoryId) {
     try {
       final CollectionReference symptonCollection = userCollection
           .doc(userId)
@@ -52,9 +51,8 @@ class SymtonService {
           .collection("symptons");
 
       return symptonCollection.snapshots().asyncMap((snapshot) async {
-
         List<SymptonModel> symptoms = [];
-        
+
         for (var doc in snapshot.docs) {
           // Get base symptom data
           Map<String, dynamic> symptomData = doc.data() as Map<String, dynamic>;
@@ -62,14 +60,14 @@ class SymtonService {
 
           // Get images1 data
           var images1Snapshot = await doc.reference.collection('images1').get();
-          var images1Data = images1Snapshot.docs.isNotEmpty 
-              ? images1Snapshot.docs.first.data() 
+          var images1Data = images1Snapshot.docs.isNotEmpty
+              ? images1Snapshot.docs.first.data()
               : {};
 
           // Get images2 data
           var images2Snapshot = await doc.reference.collection('images2').get();
-          var images2Data = images2Snapshot.docs.isNotEmpty 
-              ? images2Snapshot.docs.first.data() 
+          var images2Data = images2Snapshot.docs.isNotEmpty
+              ? images2Snapshot.docs.first.data()
               : {};
 
           // Combine all data
@@ -83,7 +81,6 @@ class SymtonService {
           ));
         }
 
-        
         return symptoms;
       });
     } catch (error) {
@@ -93,26 +90,77 @@ class SymtonService {
   }
 
   // Get all symptoms with their category names
-  Future<Map<String, List<SymptonModel>>> getSymptomsWithCategoryName(String userId) async {
+  Future<Map<String, List<SymptonModel>>> getSymptomsWithCategoryName(
+      String userId) async {
     try {
-      final healthCategoryCollection = userCollection.doc(userId).collection("healthCategory");
-      final QuerySnapshot categorySnapshot = await healthCategoryCollection.get();
-      
+      final healthCategoryCollection =
+          userCollection.doc(userId).collection("healthCategory");
+      final QuerySnapshot categorySnapshot =
+          await healthCategoryCollection.get();
+
       final Map<String, List<SymptonModel>> symptomMap = {};
-      
+
       for (final doc in categorySnapshot.docs) {
         String categoryId = doc.id;
         String categoryName = doc['name'] ?? 'Unknown Category';
-        
+
         // Get symptoms for this category
-        final List<SymptonModel> symptoms = await getSymptoms(userId, categoryId).first;
+        final List<SymptonModel> symptoms =
+            await getSymptoms(userId, categoryId).first;
         symptomMap[categoryName] = symptoms;
       }
-      
+
       return symptomMap;
     } catch (error) {
       print("Error fetching symptoms with categories: $error");
       return {};
+    }
+  }
+
+  // todo:update sympton category
+
+  Future<void> updateSympton(String userId, String categoryId, String symptonId,
+      SymptonModel symptonModel) async {
+    try {
+      final DocumentReference symptonDocRef = userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(categoryId)
+          .collection("symptons")
+          .doc(symptonId);
+
+      // Update the symptom details
+      await symptonDocRef.update({
+        'name': symptonModel.name,
+      });
+
+      // Update images in the first collection (images1)
+      final QuerySnapshot images1Snapshot =
+          await symptonDocRef.collection("images1").get();
+      if (images1Snapshot.docs.isNotEmpty) {
+        final DocumentReference image1DocRef =
+            images1Snapshot.docs.first.reference;
+        await image1DocRef.update({
+          'name': symptonModel.name,
+          'medicalReportImage': symptonModel.medicalReportImage,
+          'doctorNoteImage': symptonModel.doctorNoteImage,
+        });
+      }
+
+      // Update images in the second collection (images2)
+      final QuerySnapshot images2Snapshot =
+          await symptonDocRef.collection("images2").get();
+      if (images2Snapshot.docs.isNotEmpty) {
+        final DocumentReference image2DocRef =
+            images2Snapshot.docs.first.reference;
+        await image2DocRef.update({
+          'name': symptonModel.name,
+          'clinicNoteImage': symptonModel.clinicNoteImage,
+          'precriptionsImage': symptonModel.precriptionsImage,
+        });
+      }
+    } catch (error) {
+      print("error updating symptom: $error");
     }
   }
 }
