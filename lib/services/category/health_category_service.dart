@@ -120,4 +120,18 @@ class HealthCategoryService {
       rethrow;
     }
   }
+
+  // todo: update healthCategory
+  Future<void> updateHealthCategory(
+      String userId, String categoryId, HealthCategory healthCategory) async {
+    try {
+      await userCollection
+          .doc(userId)
+          .collection("healthCategory")
+          .doc(categoryId)
+          .update(healthCategory.toJson());
+    } catch (error) {
+      print("Error updating category on service");
+    }
+  }
 }
