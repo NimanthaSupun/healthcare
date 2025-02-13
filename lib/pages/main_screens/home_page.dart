@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
+import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/widgets/main/add_your_symptons_card.dart';
 import 'package:healthcare/widgets/main/show_user_profile_card.dart';
 import 'package:healthcare/widgets/main/show_userhealth_category.dart';
@@ -135,6 +136,11 @@ class _HomePageState extends State<HomePage> {
                               GestureDetector(
                                 onTap: () {
                                   // controller.forward();
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => ProfilePage(),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   width: 50,
