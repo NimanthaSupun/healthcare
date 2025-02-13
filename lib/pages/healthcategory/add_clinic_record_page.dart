@@ -103,12 +103,6 @@ class AddClinicRecordPage extends StatelessWidget {
         scheduledDateTime: scheduledDateTime,
       );
 
-      // await ClinicService().addNewClinic(
-      //   FirebaseAuth.instance.currentUser!.uid,
-      //   healthCategory.id,
-      //   clinic,
-      // );
-
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
         context,
