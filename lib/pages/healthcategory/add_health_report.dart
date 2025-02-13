@@ -21,6 +21,7 @@ class AddHealthReport extends StatefulWidget {
 }
 
 class _AddHealthReportState extends State<AddHealthReport> {
+  
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _symptonsController = TextEditingController();
 
