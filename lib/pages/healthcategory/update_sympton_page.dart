@@ -31,9 +31,9 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
 
   @override
   void initState() {
+    _symptonsController.text = widget.symptonModel.name;
     super.initState();
   }
-
 
   @override
   void dispose() {
