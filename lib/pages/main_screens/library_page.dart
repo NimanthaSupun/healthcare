@@ -270,70 +270,78 @@ class _LibraryPageState extends State<LibraryPage> {
                                 ],
                                 if (categoryClinics.isNotEmpty) ...[
                                   const SizedBox(height: 16),
-                                  const Text(
-                                    "Clinic",
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w700,
-                                      color: button1,
+                                  ExpansionTile(
+                                    title: const Text(
+                                      "Clinic",
+                                      style: TextStyle(
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w700,
+                                        color: button1,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Column(
-                                    children: categoryClinics.map((clinic) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SingleClinicPage(
-                                                clinic: clinic,
-                                                healthCategory: healthCategory,
+                                    children: [
+                                      const SizedBox(height: 16),
+                                      Column(
+                                        children: categoryClinics.map((clinic) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SingleClinicPage(
+                                                    clinic: clinic,
+                                                    healthCategory:
+                                                        healthCategory,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 10,
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: subLandMarksCardBg,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 8,
+                                                  horizontal: 16,
+                                                ),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      clinic.reason,
+                                                      style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    CountdownTimer(
+                                                      dueDate: clinic.dueDate,
+                                                      time: clinic.dueTime,
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           );
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 10,
-                                          ),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: subLandMarksCardBg,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 8,
-                                              horizontal: 16,
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  clinic.reason,
-                                                  style: const TextStyle(
-                                                    fontWeight: FontWeight.w600,
-                                                    fontSize: 18,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                CountdownTimer(
-                                                  dueDate: clinic.dueDate,
-                                                  time: clinic.dueTime,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
+                                        }).toList(),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ],
