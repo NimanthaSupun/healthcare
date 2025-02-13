@@ -207,56 +207,65 @@ class _LibraryPageState extends State<LibraryPage> {
                                 ),
                                 if (categorySymptons.isNotEmpty) ...[
                                   const SizedBox(height: 16),
-                                  const Text(
-                                    "Symptons",
-                                    style: TextStyle(
-                                      fontSize: 21,
-                                      fontWeight: FontWeight.w700,
-                                      color: mainGreenColor,
+                                  ExpansionTile(
+                                    title: const Text(
+                                      "Symptons",
+                                      style: TextStyle(
+                                        fontSize: 21,
+                                        fontWeight: FontWeight.w700,
+                                        color: mainGreenColor,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 16),
-                                  Column(
-                                    children: categorySymptons.map((sympton) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  SingleSymptonPage(
-                                                sympton: sympton,
+                                    children: [
+                                      const SizedBox(height: 16),
+                                      Column(
+                                        children:
+                                            categorySymptons.map((sympton) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SingleSymptonPage(
+                                                    healthCategory:
+                                                        healthCategory,
+                                                    sympton: sympton,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 10,
+                                              ),
+                                              margin: const EdgeInsets.only(
+                                                  bottom: 10),
+                                              width: double.infinity,
+                                              decoration: BoxDecoration(
+                                                color: subLandMarksCardBg,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 8,
+                                                  horizontal: 16,
+                                                ),
+                                                child: Text(
+                                                  sympton.name,
+                                                  style: const TextStyle(
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 17,
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           );
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.symmetric(
-                                            vertical: 10,
-                                          ),
-                                          margin:
-                                              const EdgeInsets.only(bottom: 10),
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: subLandMarksCardBg,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 8,
-                                              horizontal: 16,
-                                            ),
-                                            child: Text(
-                                              sympton.name,
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 17,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }).toList(),
+                                        }).toList(),
+                                      ),
+                                    ],
                                   ),
                                 ],
                                 if (categoryClinics.isNotEmpty) ...[
@@ -325,7 +334,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                         ),
                                       );
                                     }).toList(),
-                                  )
+                                  ),
                                 ],
                               ],
                             ),

@@ -1,16 +1,25 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/functions/function_dart';
+import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/sympton_model.dart';
+import 'package:healthcare/pages/responsive/mobile_layout.dart';
+import 'package:healthcare/pages/responsive/responsive_layout.dart';
+import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/services/category/image_saver_service.dart';
+import 'package:healthcare/services/category/symton_service.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
 class SingleSymptonPage extends StatefulWidget {
   final SymptonModel sympton;
+  final HealthCategory healthCategory;
 
   const SingleSymptonPage({
     Key? key,
     required this.sympton,
+    required this.healthCategory,
   }) : super(key: key);
 
   @override
@@ -125,6 +134,37 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     );
   }
 
+  void _deleteSympton(BuildContext context) async {
+    try {
+      SymtonService().deleteSympton(
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.healthCategory.id,
+        widget.sympton.id,
+      );
+
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Sympton record deleted successfully",
+      );
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => ResponsiveLayoutSreen(
+            mobileScreenLayout: MobileSreenLayout(),
+            webSreenLayout: WebSreenLayout(),
+          ),
+        ),
+      );
+    } catch (error) {
+      print("Error: {error}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,7 +203,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                                     MainAxisAlignment.spaceAround,
                                 children: [
                                   TextButton(
-                                    onPressed: () {},
+                                    onPressed: () => _deleteSympton(context),
                                     child: Text(
                                       "Ok",
                                       style: TextStyle(
