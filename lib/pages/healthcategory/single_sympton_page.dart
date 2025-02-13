@@ -131,7 +131,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              
             },
             icon: Icon(Icons.more_vert),
           ),
