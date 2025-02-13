@@ -136,7 +136,31 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                 context: context,
                 builder: (context) {
                   return CategoryBottonSheet(
-                    deleteCallback: () {},
+                    deleteCallback: () {
+                      Navigator.of(context).pop();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Delete"),
+                            content:
+                                Text("Are you sure you want to delete this"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {},
+                                child: Text("Ok"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("Cancel"),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
                     editCallback: () {},
                     title1: "Delete Sympton Report's",
                     title2: "Edit Sympton Report's",
