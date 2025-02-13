@@ -10,6 +10,7 @@ import 'package:healthcare/services/category/clinic_service.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/services/category/symton_service.dart';
 import 'package:healthcare/widgets/single_category/countdown_timmer.dart';
+import 'package:intl/intl.dart';
 
 class LibraryPage extends StatefulWidget {
   const LibraryPage({super.key});
@@ -254,9 +255,11 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   horizontal: 16,
                                                 ),
                                                 child: Text(
-                                                  sympton.name,
+                                                  DateFormat.yMMMd()
+                                                      .format(sympton.dueDate),
                                                   style: const TextStyle(
                                                     fontWeight: FontWeight.w400,
+                                                    color: mainLandMarksColor,
                                                     fontSize: 17,
                                                   ),
                                                 ),

@@ -187,12 +187,12 @@ class _AddHealthReportState extends State<AddHealthReport> {
                         ),
                         CustomInput(
                           controller: _symptonsController,
-                          labelText: "symptoms Name",
+                          labelText: "Note",
                           icon: Icons.description,
                           obsecureText: false,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return "please enter symptoms name";
+                              return "please enter some note's";
                             }
                             return null;
                           },
