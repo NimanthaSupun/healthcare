@@ -70,6 +70,7 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
       final SymptonModel symptonModel = SymptonModel(
         id: "",
         name: _symptonsController.text,
+        dueDate: DateTime.now(),
         medicalReportImage: _base64MedicalReportImage,
         doctorNoteImage: _base64DoctorNoteImage,
         precriptionsImage: _base64PrescriptionImage,

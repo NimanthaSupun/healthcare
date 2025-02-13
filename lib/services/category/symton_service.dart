@@ -15,9 +15,7 @@ class SymtonService {
           .collection("symptons");
 
       final SymptonModel newSympton = SymptonModel(
-        id: "",
-        name: symptonModel.name,
-      );
+          id: "", name: symptonModel.name, dueDate: symptonModel.dueDate);
 
       final Map<String, dynamic> data = newSympton.toJson();
 
@@ -70,10 +68,12 @@ class SymtonService {
               ? images2Snapshot.docs.first.data()
               : {};
 
+          DateTime dueDate = (symptomData['dueDate'] as Timestamp).toDate();
           // Combine all data
           symptoms.add(SymptonModel(
             id: symptomId,
             name: symptomData['name'] ?? '',
+            dueDate: dueDate,
             medicalReportImage: images1Data['medicalReportImage'] ?? '',
             doctorNoteImage: images1Data['doctorNoteImage'] ?? '',
             clinicNoteImage: images2Data['clinicNoteImage'] ?? '',

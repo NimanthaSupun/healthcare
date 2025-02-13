@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class SymptonModel {
   final String id;
   final String name;
@@ -5,6 +7,8 @@ class SymptonModel {
   final String? doctorNoteImage;
   final String? precriptionsImage;
   final String? clinicNoteImage;
+  final DateTime dueDate;
+
 
   SymptonModel({
     required this.id,
@@ -13,6 +17,8 @@ class SymptonModel {
     this.doctorNoteImage,
     this.precriptionsImage,
     this.clinicNoteImage,
+    required this.dueDate,
+
   });
 
   // convert to dart
@@ -24,6 +30,8 @@ class SymptonModel {
       doctorNoteImage: json['doctorNoteImage'] ?? '',
       precriptionsImage: json['precriptionsImage'] ?? '',
       clinicNoteImage: json['clinicNoteImage'] ?? '',
+      dueDate: (json['dueDate'] as Timestamp).toDate(),
+
     );
   }
 
@@ -35,6 +43,8 @@ class SymptonModel {
       'doctorNoteImage': doctorNoteImage,
       'precriptionsImage': precriptionsImage,
       'clinicNoteImage': clinicNoteImage,
+      'dueDate': Timestamp.fromDate(dueDate),
+
     };
   }
 }

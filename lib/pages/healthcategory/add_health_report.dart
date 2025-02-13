@@ -87,11 +87,13 @@ class _AddHealthReportState extends State<AddHealthReport> {
 
       final SymptonModel symptonModel = SymptonModel(
         id: "",
+        dueDate: _selectedDate,
         name: _symptonsController.text,
         medicalReportImage: _base64MedicalReportImage,
         doctorNoteImage: _base64DoctorNoteImage,
         precriptionsImage: _base64PrescriptionImage,
         clinicNoteImage: _base64ClinicNoteImage,
+
       );
 
       await SymtonService().addNewSympton(
