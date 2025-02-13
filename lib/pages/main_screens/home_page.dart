@@ -29,37 +29,6 @@ class _HomePageState extends State<HomePage> {
   // ignore: prefer_typing_uninitialized_variables
   late UserModel getUser;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   controller = AnimationController(
-  //     vsync: this,
-  //     duration: Duration(milliseconds: 500),
-  //   );
-  //   controller.addListener(() {
-  //     if (controller.isCompleted) {
-  //       if (mounted) {
-  //         Navigator.of(context).push(
-  //           MyCustomRouteTransition(
-  //             route: ProfilePage(), // Ensure ProfilePage is not null
-  //           ),
-  //         );
-  //       }
-  //       Timer(Duration(milliseconds: 500), () {
-  //         controller.reset();
-  //       });
-  //     }
-  //   });
-  //   scaleAnimation = Tween<double>(begin: 1, end: 10).animate(controller);
-  // }
-
-  // @override
-  // void dispose() {
-  //   controller.stop();
-  //   controller.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
