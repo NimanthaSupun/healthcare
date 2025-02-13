@@ -17,7 +17,7 @@ class AddClinicRecordPage extends StatelessWidget {
 
   final ValueNotifier<DateTime> _selectDate =
       ValueNotifier<DateTime>(DateTime.now());
-      
+
   final ValueNotifier<TimeOfDay> _selectTime =
       ValueNotifier<TimeOfDay>(TimeOfDay.now());
 
