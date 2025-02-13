@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 class AddHealthReport extends StatefulWidget {
   final HealthCategory healthCategory;
 
- const AddHealthReport({
+  const AddHealthReport({
     super.key,
     required this.healthCategory,
   });
@@ -30,6 +30,28 @@ class _AddHealthReportState extends State<AddHealthReport> {
   final ImagePicker doctorImagePicker = ImagePicker();
   final ImagePicker prescriptionImagePicker = ImagePicker();
   final ImagePicker clinicImagePicker = ImagePicker();
+
+  late DateTime _selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDate = DateTime.now();
+  }
+
+  Future<void> _onSelectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2026),
+      initialDate: _selectedDate,
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -135,6 +157,32 @@ class _AddHealthReportState extends State<AddHealthReport> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 8,
+                            horizontal: 5,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  "Date: ${_selectedDate.toLocal().toString().split(" ")[0]}",
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: _onSelectDate,
+                                icon: const Icon(
+                                  Icons.calendar_today,
+                                  size: 30,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                         CustomInput(
                           controller: _symptonsController,
                           labelText: "symptoms Name",
