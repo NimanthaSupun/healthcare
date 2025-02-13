@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/sympton_model.dart';
 import 'package:healthcare/services/category/image_saver_service.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
@@ -142,19 +143,48 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text("Delete"),
-                            content:
-                                Text("Are you sure you want to delete this"),
-                            actions: [
-                              TextButton(
-                                onPressed: () {},
-                                child: Text("Ok"),
+                            title: Text(
+                              "Delete",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                              textAlign: TextAlign.center,
+                            ),
+                            content: Text(
+                              "Are you sure you want to delete this",
+                              style: TextStyle(
+                                color: mainOrangeColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
                               ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("Cancel"),
+                              textAlign: TextAlign.center,
+                            ),
+                            actions: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "Ok",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      "Cancel",
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           );
