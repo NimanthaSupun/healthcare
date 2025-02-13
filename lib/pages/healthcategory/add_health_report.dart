@@ -93,7 +93,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
         doctorNoteImage: _base64DoctorNoteImage,
         precriptionsImage: _base64PrescriptionImage,
         clinicNoteImage: _base64ClinicNoteImage,
-
       );
 
       await SymtonService().addNewSympton(
@@ -153,7 +152,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 25,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -185,6 +184,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
                         CustomInput(
                           controller: _symptonsController,
                           labelText: "Note",
@@ -198,7 +200,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           },
                         ),
                         SizedBox(
-                          height: 25,
+                          height: 30,
                         ),
                         SingleCategoryImageCard(
                           title: "Medical reports",
