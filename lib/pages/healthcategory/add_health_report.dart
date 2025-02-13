@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/functions/function_dart';
@@ -15,8 +14,10 @@ import 'package:image_picker/image_picker.dart';
 class AddHealthReport extends StatefulWidget {
   final HealthCategory healthCategory;
 
-  const AddHealthReport({super.key, required this.healthCategory});
-
+ const AddHealthReport({
+    super.key,
+    required this.healthCategory,
+  });
   @override
   State<AddHealthReport> createState() => _AddHealthReportState();
 }
