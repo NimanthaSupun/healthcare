@@ -21,7 +21,7 @@ class AddHealthReport extends StatefulWidget {
 }
 
 class _AddHealthReportState extends State<AddHealthReport> {
-  
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _symptonsController = TextEditingController();
 
@@ -29,6 +29,13 @@ class _AddHealthReportState extends State<AddHealthReport> {
   final ImagePicker doctorImagePicker = ImagePicker();
   final ImagePicker prescriptionImagePicker = ImagePicker();
   final ImagePicker clinicImagePicker = ImagePicker();
+
+  @override
+  void initState() {
+    
+    super.initState();
+    
+  }
 
   @override
   void dispose() {
@@ -148,46 +155,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
                         ),
                         SizedBox(
                           height: 25,
-                        ),
-                        SingleCategoryImageCard(
-                          title: "Medical reports",
-                          onPressed: () =>
-                              _pickedMedicalReport(ImageSource.gallery),
-                          selectedImage: _selectedmedicalReportImage,
-                        ),
-                        SizedBox(height: 15),
-                        SingleCategoryImageCard(
-                          title: "Doctor note",
-                          onPressed: () =>
-                              _pickedDoctorNote(ImageSource.gallery),
-                          selectedImage: _selectedDoctorNoteImage,
-                        ),
-                        SizedBox(height: 15),
-                        SingleCategoryImageCard(
-                          title: "Prescription",
-                          onPressed: () =>
-                              _pickedPrescription(ImageSource.gallery),
-                          selectedImage: _selectedPrescriptionImage,
-                        ),
-                        SizedBox(height: 15),
-                        SingleCategoryImageCard(
-                          title: "Clinic note",
-                          onPressed: () =>
-                              _pickedClinicNote(ImageSource.gallery),
-                          selectedImage: _selectedClinicNoteImage,
-                        ),
-                        SizedBox(height: 15),
-                        _isLoading
-                            ? Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            : CustomButton(
-                                title: "Upload",
-                                width: double.infinity,
-                                onPressed: () => _submitSympton(context),
-                              ),
-                        SizedBox(
-                          height: 30,
                         ),
                       ],
                     ),

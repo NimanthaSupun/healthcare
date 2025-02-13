@@ -10,14 +10,17 @@ import 'package:healthcare/widgets/single_category/single_category_image_card.da
 import 'package:image_picker/image_picker.dart';
 
 class UpdateSymptonPage extends StatefulWidget {
-  const UpdateSymptonPage({super.key});
+  final SymptonModel symptonModel;
+  const UpdateSymptonPage({
+    super.key,
+    required this.symptonModel,
+  });
 
   @override
   State<UpdateSymptonPage> createState() => _UpdateSymptonPageState();
 }
 
 class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _symptonsController = TextEditingController();
 
@@ -25,6 +28,12 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
   final ImagePicker doctorImagePicker = ImagePicker();
   final ImagePicker prescriptionImagePicker = ImagePicker();
   final ImagePicker clinicImagePicker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
   @override
   void dispose() {
@@ -67,8 +76,6 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
         clinicNoteImage: _base64ClinicNoteImage,
       );
 
-     
-
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
         context,
@@ -98,9 +105,10 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -191,7 +199,7 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
       ),
     );
   }
-  
+
   Future<void> _pickedMedicalReport(ImageSource gallery) async {
     final XFile? image =
         await medicalImagePicker.pickImage(source: ImageSource.gallery);
