@@ -67,19 +67,6 @@ class AddClinicRecordPage extends StatelessWidget {
         dueDate: _selectDate.value,
         dueTime: _selectTime.value,
       );
-
-      // LocalNotificationsService.scheduleNotification(
-      //   title: "Clinic Appointment Now",
-      //   body: "Your clinic appointment for ${clinic.reason} is now",
-      //   scheduledDate: DateTime(
-      //     _selectDate.value.year,
-      //     _selectDate.value.month,
-      //     _selectDate.value.day,
-      //     _selectTime.value.hour,
-      //     _selectTime.value.minute,
-      //   ),
-      // );
-
       final DateTime scheduledDateTime = DateTime(
         _selectDate.value.year,
         _selectDate.value.month,
