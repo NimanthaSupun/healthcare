@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/sympton_model.dart';
 import 'package:healthcare/services/category/image_saver_service.dart';
+import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
 class SingleSymptonPage extends StatefulWidget {
   final SymptonModel sympton;
@@ -131,7 +132,17 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
         actions: [
           IconButton(
             onPressed: () {
-              
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return CategoryBottonSheet(
+                    deleteCallback: () {},
+                    editCallback: () {},
+                    title1: "Delete Sympton Report's",
+                    title2: "Edit Sympton Report's",
+                  );
+                },
+              );
             },
             icon: Icon(Icons.more_vert),
           ),
