@@ -179,11 +179,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   height: 40,
                 ),
-                CustomProfileCard(
-                  onTap: () {},
-                  icon: Icons.date_range,
-                  titile: "user details",
-                ),
                 Divider(),
                 SizedBox(
                   height: 10,
