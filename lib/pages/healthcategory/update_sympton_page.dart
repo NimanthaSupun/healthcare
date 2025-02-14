@@ -68,6 +68,7 @@ class _UpdateSymptonPageState extends State<UpdateSymptonPage> {
       });
 
       final SymptonModel symptonModel = SymptonModel(
+        
         id: "",
         name: _symptonsController.text,
         dueDate: DateTime.now(),
