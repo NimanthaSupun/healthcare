@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/sympton_model.dart';
