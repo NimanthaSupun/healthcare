@@ -258,7 +258,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                                   DateFormat.yMMMd()
                                                       .format(sympton.dueDate),
                                                   style: const TextStyle(
-                                                    fontWeight: FontWeight.w400,
+                                                    fontWeight: FontWeight.w900,
                                                     color: mainLandMarksColor,
                                                     fontSize: 17,
                                                   ),
