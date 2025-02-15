@@ -15,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
+  
   //initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
 

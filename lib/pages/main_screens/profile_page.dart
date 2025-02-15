@@ -8,6 +8,7 @@ import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/widgets/reusable/custom_profile_card.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -25,6 +26,16 @@ class _ProfilePageState extends State<ProfilePage> {
     // DateTime now = DateTime.now();
     // String formattedDate = formatter.format(now);
     // String formatterDay = dayFormat.format(now);
+
+    void _openGoogleMaps(double latitude, double longitude) async {
+      final Uri googleMapsUrl = Uri.parse(
+          "https://www.google.com/maps/search/?api=1&query=$latitude,$longitude");
+
+      if (!await launchUrl(googleMapsUrl,
+          mode: LaunchMode.externalApplication)) {
+        debugPrint("Could not launch Google Maps");
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(),
@@ -199,6 +210,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 SizedBox(
                   height: 40,
                 ),
+                ElevatedButton(
+                  onPressed: () =>
+                      _openGoogleMaps(6.932689343470935, 79.84423838339256),
+                  child: Text("Map"),
+                )
               ],
             ),
           ),
