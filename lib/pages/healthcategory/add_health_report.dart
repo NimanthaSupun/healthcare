@@ -388,7 +388,39 @@ class _AddHealthReportState extends State<AddHealthReport> {
       }
     } finally {
       setState(() {
-        isDoctorRecognized = false;
+        isMedicalRecognized = false;
+      });
+    }
+  }
+  // todo: function to proccess prescription image
+  void _processPrescriptionImage() async {
+
+     if (_base64PrescriptionImage == null) {
+        return;
+      }
+       setState(() {
+        isPrescriptionRecognized = true;
+        prescriptionRecognizedText = "";
+      });
+
+    try {
+      final inputImage = InputImage.fromFilePath(_base64PrescriptionImage!);
+      final RecognizedText recognizedTextFrommodel =
+          await prescriptionTextRecognizer.processImage(inputImage);
+
+      // loop block
+      for (TextBlock block in recognizedTextFrommodel.blocks) {
+        for (TextLine line in block.lines) {
+          prescriptionRecognizedText += "${line.text} \n";
+        }
+      }
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+    } finally {
+      setState(() {
+        isPrescriptionRecognized = false;
       });
     }
   }
