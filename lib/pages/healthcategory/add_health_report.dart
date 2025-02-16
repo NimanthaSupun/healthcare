@@ -38,7 +38,12 @@ class _AddHealthReportState extends State<AddHealthReport> {
   late TextRecognizer prescriptionTextRecognizer;
   late TextRecognizer clinicTextRecognizer;
 
-  
+  String medicalRecognizedText = "";
+  String doctorRecognizedText = "";
+  String prescriptionRecognizedText = "";
+  String clinicRecognizedText = "";
+
+
   
 
 
