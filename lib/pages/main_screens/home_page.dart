@@ -46,12 +46,16 @@ class _HomePageState extends State<HomePage> {
             },
             child: Icon(Icons.add),
           ),
-          FloatingActionButton(
-            onPressed: () {
-              
-            },
-            child: Icon(Icons.add),
-          ),
+          // FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.of(context).push(
+          //       MaterialPageRoute(
+          //         builder: (context) => DocumentScannerPage(),
+          //       ),
+          //     );
+          //   },
+          //   child: Icon(Icons.add),
+          // ),
         ],
       ),
       body: SafeArea(
