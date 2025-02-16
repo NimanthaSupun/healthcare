@@ -43,6 +43,13 @@ class _AddHealthReportState extends State<AddHealthReport> {
   String prescriptionRecognizedText = "";
   String clinicRecognizedText = "";
 
+  bool isMedicalRecognized = false;
+  bool isDoctorRecognized = false;
+  bool isPrescriptionRecognized = false;
+  bool isClinicRecognized = false;
+
+
+
 
   
 
