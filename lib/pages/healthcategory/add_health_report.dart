@@ -48,18 +48,22 @@ class _AddHealthReportState extends State<AddHealthReport> {
   bool isPrescriptionRecognized = false;
   bool isClinicRecognized = false;
 
-
-
-
-  
-
-
-
-
   @override
   void initState() {
     super.initState();
     _selectedDate = DateTime.now();
+    medicalTextRecognizer = TextRecognizer(
+      script: TextRecognitionScript.latin,
+    );
+    doctorTextRecognizer = TextRecognizer(
+      script: TextRecognitionScript.latin,
+    );
+    prescriptionTextRecognizer = TextRecognizer(
+      script: TextRecognitionScript.latin,
+    );
+    clinicTextRecognizer = TextRecognizer(
+      script: TextRecognitionScript.latin,
+    );
   }
 
   Future<void> _onSelectDate() async {
