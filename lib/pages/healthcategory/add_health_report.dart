@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/models/sympton_model.dart';
@@ -32,6 +33,16 @@ class _AddHealthReportState extends State<AddHealthReport> {
   final ImagePicker clinicImagePicker = ImagePicker();
 
   late DateTime _selectedDate;
+  late TextRecognizer medicalTextRecognizer;
+  late TextRecognizer doctorTextRecognizer;
+  late TextRecognizer prescriptionTextRecognizer;
+  late TextRecognizer clinicTextRecognizer;
+
+  
+  
+
+
+
 
   @override
   void initState() {
