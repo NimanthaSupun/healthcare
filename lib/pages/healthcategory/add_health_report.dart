@@ -327,4 +327,37 @@ class _AddHealthReportState extends State<AddHealthReport> {
           base64Encode(_clinicNoteImage!.readAsBytesSync());
     });
   }
+
+  // todo: function to proccess doctoernote image
+  void _processDoctorImage() async {
+
+     if (_base64DoctorNoteImage == null) {
+        return;
+      }
+       setState(() {
+        isDoctorRecognized = true;
+        doctorRecognizedText = "";
+      });
+
+    try {
+      final inputImage = InputImage.fromFilePath(_base64DoctorNoteImage!);
+      final RecognizedText recognizedTextFrommodel =
+          await doctorTextRecognizer.processImage(inputImage);
+
+      // loop block
+      for (TextBlock block in recognizedTextFrommodel.blocks) {
+        for (TextLine line in block.lines) {
+          doctorRecognizedText += "${line.text} \n";
+        }
+      }
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+    } finally {
+      setState(() {
+        isDoctorRecognized = false;
+      });
+    }
+  }
 }
