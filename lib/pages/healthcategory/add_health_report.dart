@@ -424,4 +424,36 @@ class _AddHealthReportState extends State<AddHealthReport> {
       });
     }
   }
+  // todo: function to process clinic image
+  void _procesClinicImage() async {
+
+     if (_base64ClinicNoteImage == null) {
+        return;
+      }
+       setState(() {
+        isClinicRecognized = true;
+        clinicRecognizedText = "";
+      });
+
+    try {
+      final inputImage = InputImage.fromFilePath(_base64ClinicNoteImage!);
+      final RecognizedText recognizedTextFrommodel =
+          await clinicTextRecognizer.processImage(inputImage);
+
+      // loop block
+      for (TextBlock block in recognizedTextFrommodel.blocks) {
+        for (TextLine line in block.lines) {
+          clinicRecognizedText += "${line.text} \n";
+        }
+      }
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+    } finally {
+      setState(() {
+        isClinicRecognized = false;
+      });
+    }
+  }
 }
