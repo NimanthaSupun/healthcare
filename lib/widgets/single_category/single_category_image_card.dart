@@ -99,6 +99,26 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                     ),
                   ),
             SizedBox(
+              height: 10,
+            ),
+            if (widget.selectedImage != null) ...[
+              Column(
+                children: [
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Recognized Text",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: mainNightLifeColor,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+            SizedBox(
               height: 5,
             ),
           ],
