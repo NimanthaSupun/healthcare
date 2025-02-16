@@ -9,19 +9,20 @@ import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:healthcare/services/notification/push_notification_service.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   //initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
 
   await ClinicNotificationService.init();
-  
-   //listen for incoming messages in background
+
+  //listen for incoming messages in background
   FirebaseMessaging.onBackgroundMessage(
       PushNotificationsService.onBackgroundMessage);
 
@@ -36,6 +37,7 @@ void main() async {
     ),
   );
 }
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
