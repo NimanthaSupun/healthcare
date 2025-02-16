@@ -234,6 +234,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           onPressed: () =>
                               _pickedMedicalReport(ImageSource.gallery),
                           selectedImage: _selectedmedicalReportImage,
+                          processImage:_processMedicalImage,
+                          isRecognized: isMedicalRecognized,
+                          recognizedText: medicalRecognizedText,
                         ),
                         SizedBox(height: 15),
                         SingleCategoryImageCard(
@@ -241,6 +244,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           onPressed: () =>
                               _pickedDoctorNote(ImageSource.gallery),
                           selectedImage: _selectedDoctorNoteImage,
+                          processImage: _processDoctorImage,
+                          isRecognized: isDoctorRecognized,
+                          recognizedText: doctorRecognizedText,
                         ),
                         SizedBox(height: 15),
                         SingleCategoryImageCard(
@@ -248,6 +254,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           onPressed: () =>
                               _pickedPrescription(ImageSource.gallery),
                           selectedImage: _selectedPrescriptionImage,
+                          processImage: _processPrescriptionImage,
+                          isRecognized: isPrescriptionRecognized,
+                          recognizedText: prescriptionRecognizedText,
                         ),
                         SizedBox(height: 15),
                         SingleCategoryImageCard(
@@ -255,6 +264,9 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           onPressed: () =>
                               _pickedClinicNote(ImageSource.gallery),
                           selectedImage: _selectedClinicNoteImage,
+                          processImage: _procesClinicImage,
+                          isRecognized: isClinicRecognized,
+                          recognizedText: clinicRecognizedText,
                         ),
                         SizedBox(height: 15),
                         _isLoading

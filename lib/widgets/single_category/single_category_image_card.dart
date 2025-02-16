@@ -8,11 +8,18 @@ class SingleCategoryImageCard extends StatefulWidget {
   final String title;
   XFile? selectedImage;
   final VoidCallback onPressed;
+  final VoidCallback processImage;
+  final bool isRecognized;
+  final String recognizedText;
+
   SingleCategoryImageCard({
     super.key,
     required this.title,
     this.selectedImage,
     required this.onPressed,
+    required this.processImage,
+    required this.recognizedText,
+    required this.isRecognized,
   });
 
   @override
@@ -109,9 +116,9 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                     child: Text(
                       "Recognized Text",
                       style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
-                          color: mainNightLifeColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: mainNightLifeColor,
                       ),
                     ),
                   ),
