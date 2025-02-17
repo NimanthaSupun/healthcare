@@ -21,6 +21,9 @@ class AddYourSymptonsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               // ignore: deprecated_member_use
               color: subLandMarksCardBg.withOpacity(0.9),
+              border: Border.all(
+                color: Colors.black54,
+              ),
             ),
           ),
           Center(
@@ -42,6 +45,9 @@ class AddYourSymptonsCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
               // ignore: deprecated_member_use
               color: subLandMarksCardBg.withOpacity(0.6),
+              border: Border.all(
+                color: Colors.black54,
+              ),
             ),
           ),
           Padding(
@@ -110,4 +116,3 @@ class AddYourSymptonsCard extends StatelessWidget {
     );
   }
 }
-
