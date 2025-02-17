@@ -123,10 +123,14 @@ class ProfileDataPage extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 212,
+                      padding: EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
+                        // ignore: deprecated_member_use
                         color: mainYellowColor.withOpacity(0.1),
-                        // color: mainPurpleColor.withOpacity(0.1),
+                        border: Border.all(
+                          color: Colors.black54,
+                        ),
                       ),
                     ),
                     ShowBloodSugerChart(),
