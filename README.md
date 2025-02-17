@@ -2,16 +2,16 @@
 
 The Healthcare App is a comprehensive solution designed to manage and monitor health-related data. It integrates with Firebase for authentication and data storage, and it supports push notifications to keep users informed about their health updates.
 
-## Features
+## 🚀 Features
 
-- **User Authentication**: Sign in with Google and manage user profiles.
-- **Health Reports**: Submit and view health reports with images.
-- **Push Notifications**: Receive notifications for health updates and reminders.
-- **Local Notifications**: Get notified about important health events even when the app is in the background.
-- **Profile Management**: View and update user profiles.
-- **Symptom Tracking**: Add and track symptoms over time.
+- **🔐 User Authentication**: Sign in with Google and manage user profiles.
+- **❤️ Health Reports**: Submit and view health reports with images.
+- **🔔 Push Notifications**: Receive notifications for health updates and reminders.
+- **⏰ Local Notifications**: Get notified about important health events even when the app is in the background.
+- **🪪 Profile Management**: View and update user profiles.
+- **🧑‍⚕️ Symptom Tracking**: Add and track symptoms over time.
 
-## Technologies Used
+##🤖 Technologies Used
 
 - **Flutter**: The app is built using Flutter for cross-platform compatibility.
 - **Firebase**: Firebase is used for authentication, Firestore for database, and Firebase Messaging for push notifications.
