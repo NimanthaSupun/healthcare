@@ -35,7 +35,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         // ignore: deprecated_member_use
-        color: subLandMarksCardBg.withOpacity(0.5),
+        color: subLandMarksCardBg.withOpacity(0.32),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5),
@@ -113,29 +113,42 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
               height: 10,
             ),
             widget.recognizedText.isNotEmpty
-                ? TextButton(
-                    onPressed: () {
+                ? GestureDetector(
+                    onTap: () {
                       setState(() {
                         widget.recognizedText = "";
                       });
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          "Clear this",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: mainOrangeColor,
-                            fontSize: 22,
-                          ),
-                        ),
-                        Icon(
-                          Icons.cancel_outlined,
-                          size: 30,
+                    child: Container(
+                      width: 200,
+                      height: 40,
+                      margin: EdgeInsets.only(bottom: 5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: mainWhiteColor,
+                        border: Border.all(
                           color: mainOrangeColor,
+                          width: 2,
                         ),
-                      ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Clear this",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: mainOrangeColor,
+                            ),
+                          ),
+                          Icon(
+                            Icons.clear,
+                            size: 30,
+                            color: mainOrangeColor,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 : SizedBox(
@@ -144,56 +157,84 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             widget.recognizedText.isNotEmpty
                 ? Scrollbar(
                     child: SingleChildScrollView(
-                      child: SelectableText(
-                        widget.recognizedText.isEmpty
-                            ? "No text process"
-                            : widget.recognizedText,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15),
+                      child: Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          margin: EdgeInsets.only(bottom: 5),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: mainPurpleColor,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                            color: mainWhiteColor,
+                          ),
+                          child: SelectableText(
+                            cursorColor: mainOrangeColor,
+                            widget.recognizedText.isEmpty
+                                ? "No text process"
+                                : widget.recognizedText,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                        ),
                       ),
                     ),
                   )
                 : SizedBox(),
             SizedBox(
-              height: 10,
+              height: 1,
             ),
             if (widget.selectedImage != null) ...[
               Column(
                 children: [
-                  TextButton(
-                    onPressed: widget.processImage,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          "Process Image",
-                          style: TextStyle(
-                            fontSize: 22,
-                            color: mainNightLifeColor,
-                            fontWeight: FontWeight.bold,
-                          ),
+                  GestureDetector(
+                    onTap: widget.processImage,
+                    child: Container(
+                      width: 200,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: mainWhiteColor,
+                        border: Border.all(
+                          color: mainNightLifeColor,
+                          width: 2,
                         ),
-                        if (widget.isRecognized) ...{
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.orange,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "Process Image",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: mainPurpleColor,
                             ),
                           ),
-                        }
-                      ],
+                          widget.isRecognized
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.orange,
+                                  ),
+                                )
+                              : Icon(
+                                  Icons.auto_awesome,
+                                  size: 30,
+                                  color: mainPurpleColor,
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
               )
             ],
             SizedBox(
-              height: 5,
+              height: 10,
             ),
           ],
         ),
