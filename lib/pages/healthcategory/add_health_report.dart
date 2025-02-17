@@ -48,6 +48,13 @@ class _AddHealthReportState extends State<AddHealthReport> {
   bool isPrescriptionRecognized = false;
   bool isClinicRecognized = false;
 
+  String? pickedMedicalImagePath;
+  String? pickedDoctorImagePath;
+  String? pickedPrescriptionImagePath;
+  String? pickedClinicImagePath;
+
+  
+
   @override
   void initState() {
     super.initState();
