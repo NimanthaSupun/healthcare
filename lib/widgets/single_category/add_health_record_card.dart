@@ -13,8 +13,11 @@ class AddHealthRecordCard extends StatelessWidget {
       width: MediaQuery.of(context).size.width * 0.45,
       height: 250,
       decoration: BoxDecoration(
-        color: subLandMarksCardBg,
-        borderRadius: BorderRadius.circular(10),
+          color: subLandMarksCardBg,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: Colors.black54,
+          ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

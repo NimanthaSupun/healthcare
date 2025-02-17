@@ -89,6 +89,10 @@ class AddYourSymptonsCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           color: Colors.white,
+                          border: Border.all(
+                            color: Colors.black54,
+                            width: 2,
+                          ),
                         ),
                         child: Icon(
                           Icons.add,

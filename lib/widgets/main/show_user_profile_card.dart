@@ -14,10 +14,14 @@ class ShowUserProfileCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Container(
         width: double.infinity,
-        height: 70,
+        height: 68,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          // ignore: deprecated_member_use
           color: subLandMarksCardBg.withOpacity(0.2),
+          border: Border.all(
+            color: Colors.black54,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -25,8 +29,8 @@ class ShowUserProfileCard extends StatelessWidget {
             ClipRRect(
               child: Image.asset(
                 "assets/images/user_profile_icon.png",
-                width: 60,
-                height: 60,
+                width: 55,
+                height: 55,
                 fit: BoxFit.cover,
               ),
             ),
