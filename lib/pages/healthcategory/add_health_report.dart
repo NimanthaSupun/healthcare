@@ -53,8 +53,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
   String? pickedPrescriptionImagePath;
   String? pickedClinicImagePath;
 
-  
-
   @override
   void initState() {
     super.initState();
@@ -309,6 +307,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       _medicalReportImage = File(image!.path);
       _base64MedicalReportImage =
           base64Encode(_medicalReportImage!.readAsBytesSync());
+      pickedMedicalImagePath = image.path;
     });
   }
 
@@ -321,6 +320,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       _doctorNoteImage = File(image!.path);
       _base64DoctorNoteImage =
           base64Encode(_doctorNoteImage!.readAsBytesSync());
+      pickedDoctorImagePath = image.path;
     });
   }
 
@@ -333,6 +333,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       _prescriptionImage = File(image!.path);
       _base64PrescriptionImage =
           base64Encode(_prescriptionImage!.readAsBytesSync());
+      pickedPrescriptionImagePath = image.path;
     });
   }
 
@@ -344,6 +345,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       _clinicNoteImage = File(image!.path);
       _base64ClinicNoteImage =
           base64Encode(_clinicNoteImage!.readAsBytesSync());
+      pickedClinicImagePath = image.path;
     });
   }
 
