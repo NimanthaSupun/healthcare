@@ -30,7 +30,7 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/healthcare.git
+    git clone https://github.com/NimanthaSupun/healthcare.git
     cd healthcare
     ```
 
@@ -56,6 +56,8 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
 - **lib/services/**: Services for notifications and other functionalities.
 - **lib/widgets/**: Custom widgets used throughout the app.
 - **lib/constants/**: Contains constant values used in the app.
+- **lib/provider/**: Contains the theme provider for managing app themes.
+- **lib/router/**: Contains the router configuration for navigation.
 
 ## Usage
 
@@ -75,4 +77,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-For any questions or suggestions, please contact [supunnimantha199@gmail.com](mailto:supunnimantha199@gmail.com).
+For any questions or suggestions, please contact [Nimantha Supun](mailto:yourname@example.com).
