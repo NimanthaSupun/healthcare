@@ -38,7 +38,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
         color: blueColor.withOpacity(0.1),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(5),
         child: Column(
           children: [
             Row(
@@ -78,53 +78,53 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             SizedBox(
               height: 5,
             ),
-            widget.recognizedText.isNotEmpty
-                ? Column(
-                    children: [
-                      Scrollbar(
-                        child: SingleChildScrollView(
-                          child: SelectableText(
-                            widget.recognizedText.isEmpty
-                                ? "No text process"
-                                : widget.recognizedText,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+            Column(
+              children: [
+                widget.selectedImage != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.file(
+                          File(
+                            widget.selectedImage!.path,
+                          ),
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          // ignore: deprecated_member_use
+                          color: subLandMarksCardBg.withOpacity(0.9),
+                        ),
+                        child: IconButton(
+                          onPressed: widget.onPressed,
+                          icon: Icon(
+                            Icons.add_a_photo,
                           ),
                         ),
                       ),
-                    ],
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            widget.recognizedText.isNotEmpty
+                ? Scrollbar(
+                    child: SingleChildScrollView(
+                      child: SelectableText(
+                        widget.recognizedText.isEmpty
+                            ? "No text process"
+                            : widget.recognizedText,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 15),
+                      ),
+                    ),
                   )
-                : Column(
-                    children: [
-                      widget.selectedImage != null
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.file(
-                                File(
-                                  widget.selectedImage!.path,
-                                ),
-                                height: 200,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            )
-                          : Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
-                                // ignore: deprecated_member_use
-                                color: subLandMarksCardBg.withOpacity(0.9),
-                              ),
-                              child: IconButton(
-                                onPressed: widget.onPressed,
-                                icon: Icon(
-                                  Icons.add_a_photo,
-                                ),
-                              ),
-                            ),
-                    ],
-                  ),
+                : Column(),
             SizedBox(
               height: 10,
             ),
