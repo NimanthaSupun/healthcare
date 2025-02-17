@@ -78,33 +78,37 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             SizedBox(
               height: 5,
             ),
-            widget.selectedImage != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.file(
-                      File(
-                        widget.selectedImage!.path,
-                      ),
-                      height: 200,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      // ignore: deprecated_member_use
-                      color: subLandMarksCardBg.withOpacity(0.9),
-                    ),
-                    child: IconButton(
-                      onPressed: widget.onPressed,
-                      icon: Icon(
-                        Icons.add_a_photo,
-                      ),
-                    ),
+            Column(
+              children: [
+                widget.selectedImage != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.file(
+                          File(
+                            widget.selectedImage!.path,
+                          ),
+                          height: 200,
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          // ignore: deprecated_member_use
+                          color: subLandMarksCardBg.withOpacity(0.9),
+                        ),
+                        child: IconButton(
+                          onPressed: widget.onPressed,
+                          icon: Icon(
+                            Icons.add_a_photo,
+                          ),
+                        ),
                   ),
+              ],
+            ),
             SizedBox(
               height: 10,
             ),
@@ -112,14 +116,25 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
               Column(
                 children: [
                   TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      "Recognized Text",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: mainNightLifeColor,
+                    onPressed: widget.processImage,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                         const Text("Process Image"),
+                    if (widget.isRecognized) ...{
+                      const SizedBox(
+                        width: 20,
                       ),
+                      const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.orange,
+                        ),
+                      ),
+                    }
+                      ],
                     ),
                   ),
                 ],

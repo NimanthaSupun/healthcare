@@ -234,7 +234,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                           onPressed: () =>
                               _pickedMedicalReport(ImageSource.gallery),
                           selectedImage: _selectedmedicalReportImage,
-                          processImage:_processMedicalImage,
+                          processImage: _processMedicalImage,
                           isRecognized: isMedicalRecognized,
                           recognizedText: medicalRecognizedText,
                         ),
@@ -342,14 +342,13 @@ class _AddHealthReportState extends State<AddHealthReport> {
 
   // todo: function to proccess doctoernote image
   void _processDoctorImage() async {
-
-     if (_base64DoctorNoteImage == null) {
-        return;
-      }
-       setState(() {
-        isDoctorRecognized = true;
-        doctorRecognizedText = "";
-      });
+    if (_base64DoctorNoteImage == null) {
+      return;
+    }
+    setState(() {
+      isDoctorRecognized = true;
+      doctorRecognizedText = "";
+    });
 
     try {
       final inputImage = InputImage.fromFilePath(_base64DoctorNoteImage!);
@@ -372,16 +371,16 @@ class _AddHealthReportState extends State<AddHealthReport> {
       });
     }
   }
+
   // todo: function to process medical image
   void _processMedicalImage() async {
-
-     if (_base64MedicalReportImage == null) {
-        return;
-      }
-       setState(() {
-        isMedicalRecognized = true;
-        medicalRecognizedText = "";
-      });
+    if (_base64MedicalReportImage == null) {
+      return;
+    }
+    setState(() {
+      isMedicalRecognized = true;
+      medicalRecognizedText = "";
+    });
 
     try {
       final inputImage = InputImage.fromFilePath(_base64MedicalReportImage!);
@@ -394,6 +393,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
           medicalRecognizedText += "${line.text} \n";
         }
       }
+      print(medicalRecognizedText);
     } catch (error) {
       if (!mounted) {
         return;
@@ -404,16 +404,16 @@ class _AddHealthReportState extends State<AddHealthReport> {
       });
     }
   }
+
   // todo: function to proccess prescription image
   void _processPrescriptionImage() async {
-
-     if (_base64PrescriptionImage == null) {
-        return;
-      }
-       setState(() {
-        isPrescriptionRecognized = true;
-        prescriptionRecognizedText = "";
-      });
+    if (_base64PrescriptionImage == null) {
+      return;
+    }
+    setState(() {
+      isPrescriptionRecognized = true;
+      prescriptionRecognizedText = "";
+    });
 
     try {
       final inputImage = InputImage.fromFilePath(_base64PrescriptionImage!);
@@ -436,16 +436,16 @@ class _AddHealthReportState extends State<AddHealthReport> {
       });
     }
   }
+
   // todo: function to process clinic image
   void _procesClinicImage() async {
-
-     if (_base64ClinicNoteImage == null) {
-        return;
-      }
-       setState(() {
-        isClinicRecognized = true;
-        clinicRecognizedText = "";
-      });
+    if (_base64ClinicNoteImage == null) {
+      return;
+    }
+    setState(() {
+      isClinicRecognized = true;
+      clinicRecognizedText = "";
+    });
 
     try {
       final inputImage = InputImage.fromFilePath(_base64ClinicNoteImage!);
