@@ -35,7 +35,10 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         // ignore: deprecated_member_use
-        color: subLandMarksCardBg.withOpacity(0.32),
+        color: subLandMarksCardBg.withOpacity(0.5),
+        border: Border.all(
+          color: Colors.black54,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5),
@@ -44,11 +47,15 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
                   widget.title,
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
+                    color: mainLandMarksColor,
                   ),
                 ),
                 widget.selectedImage != null
@@ -68,7 +75,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                           ),
                         ),
                       )
-                    : Text(""),
+                    : SizedBox(),
               ],
             ),
             SizedBox(
@@ -121,7 +128,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                     },
                     child: Container(
                       width: 200,
-                      height: 40,
+                      height: 35,
                       margin: EdgeInsets.only(bottom: 5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
@@ -138,13 +145,13 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                             "Clear this",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 15,
                               color: mainOrangeColor,
                             ),
                           ),
                           Icon(
                             Icons.clear,
-                            size: 30,
+                            size: 28,
                             color: mainOrangeColor,
                           ),
                         ],

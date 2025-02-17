@@ -170,7 +170,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(1),
             child: Form(
               key: _formKey,
               child: Column(
