@@ -115,15 +115,27 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             widget.recognizedText.isNotEmpty
                 ? TextButton(
                     onPressed: () {
-                      
+                      setState(() {
+                        widget.recognizedText = "";
+                      });
                     },
-                    child: Text(
-                      "Clear Text",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: mainOrangeColor,
-                        fontSize: 22,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          "Clear this",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: mainOrangeColor,
+                            fontSize: 22,
+                          ),
+                        ),
+                        Icon(
+                          Icons.cancel_outlined,
+                          size: 30,
+                          color: mainOrangeColor,
+                        ),
+                      ],
                     ),
                   )
                 : SizedBox(
@@ -156,7 +168,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                         const Text(
                           "Process Image",
                           style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 22,
                             color: mainNightLifeColor,
                             fontWeight: FontWeight.bold,
                           ),
