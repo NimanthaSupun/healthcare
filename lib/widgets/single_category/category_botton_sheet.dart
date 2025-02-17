@@ -18,64 +18,82 @@ class CategoryBottonSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 200,
+      height: 160,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(1),
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: subLandMarksCardBg,
+                border: Border.all(
+                  color: mainOrangeColor,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    title1,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: mainOrangeColor,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: deleteCallback,
+                    icon: Icon(
+                      Icons.delete,
+                      size: 25,
+                      color: mainOrangeColor,
+                    ),
+                  ),
+                ],
+              ),
+            ),
             SizedBox(
-              height: 20,
+              height: 18,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  title1,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.8,
+              height: 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: subLandMarksCardBg,
+                border: Border.all(
+                  color: mainLandMarksColor,
                 ),
-                IconButton(
-                  onPressed: deleteCallback,
-                  icon: Icon(
-                    Icons.delete,
-                    size: 25,
-                    color: mainOrangeColor,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    title2,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: mainLandMarksColor,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Divider(),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  title2,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+                  IconButton(
+                    onPressed: editCallback,
+                    icon: Icon(
+                      Icons.edit,
+                      size: 25,
+                      color: mainLandMarksColor,
+                    ),
                   ),
-                ),
-                IconButton(
-                  onPressed: editCallback,
-                  icon: Icon(
-                    Icons.edit,
-                    size: 25,
-                    color: button1,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

@@ -178,7 +178,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                   Text(
                     "Upload Your symptom Records",
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
