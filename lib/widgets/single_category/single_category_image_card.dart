@@ -139,7 +139,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                         const Text(
                           "Process Image",
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 15,
                             color: mainNightLifeColor,
                             fontWeight: FontWeight.bold,
                           ),
@@ -166,7 +166,6 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
             SizedBox(
               height: 5,
             ),
-            
           ],
         ),
       ),
