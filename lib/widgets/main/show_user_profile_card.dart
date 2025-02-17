@@ -28,9 +28,9 @@ class ShowUserProfileCard extends StatelessWidget {
           children: [
             ClipRRect(
               child: Image.asset(
-                "assets/images/user_profile_icon.png",
-                width: 55,
-                height: 55,
+                "assets/images/man_4140048.png",
+                width: 58,
+                height: 58,
                 fit: BoxFit.cover,
               ),
             ),

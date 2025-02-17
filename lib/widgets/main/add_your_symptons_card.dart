@@ -111,12 +111,3 @@ class AddYourSymptonsCard extends StatelessWidget {
   }
 }
 
-
-//  Text(
-//                   "Add Your Symptons",
-//                   style: TextStyle(
-//                     fontSize: 30,
-//                     color: mainWhiteColor.withOpacity(1),
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
