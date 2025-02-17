@@ -10,7 +10,7 @@ class SingleCategoryImageCard extends StatefulWidget {
   final VoidCallback onPressed;
   final VoidCallback processImage;
   final bool isRecognized;
-  final String recognizedText;
+  String recognizedText;
 
   SingleCategoryImageCard({
     super.key,
@@ -110,8 +110,25 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
               ],
             ),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
+            widget.recognizedText.isNotEmpty
+                ? TextButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text(
+                      "Clear Text",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: mainOrangeColor,
+                        fontSize: 22,
+                      ),
+                    ),
+                  )
+                : SizedBox(
+                    height: 10,
+                  ),
             widget.recognizedText.isNotEmpty
                 ? Scrollbar(
                     child: SingleChildScrollView(
@@ -124,7 +141,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                       ),
                     ),
                   )
-                : Column(),
+                : SizedBox(),
             SizedBox(
               height: 10,
             ),
