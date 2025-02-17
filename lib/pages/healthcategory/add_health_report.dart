@@ -360,7 +360,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
     });
 
     try {
-      final inputImage = InputImage.fromFilePath(_base64DoctorNoteImage!);
+      final inputImage = InputImage.fromFilePath(pickedDoctorImagePath!);
       final RecognizedText recognizedTextFrommodel =
           await doctorTextRecognizer.processImage(inputImage);
 
@@ -392,7 +392,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
     });
 
     try {
-      final inputImage = InputImage.fromFilePath(_base64MedicalReportImage!);
+      final inputImage = InputImage.fromFilePath(pickedMedicalImagePath!);
       final RecognizedText recognizedTextFrommodel =
           await medicalTextRecognizer.processImage(inputImage);
 
@@ -425,7 +425,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
     });
 
     try {
-      final inputImage = InputImage.fromFilePath(_base64PrescriptionImage!);
+      final inputImage = InputImage.fromFilePath(pickedPrescriptionImagePath!);
       final RecognizedText recognizedTextFrommodel =
           await prescriptionTextRecognizer.processImage(inputImage);
 
@@ -457,7 +457,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
     });
 
     try {
-      final inputImage = InputImage.fromFilePath(_base64ClinicNoteImage!);
+      final inputImage = InputImage.fromFilePath(pickedClinicImagePath!);
       final RecognizedText recognizedTextFrommodel =
           await clinicTextRecognizer.processImage(inputImage);
 
