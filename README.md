@@ -11,7 +11,7 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
 - **🪪 Profile Management**: View and update user profiles.
 - **🧑‍⚕️ Symptom Tracking**: Add and track symptoms over time.
 
-##🤖 Technologies Used
+## 🤖 Technologies Used
 
 - **Flutter**: The app is built using Flutter for cross-platform compatibility.
 - **Firebase**: Firebase is used for authentication, Firestore for database, and Firebase Messaging for push notifications.
@@ -19,7 +19,7 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
 - **Local Notifications**: Implemented using the `flutter_local_notifications` package.
 - **Time Zone Data**: Managed using the `timezone` package.
 
-## Getting Started
+## 💡 Getting Started
 
 ### Prerequisites
 
@@ -48,7 +48,7 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
     flutter run
     ```
 
-## Project Structure
+## ⚙️ Project Structure
 
 - **lib/main.dart**: Entry point of the application.
 - **lib/pages/**: Contains the main screens of the app.
@@ -59,13 +59,13 @@ The Healthcare App is a comprehensive solution designed to manage and monitor he
 - **lib/provider/**: Contains the theme provider for managing app themes.
 - **lib/router/**: Contains the router configuration for navigation.
 
-## Usage
+## 🔩 Usage
 
-- **Sign In**: Use Google Sign-In to authenticate.
-- **Submit Health Report**: Fill out the form and submit health reports with images.
-- **View Notifications**: Receive and view push and local notifications.
-- **Manage Profile**: View and update your profile information.
-- **Track Symptoms**: Add and track your symptoms over time.
+- **🔑 Sign In**: Use Google Sign-In to authenticate.
+- **📝 Submit Health Report**: Fill out the form and submit health reports with images.
+- **📲 View Notifications**: Receive and view push and local notifications.
+- **👩‍🏫 Manage Profile**: View and update your profile information.
+- **🔗 Track Symptoms**: Add and track your symptoms over time.
 
 ## Contributing
 
