@@ -35,7 +35,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         // ignore: deprecated_member_use
-        color: blueColor.withOpacity(0.1),
+        color: subLandMarksCardBg.withOpacity(0.5),
       ),
       child: Padding(
         padding: const EdgeInsets.all(5),
