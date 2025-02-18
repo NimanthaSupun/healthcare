@@ -402,7 +402,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
           medicalRecognizedText += "${line.text} \n";
         }
       }
-      print(medicalRecognizedText);
     } catch (error) {
       if (!mounted) {
         return;
