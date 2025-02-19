@@ -7,7 +7,6 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/pages/userprofile/add_meditation_screen.dart';
-import 'package:healthcare/widgets/profile_widget/custom_profile_card.dart';
 import 'package:healthcare/widgets/profile_widget/single_navigate_card.dart';
 import 'package:intl/intl.dart';
 
@@ -186,17 +185,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   },
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 50,
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-                Divider(),
-                SizedBox(
-                  height: 25,
-                ),
-                CustomProfileCard(
-                  onTap: () {
+                SingleNavigateCard(
+                  title: "Meditation",
+                  iconUrl: "assets/images/medical-report_13214154.png",
+                  onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => AddMedicationScreen(
@@ -204,16 +198,11 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   },
-                  icon: Icons.medication,
-                  iconColor: mainOrangeColor,
-                  titile: "Add meditation",
                 ),
-                SizedBox(
-                  height: 15,
-                ),
-
-                CustomProfileCard(
-                  onTap: () {
+                SingleNavigateCard(
+                  title: "Settings",
+                  iconUrl: "assets/images/medical-report_13214154.png",
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -221,17 +210,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     );
                   },
-                  icon: Icons.settings,
-                  titile: "settings",
                 ),
-                SizedBox(
-                  height: 40,
-                ),
-                SingleNavigateCard(
-                  title: "Meditation",
-                  iconUrl: "assets/images/medical-report_13214154.png",
-                  onPressed: () {},
-                ),
+
                 // ElevatedButton(
                 //   onPressed: () =>
                 //       _openGoogleMaps(6.932689343470935, 79.84423838339256),

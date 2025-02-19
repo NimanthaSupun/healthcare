@@ -16,19 +16,24 @@ class SingleNavigateCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 70,
+      height: 65,
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-      margin: EdgeInsets.only(bottom: 15),
+      margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-          color: subLandMarksCardBg, borderRadius: BorderRadius.circular(8)),
+        color: subLandMarksCardBg,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: Colors.black54,
+        ),
+      ),
       child: Row(
         children: [
           ClipRect(
             child: Image.asset(
               iconUrl,
               fit: BoxFit.cover,
-              width: 50,
-              height: 50,
+              width: 45,
+              height: 45,
             ),
           ),
           SizedBox(
