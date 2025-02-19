@@ -79,93 +79,92 @@ class _ProfilePageState extends State<ProfilePage> {
                           SizedBox(
                             height: 20,
                           ),
-                          Container(
-                            width: double.infinity,
-                            height: 100,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.black54,
+                          Card(
+                            child: Container(
+                              width: double.infinity,
+                              height: 100,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
                               ),
-                              color: subLandMarksCardBg,
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  width: 75,
-                                  height: 75,
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 1,
-                                    vertical: 1,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    border: Border.all(
-                                      color: mobileBackgroundColor,
-                                      width: 2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 75,
+                                    height: 75,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 1,
+                                      vertical: 1,
                                     ),
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: user.imageUrl != null &&
-                                            user.imageUrl!.isNotEmpty
-                                        ? Image.memory(
-                                            base64Decode(
-                                              user.imageUrl!,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                        color: mobileBackgroundColor,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: user.imageUrl != null &&
+                                              user.imageUrl!.isNotEmpty
+                                          ? Image.memory(
+                                              base64Decode(
+                                                user.imageUrl!,
+                                              ),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.network(
+                                              "https://i.stack.imgur.com/l60Hf.png",
+                                              fit: BoxFit.cover,
                                             ),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : Image.network(
-                                            "https://i.stack.imgur.com/l60Hf.png",
-                                            fit: BoxFit.cover,
-                                          ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Text(
-                                      user.name,
-                                      style: TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w700,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    Text(
-                                      user.email,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Spacer(),
-                                IconButton(
-                                  onPressed: () {
-                                    GoRouter.of(context).pushReplacement(
-                                      '/update-profile',
-                                      extra: user,
-                                    );
-                                  },
-                                  icon: Icon(
-                                    Icons.edit,
-                                    size: 30,
-                                    color: mainOrangeColor,
+                                  SizedBox(
+                                    width: 5,
                                   ),
-                                ),
-                              ],
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Text(
+                                        user.name,
+                                        style: TextStyle(
+                                          fontSize: 23,
+                                          fontWeight: FontWeight.w700,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      Text(
+                                        user.email,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w800,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Spacer(),
+                                  IconButton(
+                                    onPressed: () {
+                                      GoRouter.of(context).pushReplacement(
+                                        '/update-profile',
+                                        extra: user,
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.edit,
+                                      size: 30,
+                                      color: mainOrangeColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
