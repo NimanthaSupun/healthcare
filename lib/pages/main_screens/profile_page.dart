@@ -7,7 +7,7 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/pages/userprofile/add_meditation_screen.dart';
-import 'package:healthcare/widgets/reusable/custom_profile_card.dart';
+import 'package:healthcare/widgets/profile_widget/custom_profile_card.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
