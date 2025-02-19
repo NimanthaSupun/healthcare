@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/setting_page.dart';
+import 'package:healthcare/pages/userprofile/add_meditation_screen.dart';
 import 'package:healthcare/widgets/reusable/custom_profile_card.dart';
 import 'package:intl/intl.dart';
 
@@ -194,7 +195,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 25,
                 ),
                 CustomProfileCard(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => AddMedicationScreen(
+                            userId: FirebaseAuth.instance.currentUser!.uid),
+                      ),
+                    );
+                  },
                   icon: Icons.medication,
                   iconColor: mainOrangeColor,
                   titile: "Add meditation",
