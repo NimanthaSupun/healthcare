@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:healthcare/services/notification/meditation_remender_service.dart';
+import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:uuid/uuid.dart';
 
 class AddMedicationScreen extends StatefulWidget {
@@ -245,7 +245,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
       );
       
       try {
-        await MedicationReminderService.scheduleMedicationReminder(
+        await ClinicNotificationService.scheduleMedicationReminder(
           userId: widget.userId,
           medicationId: medicationId,
           medicationName: _nameController.text,
@@ -421,7 +421,7 @@ class MedicationListItem extends StatelessWidget {
         );
       },
       onDismissed: (direction) {
-        MedicationReminderService.cancelMedicationReminders(medicationId);
+        ClinicNotificationService.cancelMedicationReminders(medicationId);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Reminder for $name canceled')),
         );
