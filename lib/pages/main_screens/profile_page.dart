@@ -195,7 +195,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 CustomProfileCard(
                   onTap: () {
-                    // GoRouter.of(context).pushReplacement("/setting-page");
                     Navigator.push(
                       context,
                       MaterialPageRoute(
