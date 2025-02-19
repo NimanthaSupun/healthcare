@@ -189,7 +189,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SingleNavigateCard(
                   title: "Meditation",
-                  iconUrl: "assets/images/medical-report_13214154.png",
+                  iconUrl: "assets/images/vitamin-c_4916188.png",
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -201,7 +201,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SingleNavigateCard(
                   title: "Settings",
-                  iconUrl: "assets/images/medical-report_13214154.png",
+                  iconUrl: "assets/images/setting_4240194.png",
                   onPressed: () {
                     Navigator.push(
                       context,
