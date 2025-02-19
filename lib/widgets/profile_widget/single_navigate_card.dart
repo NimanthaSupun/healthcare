@@ -17,12 +17,10 @@ class SingleNavigateCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 70,
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       margin: EdgeInsets.only(bottom: 15),
       decoration: BoxDecoration(
-        color: subLandMarksCardBg,
-        borderRadius: BorderRadius.circular(8)
-      ),
+          color: subLandMarksCardBg, borderRadius: BorderRadius.circular(8)),
       child: Row(
         children: [
           ClipRect(
@@ -33,6 +31,9 @@ class SingleNavigateCard extends StatelessWidget {
               height: 50,
             ),
           ),
+          SizedBox(
+            width: 15,
+          ),
           Text(
             title,
             style: TextStyle(
@@ -40,9 +41,10 @@ class SingleNavigateCard extends StatelessWidget {
               fontSize: 18,
             ),
           ),
+          Spacer(),
           IconButton(
             onPressed: onPressed,
-            icon: Icon(Icons.more_vert),
+            icon: Icon(Icons.arrow_forward_ios),
           ),
         ],
       ),

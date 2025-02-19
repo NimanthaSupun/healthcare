@@ -8,6 +8,7 @@ import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/pages/userprofile/add_meditation_screen.dart';
 import 'package:healthcare/widgets/profile_widget/custom_profile_card.dart';
+import 'package:healthcare/widgets/profile_widget/single_navigate_card.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -225,6 +226,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SizedBox(
                   height: 40,
+                ),
+                SingleNavigateCard(
+                  title: "Meditation",
+                  iconUrl: "assets/images/medical-report_13214154.png",
+                  onPressed: () {},
                 ),
                 // ElevatedButton(
                 //   onPressed: () =>
