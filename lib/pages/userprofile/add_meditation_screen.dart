@@ -31,6 +31,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   
   @override
   void initState() {
+    _selectedDate = DateTime.now();
     super.initState();
   }
 
