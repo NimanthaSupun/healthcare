@@ -30,6 +30,7 @@ void main() async {
   await LocalNotificationsService.init();
   tz.initializeTimeZones();
 
+
   runApp(
     ChangeNotifierProvider(
       child: MyApp(),
