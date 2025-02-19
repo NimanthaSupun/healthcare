@@ -17,6 +17,10 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // initialize the notification(Loacal notification)
+  await LocalNotificationsService.init();
+  tz.initializeTimeZones();
+
   //initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
 
@@ -25,11 +29,6 @@ void main() async {
   //listen for incoming messages in background
   FirebaseMessaging.onBackgroundMessage(
       PushNotificationsService.onBackgroundMessage);
-
-  // initialize the notification(Loacal notification)
-  await LocalNotificationsService.init();
-  tz.initializeTimeZones();
-
 
   runApp(
     ChangeNotifierProvider(
