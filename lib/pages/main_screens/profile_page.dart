@@ -187,12 +187,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 10,
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 15,
                 ),
                 Divider(),
                 SizedBox(
-                  height: 10,
+                  height: 25,
                 ),
+                CustomProfileCard(
+                  onTap: () {},
+                  icon: Icons.medication,
+                  iconColor: mainOrangeColor,
+                  titile: "Add meditation",
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+
                 CustomProfileCard(
                   onTap: () {
                     Navigator.push(
