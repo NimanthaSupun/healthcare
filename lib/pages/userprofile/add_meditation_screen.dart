@@ -25,7 +25,29 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   
   final List<String> _dosageUnits = ['mg', 'ml', 'tablet(s)', 'capsule(s)', 'drop(s)', 'unit(s)'];
   final List<String> _weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  late DateTime _selectedDate;
+
   
+  @override
+  void initState() {
+    super.initState();
+  }
+
+   Future<void> _onSelectDate() async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2026),
+      initialDate: _selectedDate,
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
