@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -12,18 +13,44 @@ enum MedicationFrequency {
 }
 
 class MedicationReminderService {
-  
   static final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
+  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   
-  // Schedule a daily medication reminder
+  static Future<void> init() async {
+    // Initialize local notifications
+    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings("@mipmap/ic_launcher");
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings();
+    
+    await _localNotifications.initialize(
+      InitializationSettings(android: androidSettings, iOS: iosSettings),
+      onDidReceiveNotificationResponse: _handleNotificationTap,
+    );
+
+    // Request permissions for both local and FCM notifications
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
+    
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    // Handle FCM messages
+    FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
+  }
+
+  // Schedule medication reminder based on frequency
   static Future<void> scheduleMedicationReminder({
     required String userId,
     required String medicationId,
     required String medicationName,
     required int dosage,
     required String dosageUnit,
-    required DateTime reminderTime,
+    required DateTime firstReminderTime,
     required MedicationFrequency frequency,
     List<int>? daysOfWeek, // For weekly frequency (1=Monday, 7=Sunday)
     List<DateTime>? customTimes, // For custom frequency
@@ -34,7 +61,7 @@ class MedicationReminderService {
       'medicationName': medicationName,
       'dosage': dosage,
       'dosageUnit': dosageUnit,
-      'reminderTime': reminderTime,
+      'firstReminderTime': firstReminderTime,
       'frequency': frequency.toString(),
       'daysOfWeek': daysOfWeek,
       'customTimes': customTimes?.map((time) => Timestamp.fromDate(time)).toList(),
@@ -67,7 +94,7 @@ class MedicationReminderService {
           id: medicationId.hashCode,
           title: 'Medication Reminder',
           body: notificationBody,
-          time: reminderTime,
+          time: firstReminderTime,
           notificationDetails: notificationDetails,
         );
         break;
@@ -78,12 +105,19 @@ class MedicationReminderService {
           id: medicationId.hashCode,
           title: 'Morning Medication Reminder',
           body: notificationBody,
-          time: reminderTime,
+          time: firstReminderTime,
           notificationDetails: notificationDetails,
         );
         
         // Schedule evening dose (12 hours later)
-        DateTime eveningTime = reminderTime.add(const Duration(hours: 12));
+        DateTime eveningTime = DateTime(
+          firstReminderTime.year,
+          firstReminderTime.month,
+          firstReminderTime.day,
+          (firstReminderTime.hour + 12) % 24,
+          firstReminderTime.minute,
+        );
+        
         await _scheduleRecurringDailyNotification(
           id: medicationId.hashCode + 1,
           title: 'Evening Medication Reminder',
@@ -94,17 +128,24 @@ class MedicationReminderService {
         break;
         
       case MedicationFrequency.threeTimesDaily:
-        // Schedule morning dose
+        // Morning dose
         await _scheduleRecurringDailyNotification(
           id: medicationId.hashCode,
           title: 'Morning Medication Reminder',
           body: notificationBody,
-          time: reminderTime,
+          time: firstReminderTime,
           notificationDetails: notificationDetails,
         );
         
-        // Schedule afternoon dose (8 hours later)
-        DateTime afternoonTime = reminderTime.add(const Duration(hours: 8));
+        // Afternoon dose (8 hours later)
+        DateTime afternoonTime = DateTime(
+          firstReminderTime.year,
+          firstReminderTime.month,
+          firstReminderTime.day,
+          (firstReminderTime.hour + 8) % 24,
+          firstReminderTime.minute,
+        );
+        
         await _scheduleRecurringDailyNotification(
           id: medicationId.hashCode + 1,
           title: 'Afternoon Medication Reminder',
@@ -113,8 +154,15 @@ class MedicationReminderService {
           notificationDetails: notificationDetails,
         );
         
-        // Schedule evening dose (8 hours after afternoon)
-        DateTime eveningTime = afternoonTime.add(const Duration(hours: 8));
+        // Evening dose (8 hours after afternoon)
+        DateTime eveningTime = DateTime(
+          firstReminderTime.year,
+          firstReminderTime.month,
+          firstReminderTime.day,
+          (firstReminderTime.hour + 16) % 24,
+          firstReminderTime.minute,
+        );
+        
         await _scheduleRecurringDailyNotification(
           id: medicationId.hashCode + 2,
           title: 'Evening Medication Reminder',
@@ -132,7 +180,7 @@ class MedicationReminderService {
               id: medicationId.hashCode + idOffset,
               title: 'Weekly Medication Reminder',
               body: notificationBody,
-              time: reminderTime,
+              time: firstReminderTime,
               weekday: weekday,
               notificationDetails: notificationDetails,
             );
@@ -163,6 +211,15 @@ class MedicationReminderService {
       case MedicationFrequency.asNeeded:
         // For as-needed medications, we don't schedule automatic reminders
         break;
+    }
+    
+    // Store FCM token with user data for backup cloud notifications
+    final String? token = await _firebaseMessaging.getToken();
+    if (token != null) {
+      await _firestore.collection('users').doc(userId).set({
+        'fcmToken': token,
+        'lastUpdated': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
     }
   }
 
@@ -269,6 +326,38 @@ class MedicationReminderService {
     }
     
     return scheduledDate;
+  }
+  
+  static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+    // Handle background FCM messages
+    if (message.notification != null) {
+      print('Background medication reminder received: ${message.notification!.title}');
+    }
+  }
+
+  static void _handleForegroundMessage(RemoteMessage message) {
+    // Handle foreground FCM messages
+    if (message.notification != null) {
+      _localNotifications.show(
+        message.hashCode,
+        message.notification!.title ?? '',
+        message.notification!.body ?? '',
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'medication_reminders',
+            'Medication Reminders',
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
+        ),
+      );
+    }
+  }
+  
+  static void _handleNotificationTap(NotificationResponse response) {
+    // Handle notification taps here
+    // Navigate to appropriate screen based on payload
+    print('Medication notification tapped: ${response.payload}');
   }
   
   // Method to get all active medications for a user

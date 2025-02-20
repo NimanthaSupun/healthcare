@@ -26,6 +26,7 @@ void main() async {
 
   await ClinicNotificationService.init();
 
+
   //listen for incoming messages in background
   FirebaseMessaging.onBackgroundMessage(
       PushNotificationsService.onBackgroundMessage);

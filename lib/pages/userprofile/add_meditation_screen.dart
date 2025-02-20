@@ -1,482 +1,539 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/services/notification/meditation_remender_service.dart';
+import 'package:healthcare/widgets/reusable/custom_button.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 import 'package:uuid/uuid.dart';
 
-class AddMedicationScreen extends StatefulWidget {
-  final String userId;
-
-  const AddMedicationScreen({super.key, required this.userId});
+class AddMedicationPage extends StatefulWidget {
+  const AddMedicationPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AddMedicationScreenState createState() => _AddMedicationScreenState();
+  State<AddMedicationPage> createState() => _AddMedicationPageState();
 }
 
-class _AddMedicationScreenState extends State<AddMedicationScreen> {
+class _AddMedicationPageState extends State<AddMedicationPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _medicationNameController = TextEditingController();
   final TextEditingController _dosageController = TextEditingController();
+  
+  // Default values
+  String _selectedDosageUnit = 'mg';
+  MedicationFrequency _selectedFrequency = MedicationFrequency.daily;
+  
+  // Time picker state
+  TimeOfDay _selectedTime = TimeOfDay.now();
+  
+  // Days of week for weekly selection
+  final List<bool> _selectedDays = List.generate(7, (_) => false);
+  final List<String> _weekdayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  
+  // For custom times
+  final List<TimeOfDay> _customTimes = [TimeOfDay.now()];
 
-  String _dosageUnit = 'mg';
-  MedicationFrequency _frequency = MedicationFrequency.daily;
-  TimeOfDay _reminderTime = TimeOfDay(hour: 8, minute: 0);
-  final List<int> _selectedDays = [];
-
-  final List<String> _dosageUnits = [
-    'mg',
-    'ml',
-    'tablet(s)',
-    'capsule(s)',
-    'drop(s)',
-    'unit(s)'
-  ];
-  final List<String> _weekDays = [
-    'Mon',
-    'Tue',
-    'Wed',
-    'Thu',
-    'Fri',
-    'Sat',
-    'Sun'
-  ];
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Medication'),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Medication Name Field
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: 'Medication Name',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter medication name';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 16),
-
-              // Dosage Row
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: TextFormField(
-                      controller: _dosageController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        labelText: 'Dosage',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Required';
-                        }
-                        if (int.tryParse(value) == null) {
-                          return 'Enter a number';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    flex: 3,
-                    child: DropdownButtonFormField<String>(
-                      value: _dosageUnit,
-                      decoration: InputDecoration(
-                        labelText: 'Unit',
-                        border: OutlineInputBorder(),
-                      ),
-                      items: _dosageUnits.map((String unit) {
-                        return DropdownMenuItem<String>(
-                          value: unit,
-                          child: Text(unit),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        if (newValue != null) {
-                          setState(() {
-                            _dosageUnit = newValue;
-                          });
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 24),
-
-              Text('When do you take this medication?',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              SizedBox(height: 8),
-
-              // Frequency Selection
-              DropdownButtonFormField<MedicationFrequency>(
-                value: _frequency,
-                decoration: InputDecoration(
-                  labelText: 'Frequency',
-                  border: OutlineInputBorder(),
-                ),
-                items: MedicationFrequency.values.map((frequency) {
-                  return DropdownMenuItem<MedicationFrequency>(
-                    value: frequency,
-                    child: Text(_getFrequencyText(frequency)),
-                  );
-                }).toList(),
-                onChanged: (MedicationFrequency? newValue) {
-                  if (newValue != null) {
-                    setState(() {
-                      _frequency = newValue;
-                    });
-                  }
-                },
-              ),
-              SizedBox(height: 16),
-
-              // // Time Picker
-              ListTile(
-                title: Text('Reminder Time'),
-                subtitle: Text(_reminderTime.format(context)),
-                trailing: Icon(Icons.access_time),
-                onTap: () async {
-                  final TimeOfDay? picked = await showTimePicker(
-                    context: context,
-                    initialTime: _reminderTime,
-                  );
-                  if (picked != null && picked != _reminderTime) {
-                    setState(() {
-                      _reminderTime = picked;
-                    });
-                  }
-                },
-              ),
-              // Weekly days selector (only show for weekly frequency)
-              if (_frequency == MedicationFrequency.weekly) ...[
-                SizedBox(height: 16),
-                Text('Select days of the week:',
-                    style: TextStyle(fontWeight: FontWeight.w500)),
-                SizedBox(height: 8),
-                Wrap(
-                  spacing: 8.0,
-                  children: List.generate(7, (index) {
-                    final day = index + 1; // 1 = Monday, 7 = Sunday
-                    return FilterChip(
-                      label: Text(_weekDays[index]),
-                      selected: _selectedDays.contains(day),
-                      onSelected: (bool selected) {
-                        setState(() {
-                          if (selected) {
-                            _selectedDays.add(day);
-                          } else {
-                            _selectedDays.remove(day);
-                          }
-                        });
-                      },
-                    );
-                  }),
-                ),
-              ],
-
-              SizedBox(height: 24),
-
-              // Save Button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _saveMedication,
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text('Save Medication Reminder',
-                        style: TextStyle(fontSize: 16)),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: _selectedTime,
     );
-  }
-
-  String _getFrequencyText(MedicationFrequency frequency) {
-    switch (frequency) {
-      case MedicationFrequency.daily:
-        return 'Once daily';
-      case MedicationFrequency.twiceDaily:
-        return 'Twice daily';
-      case MedicationFrequency.threeTimesDaily:
-        return 'Three times daily';
-      case MedicationFrequency.weekly:
-        return 'Weekly';
-      case MedicationFrequency.asNeeded:
-        return 'As needed (no reminders)';
-      case MedicationFrequency.custom:
-        return 'Custom schedule';
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
     }
   }
 
-  void _saveMedication() async {
-    if (_formKey.currentState!.validate()) {
-      // Validate weekly days are selected if frequency is weekly
-      if (_frequency == MedicationFrequency.weekly && _selectedDays.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Please select at least one day of the week')),
-        );
+  Future<void> _addCustomTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+    if (picked != null) {
+      setState(() {
+        _customTimes.add(picked);
+      });
+    }
+  }
+  
+  // void _removeCustomTime(int index) {
+  //   setState(() {
+  //     _customTimes.removeAt(index);
+  //   });
+  // }
+
+  void _submitForm() async {
+    try {
+      if (!_formKey.currentState!.validate()) {
         return;
       }
 
-      // Create medication ID
-      final String medicationId = Uuid().v4();
-
-      // Convert TimeOfDay to DateTime for scheduling
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      final medicationId = const Uuid().v4();
+      final int dosage = int.parse(_dosageController.text);
+      
+      // Create base DateTime for the first reminder
       final now = DateTime.now();
-      final reminderDateTime = DateTime(now.year, now.month, now.day,
-          _reminderTime.hour, _reminderTime.minute);
-
-      try {
-        await MedicationReminderService.scheduleMedicationReminder(
-          userId: widget.userId,
-          medicationId: medicationId,
-          medicationName: _nameController.text,
-          dosage: int.parse(_dosageController.text),
-          dosageUnit: _dosageUnit,
-          reminderTime: reminderDateTime,
-          frequency: _frequency,
-          daysOfWeek:
-              _frequency == MedicationFrequency.weekly ? _selectedDays : null,
-          customTimes:
-              null, // You could implement a custom time picker for this option
-        );
-
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Medication reminder scheduled successfully')),
-        );
-
-        // ignore: use_build_context_synchronously
-        Navigator.pop(context);
-      } catch (e) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error scheduling reminder: $e')),
-        );
+      final firstReminderTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        _selectedTime.hour,
+        _selectedTime.minute,
+      );
+      
+      // Handle weekly schedule days
+      List<int>? daysOfWeek;
+      if (_selectedFrequency == MedicationFrequency.weekly) {
+        daysOfWeek = [];
+        for (int i = 0; i < 7; i++) {
+          if (_selectedDays[i]) {
+            // Convert to 1-7 format where 1=Monday
+            daysOfWeek.add(i + 1);
+          }
+        }
       }
+      
+      // Handle custom times
+      List<DateTime>? customTimes;
+      if (_selectedFrequency == MedicationFrequency.custom) {
+        customTimes = _customTimes.map((timeOfDay) {
+          return DateTime(
+            now.year,
+            now.month,
+            now.day,
+            timeOfDay.hour,
+            timeOfDay.minute,
+          );
+        }).toList();
+      }
+      
+      // Schedule the medication reminder
+      await MedicationReminderService.scheduleMedicationReminder(
+        userId: userId,
+        medicationId: medicationId,
+        medicationName: _medicationNameController.text,
+        dosage: dosage,
+        dosageUnit: _selectedDosageUnit,
+        firstReminderTime: firstReminderTime,
+        frequency: _selectedFrequency,
+        daysOfWeek: daysOfWeek,
+        customTimes: customTimes,
+      );
+
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Medication reminder set successfully",
+      );
+
+      Future.delayed(const Duration(seconds: 2));
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+      
+    } catch (error) {
+      print("Error: $error");
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Error"),
+          content: Text(error.toString()),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
     }
   }
-}
-
-// Medication List Screen to view and manage medications
-class MedicationListScreen extends StatelessWidget {
-  final String userId;
-
-  const MedicationListScreen({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Medications'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddMedicationScreen(userId: userId),
-                ),
-              );
-            },
-          ),
-        ],
+        title: const Text("Add Medication"),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('medications')
-            .where('userId', isEqualTo: userId)
-            .where('status', isEqualTo: 'active')
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          }
-
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+            child: Form(
+              key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.medication_outlined, size: 64, color: Colors.grey),
-                  SizedBox(height: 16),
-                  Text('No medications added yet',
-                      style: TextStyle(fontSize: 18, color: Colors.grey)),
-                  SizedBox(height: 24),
-                  ElevatedButton.icon(
-                    icon: Icon(Icons.add),
-                    label: Text('Add Medication'),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              AddMedicationScreen(userId: userId),
-                        ),
-                      );
+                  const SizedBox(height: 5),
+                  const Text(
+                    "Stay on Top of Your Medication",
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    "Set reminders for your medications to ensure you never miss a dose.",
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 15),
+                  // ClipRRect(
+                  //   borderRadius: BorderRadius.circular(12),
+                  //   child: Image.asset(
+                  //     "assets/images/medication_reminder.png",
+                  //     height: 180,
+                  //     width: double.infinity,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
+                  const SizedBox(height: 20),
+                  
+                  // Medication name input
+                  CustomInput(
+                    controller: _medicationNameController,
+                    labelText: "Medication Name",
+                    hintText: "Enter medication name",
+                    icon: Icons.medication_outlined,
+                    obsecureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter medication name";
+                      }
+                      return null;
                     },
                   ),
+                  const SizedBox(height: 15),
+                  
+                  // Dosage and units
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: CustomInput(
+                          controller: _dosageController,
+                          labelText: "Dosage",
+                          hintText: "Amount",
+                          icon: Icons.numbers,
+                          keyboardType: TextInputType.number,
+                          obsecureText: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Enter dosage";
+                            }
+                            if (int.tryParse(value) == null) {
+                              return "Use numbers only";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        flex: 2,
+                        child: DropdownButtonFormField<String>(
+                          value: _selectedDosageUnit,
+                          decoration: const InputDecoration(
+                            labelText: "Unit",
+                            border: OutlineInputBorder(),
+                          ),
+                          items: const [
+                            DropdownMenuItem(value: 'mg', child: Text('mg')),
+                            DropdownMenuItem(value: 'ml', child: Text('ml')),
+                            DropdownMenuItem(value: 'pills', child: Text('pills')),
+                            DropdownMenuItem(value: 'tablets', child: Text('tablets')),
+                            DropdownMenuItem(value: 'units', child: Text('units')),
+                          ],
+                          onChanged: (value) {
+                            if (value != null) {
+                              setState(() {
+                                _selectedDosageUnit = value;
+                              });
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  
+                  // Frequency selection
+                  const Text(
+                    "How often do you take this medication?",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  
+                  // Frequency radio buttons
+                  Column(
+                    children: [
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("Once daily"),
+                        value: MedicationFrequency.daily,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("Twice daily (morning & evening)"),
+                        value: MedicationFrequency.twiceDaily,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("Three times daily"),
+                        value: MedicationFrequency.threeTimesDaily,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("Weekly"),
+                        value: MedicationFrequency.weekly,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("As needed (no automatic reminders)"),
+                        value: MedicationFrequency.asNeeded,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                      RadioListTile<MedicationFrequency>(
+                        title: const Text("Custom times"),
+                        value: MedicationFrequency.custom,
+                        groupValue: _selectedFrequency,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedFrequency = value!;
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  
+                  // Conditional UI based on frequency
+                  if (_selectedFrequency == MedicationFrequency.daily ||
+                      _selectedFrequency == MedicationFrequency.twiceDaily ||
+                      _selectedFrequency == MedicationFrequency.threeTimesDaily)
+                    _buildDailyTimeSelector(),
+                    
+                  if (_selectedFrequency == MedicationFrequency.weekly)
+                    _buildWeeklySelector(),
+                    
+                  if (_selectedFrequency == MedicationFrequency.custom)
+                    _buildCustomTimesSelector(),
+                  
+                  const SizedBox(height: 30),
+                  CustomButton(
+                    title: "Set Reminder",
+                    width: double.infinity,
+                    onPressed: _submitForm,
+                  ),
+                  const SizedBox(height: 30),
                 ],
               ),
-            );
-          }
-
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              final doc = snapshot.data!.docs[index];
-              final data = doc.data() as Map<String, dynamic>;
-
-              return MedicationListItem(
-                medicationData: data,
-                medicationId: doc.id,
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class MedicationListItem extends StatelessWidget {
-  final Map<String, dynamic> medicationData;
-  final String medicationId;
-
-  const MedicationListItem({
-    super.key,
-    required this.medicationData,
-    required this.medicationId,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final String name = medicationData['medicationName'] ?? 'Unknown';
-    final int dosage = medicationData['dosage'] ?? 0;
-    final String unit = medicationData['dosageUnit'] ?? '';
-    final String frequencyString = medicationData['frequency'] ?? '';
-    final MedicationFrequency frequency = MedicationFrequency.values.firstWhere(
-      (e) => e.toString() == frequencyString,
-      orElse: () => MedicationFrequency.daily,
-    );
-
-    // Get formatted time
-    final Timestamp? reminderTimestamp = medicationData['reminderTime'];
-    String timeString = 'Not set';
-    if (reminderTimestamp != null) {
-      final DateTime reminderTime = reminderTimestamp.toDate();
-      final TimeOfDay timeOfDay = TimeOfDay.fromDateTime(reminderTime);
-      timeString = timeOfDay.format(context);
-    }
-
-    return Dismissible(
-      key: Key(medicationId),
-      background: Container(
-        color: Colors.red,
-        alignment: Alignment.centerRight,
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Icon(Icons.delete, color: Colors.white),
-      ),
-      direction: DismissDirection.endToStart,
-      confirmDismiss: (direction) async {
-        return await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text("Cancel Reminder"),
-              content:
-                  Text("Are you sure you want to cancel reminders for $name?"),
-              actions: [
-                TextButton(
-                  child: Text("No"),
-                  onPressed: () => Navigator.of(context).pop(false),
-                ),
-                TextButton(
-                  child: Text("Yes"),
-                  onPressed: () => Navigator.of(context).pop(true),
-                ),
-              ],
-            );
-          },
-        );
-      },
-      onDismissed: (direction) {
-        MedicationReminderService.cancelMedicationReminders(medicationId);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Reminder for $name canceled')),
-        );
-      },
-      child: Card(
-        margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: ListTile(
-          leading: CircleAvatar(
-            backgroundColor: Theme.of(context).primaryColor,
-            child: Icon(Icons.medication, color: Colors.white),
+            ),
           ),
-          title: Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('$dosage $unit - ${_getFrequencyText(frequency)}'),
-              Text('Reminder at $timeString',
-                  style: TextStyle(color: Colors.grey[600])),
-            ],
-          ),
-          isThreeLine: true,
-          trailing: Icon(Icons.chevron_right),
-          onTap: () {
-            // Navigate to medication detail page
-          },
         ),
       ),
     );
   }
-
-  String _getFrequencyText(MedicationFrequency frequency) {
-    switch (frequency) {
-      case MedicationFrequency.daily:
-        return 'Once daily';
-      case MedicationFrequency.twiceDaily:
-        return 'Twice daily';
-      case MedicationFrequency.threeTimesDaily:
-        return 'Three times daily';
-      case MedicationFrequency.weekly:
-        return 'Weekly';
-      case MedicationFrequency.asNeeded:
-        return 'As needed';
-      case MedicationFrequency.custom:
-        return 'Custom schedule';
-    }
+  
+  Widget _buildDailyTimeSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "When do you take your first dose?",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        GestureDetector(
+          onTap: () => _selectTime(context),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.access_time),
+                const SizedBox(width: 10),
+                Text(
+                  _selectedTime.format(context),
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Spacer(),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+        ),
+        if (_selectedFrequency == MedicationFrequency.twiceDaily)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Text(
+              "Your second dose will be scheduled at ${TimeOfDay(
+                hour: (_selectedTime.hour + 12) % 24,
+                minute: _selectedTime.minute,
+              ).format(context)}",
+              style: const TextStyle(
+                fontSize: 14,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+          ),
+        if (_selectedFrequency == MedicationFrequency.threeTimesDaily)
+          Padding(
+            padding: const EdgeInsets.only(top: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Your second dose will be scheduled at ${TimeOfDay(
+                    hour: (_selectedTime.hour + 8) % 24,
+                    minute: _selectedTime.minute,
+                  ).format(context)}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  "Your third dose will be scheduled at ${TimeOfDay(
+                    hour: (_selectedTime.hour + 16) % 24,
+                    minute: _selectedTime.minute,
+                  ).format(context)}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
   }
-}
+  
+  Widget _buildWeeklySelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Which days of the week?",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 8,
+          children: List.generate(7, (index) {
+            return FilterChip(
+              label: Text(_weekdayLabels[index]),
+              selected: _selectedDays[index],
+              onSelected: (selected) {
+                setState(() {
+                  _selectedDays[index] = selected;
+                });
+              },
+            );
+          }),
+        ),
+        const SizedBox(height: 20),
+        const Text(
+          "At what time?",
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 10),
+        GestureDetector(
+          onTap: () => _selectTime(context),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              children: [
+                const Icon(Icons.access_time),
+                const SizedBox(width: 10),
+                Text(
+                  _selectedTime.format(context),
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Spacer(),
+                const Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+  
+  Widget _buildCustomTimesSelector() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Custom reminder times",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.add),
+              label: const Text("Add Time"),
+              onPressed: () => _addCustomTime(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+      ],
+    );
+    }   
+  }        

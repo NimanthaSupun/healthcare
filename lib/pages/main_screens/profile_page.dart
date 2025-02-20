@@ -179,10 +179,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   title: "Meditation",
                   iconUrl: "assets/images/vitamin-c_4916188.png",
                   onPressed: () {
-                    Navigator.of(context).push(
+                    Navigator.push(
+                      context,
                       MaterialPageRoute(
-                        builder: (context) => AddMedicationScreen(
-                            userId: FirebaseAuth.instance.currentUser!.uid),
+                        builder: (context) => AddMedicationPage(),
                       ),
                     );
                   },
