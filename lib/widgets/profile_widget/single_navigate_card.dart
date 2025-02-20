@@ -43,7 +43,7 @@ class SingleNavigateCard extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.w700,
-              fontSize: 18,
+              fontSize: 20,
             ),
           ),
           Spacer(),
