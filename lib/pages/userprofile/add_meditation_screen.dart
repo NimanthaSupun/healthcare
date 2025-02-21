@@ -17,50 +17,43 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   final TextEditingController _medicationNameController = TextEditingController();
   final TextEditingController _dosageController = TextEditingController();
   final ValueNotifier<List<TimeOfDay>> _selectedTimes = ValueNotifier<List<TimeOfDay>>([]);
-  
-  Future<void> _selectTime(BuildContext context) async {
+  String _selectedFrequency = "Daily";
+
+  final List<String> _frequencyOptions = [
+    "Daily",
+    "Twice Daily",
+    "Three Times Daily",
+    "Weekly"
+  ];
+
+  Future<void> _pickTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    if (picked != null) {
-      _selectedTimes.value = List.from(_selectedTimes.value)..add(picked);
+    if (picked != null && !_selectedTimes.value.contains(picked)) {
+      _selectedTimes.value = [..._selectedTimes.value, picked];
     }
   }
 
   void _submitForm() async {
-    if (!_formKey.currentState!.validate() || _selectedTimes.value.isEmpty) {
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    final String userId = FirebaseAuth.instance.currentUser!.uid;
-    final String medicationId = DateTime.now().millisecondsSinceEpoch.toString();
-    final String medicationName = _medicationNameController.text;
-    final String dosage = _dosageController.text;
-    final List<DateTime> scheduledTimes = _selectedTimes.value.map((time) {
-      return DateTime(
-        DateTime.now().year,
-        DateTime.now().month,
-        DateTime.now().day,
-        time.hour,
-        time.minute,
-      );
-    }).toList();
-
-    await MedicationNotificationService.scheduleMedicationReminder(
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    await MedicationService.scheduleRecurringMedicationReminder(
       userId: userId,
-      medicationId: medicationId,
-      medicationName: medicationName,
-      dosage: dosage,
-      scheduledTimes: scheduledTimes,
+      medicationName: _medicationNameController.text,
+      dosage: _dosageController.text,
+      frequency: _selectedFrequency,
+      times: _selectedTimes.value,
     );
 
-    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Medication reminder added successfully!")),
+      SnackBar(content: Text("Medication reminder set successfully!")),
     );
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -68,46 +61,72 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     return Scaffold(
       appBar: AppBar(title: Text("Add Medication")),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomInput(
                 controller: _medicationNameController,
                 labelText: "Medication Name",
                 hintText: "Enter medication name",
-                icon: Icons.medical_services,
+                icon: Icons.medical_services_outlined,
                 obsecureText: false,
-                validator: (value) => value!.isEmpty ? "Please enter medication name" : null,
+                validator: (value) =>
+                    value!.isEmpty ? "Please enter medication name" : null,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 16),
               CustomInput(
                 controller: _dosageController,
                 labelText: "Dosage (mg)",
                 hintText: "Enter dosage",
                 icon: Icons.format_list_numbered,
                 obsecureText: false,
-                validator: (value) => value!.isEmpty ? "Please enter dosage" : null,
+                validator: (value) =>
+                    value!.isEmpty ? "Please enter dosage" : null,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: _selectedFrequency,
+                decoration: InputDecoration(labelText: "Frequency"),
+                items: _frequencyOptions.map((String option) {
+                  return DropdownMenuItem<String>(
+                    value: option,
+                    child: Text(option),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedFrequency = newValue!;
+                    _selectedTimes.value = [];
+                  });
+                },
+              ),
+              SizedBox(height: 16),
+              Text("Select Time(s)"),
               ValueListenableBuilder<List<TimeOfDay>>(
                 valueListenable: _selectedTimes,
                 builder: (context, times, child) {
                   return Column(
                     children: [
-                      ...times.map((time) => Text("Time: ${time.format(context)}")),
-                      ElevatedButton(
-                        onPressed: () => _selectTime(context),
-                        child: Text("Add Time"),
+                      Wrap(
+                        spacing: 10,
+                        children: times
+                            .map((time) => Chip(label: Text(time.format(context))))
+                            .toList(),
+                      ),
+                      TextButton(
+                        onPressed: () => _pickTime(context),
+                        child: Text("Pick a Time"),
                       ),
                     ],
                   );
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 16),
               CustomButton(
-                title: "Save Reminder",
+                title: "Set Reminder",
                 width: double.infinity,
                 onPressed: _submitForm,
               ),

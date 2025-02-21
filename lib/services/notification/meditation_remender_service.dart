@@ -1,78 +1,85 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
-class MedicationNotificationService {
-  static final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
-  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class MedicationService {
+  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  static Future<void> init() async {
-    const AndroidInitializationSettings androidSettings = AndroidInitializationSettings("@mipmap/ic_launcher");
-    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings();
+  static Future<void> initialize() async {
+    tz.initializeTimeZones();
 
-    await _localNotifications.initialize(
-      InitializationSettings(android: androidSettings, iOS: iosSettings),
-      onDidReceiveNotificationResponse: _handleNotificationTap,
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    final InitializationSettings settings = InitializationSettings(
+      android: androidSettings,
     );
-
-    await _localNotifications
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-        ?.requestNotificationsPermission();
-    
-    await _firebaseMessaging.requestPermission(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
+    await _notificationsPlugin.initialize(settings);
   }
 
-  static Future<void> scheduleMedicationReminder({
+  static Future<void> scheduleRecurringMedicationReminder({
     required String userId,
-    required String medicationId,
     required String medicationName,
     required String dosage,
-    required List<DateTime> scheduledTimes,
+    required String frequency,
+    required List<TimeOfDay> times,
   }) async {
-    for (var scheduledTime in scheduledTimes) {
-      await _firestore.collection('medication_reminders').add({
-        'userId': userId,
-        'medicationId': medicationId,
-        'medicationName': medicationName,
-        'dosage': dosage,
-        'scheduledTime': scheduledTime,
-        'status': 'scheduled',
-      });
+    for (var time in times) {
+      _scheduleNotification(medicationName, dosage, frequency, time);
+    }
+  }
 
-      const NotificationDetails notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails(
-          'medication_reminders',
-          'Medication Reminders',
-          importance: Importance.max,
-          priority: Priority.high,
-        ),
-        iOS: DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
-      );
+  static Future<void> _scheduleNotification(
+      String medicationName, String dosage, String frequency, TimeOfDay time) async {
+    final now = tz.TZDateTime.now(tz.local);
+    final scheduleTime = tz.TZDateTime(tz.local, now.year, now.month, now.day,
+        time.hour, time.minute);
 
-      await _localNotifications.zonedSchedule(
-        medicationId.hashCode ^ scheduledTime.hashCode,
-        'Medication Reminder',
-        'Time to take your medication: $medicationName ($dosage)',
-        tz.TZDateTime.from(scheduledTime, tz.local),
-        notificationDetails,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
+    List<int> days = [];
+    switch (frequency) {
+      case "Daily":
+        days = List.generate(7, (index) => index + 1);
+        break;
+      case "Twice Daily":
+        days = List.generate(7, (index) => index + 1);
+        break;
+      case "Three Times Daily":
+        days = List.generate(7, (index) => index + 1);
+        break;
+      case "Weekly":
+        days = [now.weekday];
+        break;
+    }
+
+    for (var day in days) {
+      await _notificationsPlugin.zonedSchedule(
+        time.hashCode + day,
+        "Medication Reminder",
+        "Take $medicationName - $dosage",
+        _nextInstanceOfDay(scheduleTime, day),
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            'medication_channel',
+            'Medication Reminders',
+            importance: Importance.high,
+            priority: Priority.high,
+          ),
+        ),
+        // androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: frequency == "Weekly"
+            ? DateTimeComponents.dayOfWeekAndTime
+            : DateTimeComponents.time, androidScheduleMode: AndroidScheduleMode.exact,
       );
     }
   }
 
-  static void _handleNotificationTap(NotificationResponse response) {
-    print('Medication Notification tapped: ${response.payload}');
+  static tz.TZDateTime _nextInstanceOfDay(tz.TZDateTime scheduledTime, int day) {
+    while (scheduledTime.weekday != day) {
+      scheduledTime = scheduledTime.add(Duration(days: 1));
+    }
+    return scheduledTime;
   }
 }
