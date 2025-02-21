@@ -89,8 +89,9 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                       },
                       child: Card(
                         color: Colors.white,
-                        elevation: 5,
-                        shadowColor: const Color.fromARGB(255, 128, 167, 232),
+                        elevation: 6,
+                        // shadowColor: const Color.fromARGB(255, 196, 212, 239),
+                        shadowColor: mobileBackgroundColor,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
