@@ -87,6 +87,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     } catch (error) {
       print("Error: $error");
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) => AlertDialog(
           title: Text("Error"),
