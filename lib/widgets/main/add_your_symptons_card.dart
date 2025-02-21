@@ -30,7 +30,6 @@ class AddYourSymptonsCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
-                // "assets/images/undraw_track-and-field_i2au.png",
                 "assets/images/frame-medical-equipment-desk.jpg",
                 fit: BoxFit.cover,
                 height: 150,
