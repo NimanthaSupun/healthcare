@@ -48,7 +48,7 @@ class AddYourSymptonsCard extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 // ignore: deprecated_member_use
-                color: subLandMarksCardBg.withOpacity(0.3),
+                color: subLandMarksCardBg.withOpacity(0.4),
                 // border: Border.all(
                 //   color: Colors.black54,
                 // ),
