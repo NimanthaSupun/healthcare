@@ -20,7 +20,7 @@ class AddYourSymptonsCard extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              height: 150,
+              height: 165,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 // ignore: deprecated_member_use
@@ -37,14 +37,14 @@ class AddYourSymptonsCard extends StatelessWidget {
                   "assets/images/frame-medical-equipment-desk.jpg",
                   // "assets/images/home-image.jpg",
                   fit: BoxFit.cover,
-                  height: 150,
+                  height: 165,
                   width: double.infinity,
                 ),
               ),
             ),
             Container(
               width: double.infinity,
-              height: 150,
+              height: 165,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 // ignore: deprecated_member_use
@@ -71,7 +71,7 @@ class AddYourSymptonsCard extends StatelessWidget {
                             child: Text(
                               "Personalize",
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 35,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w900,
                               ),
@@ -81,7 +81,7 @@ class AddYourSymptonsCard extends StatelessWidget {
                             child: Text(
                               "Your Categories",
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 35,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -91,20 +91,25 @@ class AddYourSymptonsCard extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: onPresed,
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
+                        child: Card(
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(100),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Colors.black54,
-                              width: 2,
-                            ),
                           ),
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
+                          elevation: 10,
+                          color: Colors.white,
+                          shadowColor: Colors.blue,
+                          child: Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: Colors.white,
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.black,
+                              size: 27,
+                            ),
                           ),
                         ),
                       ),
