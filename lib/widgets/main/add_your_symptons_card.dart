@@ -44,10 +44,10 @@ class AddYourSymptonsCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               // ignore: deprecated_member_use
-              color: subLandMarksCardBg.withOpacity(0.65),
-              border: Border.all(
-                color: Colors.black54,
-              ),
+              color: subLandMarksCardBg.withOpacity(0.3),
+              // border: Border.all(
+              //   color: Colors.black54,
+              // ),
             ),
           ),
           Padding(
@@ -78,7 +78,8 @@ class AddYourSymptonsCard extends StatelessWidget {
                             "Your Categories",
                             style: TextStyle(
                               fontSize: 30,
-                              color: Colors.white,
+                              // color: Colors.white,
+                              color: mainPurpleColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
