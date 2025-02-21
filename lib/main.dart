@@ -5,6 +5,7 @@ import 'package:healthcare/firebase_options.dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/router/router.dart';
 import 'package:healthcare/services/notification/local_notification_service.dart';
+import 'package:healthcare/services/notification/meditation_remender_service.dart';
 import 'package:healthcare/services/notification/notification_service.dart';
 import 'package:healthcare/services/notification/push_notification_service.dart';
 import 'package:provider/provider.dart';
@@ -25,6 +26,8 @@ void main() async {
   await PushNotificationsService.init();
 
   await ClinicNotificationService.init();
+
+  await MedicationNotificationService.init();
 
   //listen for incoming messages in background
   FirebaseMessaging.onBackgroundMessage(
