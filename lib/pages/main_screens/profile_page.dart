@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       borderRadius: BorderRadius.circular(100),
                                       border: Border.all(
                                         color: mobileBackgroundColor,
-                                        width: 2,
+                                        width: 3,
                                       ),
                                     ),
                                     child: ClipRRect(
