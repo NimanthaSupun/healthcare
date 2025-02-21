@@ -62,7 +62,6 @@ dependencies:
   google_mlkit_text_recognition: ^0.14.0
   google_mlkit_document_scanner: ^0.3.0
   uuid: ^4.5.1
-  flutter_native_timezone: ^2.0.0
 
 dev_dependencies:
   flutter_test:
