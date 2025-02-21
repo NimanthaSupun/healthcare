@@ -88,8 +88,9 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
                         );
                       },
                       child: Card(
-                        // color: subLandMarksCardBg,
-                        // shadowColor: subLandMarksCardBg,
+                        color: Colors.white,
+                        elevation: 5,
+                        shadowColor: const Color.fromARGB(255, 128, 167, 232),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
