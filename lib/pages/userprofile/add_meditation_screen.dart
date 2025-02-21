@@ -22,6 +22,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   final ValueNotifier<DateTime> _selectDate = ValueNotifier<DateTime>(DateTime.now());
   final ValueNotifier<TimeOfDay> _selectTime = ValueNotifier<TimeOfDay>(TimeOfDay.now());
 
+  // ignore: non_constant_identifier_names
   AddMedicationPage() {
     _selectDate.value = DateTime.now();
     _selectTime.value = TimeOfDay.now();
