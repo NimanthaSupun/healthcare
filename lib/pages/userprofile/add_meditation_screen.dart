@@ -76,6 +76,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       );
 
       UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
         context,
         "Medication reminder set successfully",
       );
