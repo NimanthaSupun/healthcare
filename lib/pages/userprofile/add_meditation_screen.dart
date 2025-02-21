@@ -82,6 +82,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       );
 
       Future.delayed(Duration(seconds: 2));
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } catch (error) {
       print("Error: $error");
