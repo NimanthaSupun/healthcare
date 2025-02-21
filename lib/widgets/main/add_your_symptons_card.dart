@@ -79,8 +79,7 @@ class AddYourSymptonsCard extends StatelessWidget {
                               "Your Categories",
                               style: TextStyle(
                                 fontSize: 30,
-                                // color: Colors.white,
-                                color: mainPurpleColor,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
