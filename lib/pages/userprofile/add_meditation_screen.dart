@@ -133,14 +133,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 10),
-                  ClipRRect(
-                    child: Image.asset(
-                      "assets/images/medication_reminder.png",
-                      height: 180,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   SizedBox(height: 20),
                   CustomInput(
                     controller: _medicationNameController,
