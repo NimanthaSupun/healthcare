@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
-import 'package:outlined_text/outlined_text.dart';
 
 class AddYourSymptonsCard extends StatelessWidget {
   final VoidCallback onPresed;
@@ -78,7 +77,6 @@ class AddYourSymptonsCard extends StatelessWidget {
                               ),
                             ),
                           ),
-                        
                           Center(
                             child: Text(
                               "Your Categories",
