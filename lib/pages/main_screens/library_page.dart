@@ -75,13 +75,15 @@ class _LibraryPageState extends State<LibraryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 30,
+                  horizontal: 10,
+                ),
                 child: TextField(
                   controller: _searchController,
                   decoration: InputDecoration(
