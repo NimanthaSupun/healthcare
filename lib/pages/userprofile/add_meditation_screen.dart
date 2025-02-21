@@ -68,15 +68,18 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         daysOfWeek: daysOfWeek,
       );
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Medication reminder set successfully")),
       );
 
       Future.delayed(const Duration(seconds: 2));
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } catch (error) {
       print("Error: $error");
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (context) => AlertDialog(
           title: const Text("Error"),
