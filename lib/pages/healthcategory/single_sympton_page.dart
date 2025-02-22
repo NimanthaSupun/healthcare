@@ -108,9 +108,15 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
           OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
+              SizedBox(
+                height: 15,
+              ),
               processText.isNotEmpty
                   ? TextButton.icon(
-                      icon: const Icon(Icons.text_fields_sharp),
+                      icon: const Icon(
+                        Icons.text_fields_sharp,
+                        size: 20,
+                      ),
                       label: const Text(
                         'process Text',
                         style: TextStyle(
@@ -142,6 +148,9 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                 onPressed: imageUrl.isNotEmpty && !_downloading
                     ? () => _downloadBase64Image(imageUrl, downloadName)
                     : null,
+              ),
+              SizedBox(
+                height: 15,
               ),
             ],
           ),
