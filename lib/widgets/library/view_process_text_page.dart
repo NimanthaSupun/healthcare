@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ViewProcessTextPage extends StatelessWidget {
@@ -66,68 +65,65 @@ class ViewProcessTextPage extends StatelessWidget {
         elevation: 0,
       ),
       body: SafeArea(
-        child: Container(
-          color: Colors.grey[50],
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Document metadata section
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 12,
-                              horizontal: 16,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[100],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.description_outlined,
-                                  color: Colors.blue,
-                                ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  'Legal Document',
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal:10,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Document metadata section
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
                           ),
-                          const SizedBox(height: 24),
+                          decoration: BoxDecoration(
+                            color: Colors.grey[100],
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.description_outlined,
+                                color: Colors.blue,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Legal Document',
+                                style: TextStyle(
+                                  color: Colors.grey[700],
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 24),
 
-                          // Main content
-                          SelectableText.rich(
-                            TextSpan(
-                              children: _formatContractText(processText),
-                            ),
+                        // Main content
+                        SelectableText.rich(
+                          TextSpan(
+                            children: _formatContractText(processText),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
+                ),
 
-                  // Bottom padding
-                  const SizedBox(height: 24),
-                ],
-              ),
+                // Bottom padding
+                const SizedBox(height: 24),
+              ],
             ),
           ),
         ),
