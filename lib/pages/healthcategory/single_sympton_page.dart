@@ -61,6 +61,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     required String imageUrl,
     required String downloadName,
     required String type,
+    required String processText,
   }) {
     return Card(
       elevation: 4,
@@ -97,6 +98,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
           OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
+
               TextButton.icon(
                 icon: const Icon(Icons.remove_red_eye),
                 label: const Text('View'),
@@ -129,6 +131,28 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
             maxScale: 4.0,
             child: Center(
               child: Image.memory(base64Decode(base64Image)),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _viewProcessText(
+      BuildContext context, String title, String processText) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder:(context) => Scaffold(
+          appBar: AppBar(title: Text(title),
+          ),
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(processText)
+                ],
+              ),
             ),
           ),
         ),
@@ -283,24 +307,28 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               imageUrl: widget.sympton.medicalReportImage ?? '',
               downloadName: 'medical_report_${widget.sympton.name}',
               type: 'medical',
+              processText: widget.sympton.medicalProccessText ??''
             ),
             _buildImageCard(
               title: 'Doctor\'s Note',
               imageUrl: widget.sympton.doctorNoteImage ?? '',
               downloadName: 'doctor_note_${widget.sympton.name}',
               type: 'doctor',
+              processText: widget.sympton.doctorProcessText ?? '',
             ),
             _buildImageCard(
               title: 'Clinic Note',
               imageUrl: widget.sympton.clinicNoteImage ?? '',
               downloadName: 'clinic_note_${widget.sympton.name}',
               type: 'clinic',
+              processText: widget.sympton.clinicalProccessText ?? '',
             ),
             _buildImageCard(
               title: 'Prescriptions',
               imageUrl: widget.sympton.precriptionsImage ?? '',
               downloadName: 'prescription_${widget.sympton.name}',
               type: 'prescription',
+              processText: widget.sympton.precriptionsProcessText ?? ''
             ),
             const SizedBox(height: 16),
           ],
