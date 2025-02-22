@@ -21,6 +21,7 @@ class ShowUserProfileCard extends StatelessWidget {
           color: subLandMarksCardBg.withOpacity(0.2),
           border: Border.all(
             color: Colors.black54,
+            width: 2,
           ),
         ),
         child: Row(

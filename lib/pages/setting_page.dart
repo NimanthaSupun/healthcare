@@ -107,6 +107,7 @@ class _SettingPageState extends State<SettingPage> {
                 //     ),
                 //   ),
                 // ),
+
                 GestureDetector(
                   onTap: _toggle,
                   child: DarkLightCard(
@@ -114,7 +115,7 @@ class _SettingPageState extends State<SettingPage> {
                         ? "Dark Mode"
                         : "Light Mode",
                     imageUrl: Theme.of(context).brightness == Brightness.light
-                        ? "assets/images/moon_11976034.png"
+                        ? "assets/images/night_7687000.png"
                         : "assets/images/sun_11312227.png",
                   ),
                 ),
