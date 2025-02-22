@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/functions/function_dart';
 
 class ViewProcessTextPage extends StatelessWidget {
   final String title;
@@ -50,6 +52,21 @@ class ViewProcessTextPage extends StatelessWidget {
         ),
       );
     }).toList();
+  }
+
+  void _copyText(BuildContext context) async {
+    if (processText.isNotEmpty) {
+      await Clipboard.setData(
+        ClipboardData(
+          text: processText,
+        ),
+      );
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Text copied to clipboard",
+      );
+    }
   }
 
   @override
@@ -129,7 +146,9 @@ class ViewProcessTextPage extends StatelessWidget {
                 ),
 
                 // Bottom padding
-                const SizedBox(height: 24),
+                const SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
