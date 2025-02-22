@@ -70,91 +70,111 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
         horizontal: 10,
         vertical: 10,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          if (imageUrl.isNotEmpty)
-            SizedBox(
-              height: 200,
-              width: double.infinity,
-              child: Image.memory(
-                base64Decode(imageUrl),
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) => const Center(
-                  child: Icon(Icons.error_outline, size: 40, color: Colors.red),
-                ),
-              ),
-            )
-          else
-            Container(
-              height: 200,
-              width: double.infinity,
-              color: Colors.grey[200],
-              child: const Center(child: Text('No image available')),
-            ),
-          OverflowBar(
-            alignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                height: 15,
-              ),
-              processText.isNotEmpty
-                  ? TextButton.icon(
-                      icon: const Icon(
-                        Icons.text_fields_sharp,
-                        size: 20,
-                      ),
-                      label: const Text(
-                        'process Text',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      onPressed: imageUrl.isNotEmpty
-                          ? () => _viewProcessText(context, title, processText)
-                          : null,
-                    )
-                  : Text(""),
-              TextButton.icon(
-                icon: const Icon(Icons.remove_red_eye),
-                label: const Text(
-                  'View',
-                  style: TextStyle(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+          horizontal: 5,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            if (imageUrl.isNotEmpty)
+              SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: Image.memory(
+                  base64Decode(imageUrl),
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) => const Center(
+                    child:
+                        Icon(Icons.error_outline, size: 40, color: Colors.red),
                   ),
                 ),
-                onPressed: imageUrl.isNotEmpty
-                    ? () => _viewImage(context, title, imageUrl)
-                    : null,
+              )
+            else
+              Container(
+                height: 200,
+                width: double.infinity,
+                color: Colors.grey[200],
+                child: const Center(child: Text('No image available')),
               ),
-              TextButton.icon(
-                icon: const Icon(Icons.download),
-                label: const Text('Download'),
-                onPressed: imageUrl.isNotEmpty && !_downloading
-                    ? () => _downloadBase64Image(imageUrl, downloadName)
-                    : null,
-              ),
-              SizedBox(
-                height: 15,
-              ),
-            ],
-          ),
-        ],
+            OverflowBar(
+              alignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                processText.isNotEmpty
+                    ? TextButton.icon(
+                        icon: const Icon(
+                          Icons.auto_awesome_sharp,
+                          size: 25,
+                          color: mainPurpleColor,
+                        ),
+                        label: const Text(
+                          'process Text',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: mainPurpleColor,
+                          ),
+                        ),
+                        onPressed: imageUrl.isNotEmpty
+                            ? () =>
+                                _viewProcessText(context, title, processText)
+                            : null,
+                      )
+                    : Text(""),
+                TextButton.icon(
+                  icon: const Icon(Icons.remove_red_eye),
+                  label: const Text(
+                    'View',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  onPressed: imageUrl.isNotEmpty
+                      ? () => _viewImage(context, title, imageUrl)
+                      : null,
+                ),
+                TextButton.icon(
+                  icon: const Icon(
+                    Icons.download,
+                    color: Colors.black,
+                  ),
+                  label: const Text(
+                    'Download',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: imageUrl.isNotEmpty && !_downloading
+                      ? () => _downloadBase64Image(imageUrl, downloadName)
+                      : null,
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
