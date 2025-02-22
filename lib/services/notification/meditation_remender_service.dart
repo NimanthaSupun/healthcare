@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class MedicationService {
   static final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<void> initialize() async {
     tz.initializeTimeZones();
@@ -16,6 +18,9 @@ class MedicationService {
       android: androidSettings,
     );
     await _notificationsPlugin.initialize(settings);
+
+    // Load stored reminders and reschedule them
+    _loadAndScheduleReminders();
   }
 
   static Future<void> scheduleRecurringMedicationReminder({
@@ -25,9 +30,22 @@ class MedicationService {
     required String frequency,
     required List<TimeOfDay> times,
   }) async {
+    List<Map<String, dynamic>> reminders = [];
     for (var time in times) {
+      reminders.add({
+        'medicationName': medicationName,
+        'dosage': dosage,
+        'frequency': frequency,
+        'hour': time.hour,
+        'minute': time.minute,
+      });
       _scheduleNotification(medicationName, dosage, frequency, time);
     }
+    
+    // Store reminders in Firestore
+    await _firestore.collection('medication_reminders').doc(userId).set({
+      'reminders': reminders,
+    });
   }
 
   static Future<void> _scheduleNotification(
@@ -42,8 +60,6 @@ class MedicationService {
         days = List.generate(7, (index) => index + 1);
         break;
       case "Twice Daily":
-        days = List.generate(7, (index) => index + 1);
-        break;
       case "Three Times Daily":
         days = List.generate(7, (index) => index + 1);
         break;
@@ -66,7 +82,6 @@ class MedicationService {
             priority: Priority.high,
           ),
         ),
-        // androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: frequency == "Weekly"
@@ -81,5 +96,21 @@ class MedicationService {
       scheduledTime = scheduledTime.add(Duration(days: 1));
     }
     return scheduledTime;
+  }
+
+  static Future<void> _loadAndScheduleReminders() async {
+    final remindersSnapshot = await _firestore.collection('medication_reminders').get();
+    for (var doc in remindersSnapshot.docs) {
+      final reminders = doc['reminders'] as List<dynamic>;
+      for (var reminder in reminders) {
+        final time = TimeOfDay(hour: reminder['hour'], minute: reminder['minute']);
+        _scheduleNotification(
+          reminder['medicationName'],
+          reminder['dosage'],
+          reminder['frequency'],
+          time,
+        );
+      }
+    }
   }
 }
