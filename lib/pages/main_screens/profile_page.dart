@@ -80,8 +80,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: 20,
                           ),
                           Card(
-                            elevation: 8,
-                            shadowColor: mainBlueColor,
+                            elevation: 4,
+                            shadowColor: mainLandMarksColor,
                             child: Container(
                               width: double.infinity,
                               height: 100,
