@@ -118,16 +118,26 @@ class ViewProcessTextPage extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.description_outlined,
-                                color: Colors.blue,
                               ),
                               const SizedBox(width: 12),
                               Text(
-                                'Legal Document',
+                                'copy to clipboard',
                                 style: TextStyle(
-                                  color: Colors.grey[700],
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900,
                                 ),
+                              ),
+                              Spacer(),
+                              IconButton(
+                                onPressed: () => _copyText(context),
+                                icon: Icon(
+                                  Icons.copy,
+                                  size: 25,
+                                  color: mainLandMarksColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
                               ),
                             ],
                           ),
