@@ -50,9 +50,11 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       times: _selectedTimes.value,
     );
 
+    // ignore: use_build_context_synchronously
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Medication reminder set successfully!")),
     );
+    // ignore: use_build_context_synchronously
     Navigator.of(context).pop();
   }
 
