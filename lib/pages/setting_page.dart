@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/provider/theme_provider.dart';
 import 'package:healthcare/services/auth/auth_service.dart';
+import 'package:healthcare/widgets/profile_widget/dark_light_card.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:provider/provider.dart';
 
@@ -105,6 +106,10 @@ class _SettingPageState extends State<SettingPage> {
                       ),
                     ),
                   ),
+                ),
+                DarkLightCard(
+                  title: "",
+                  imageUrl: "",
                 ),
                 SizedBox(
                   height: 300,
