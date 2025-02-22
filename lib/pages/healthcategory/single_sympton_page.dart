@@ -204,28 +204,6 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
       ),
     );
   }
-
-  void _viewProcessText(
-      BuildContext context, String title, String processText) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => Scaffold(
-          appBar: AppBar(
-            title: Text(title),
-          ),
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [Text(processText)],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   void _deleteSympton(BuildContext context) async {
     try {
       SymtonService().deleteSympton(
