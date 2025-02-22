@@ -98,12 +98,18 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
           OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
-
               TextButton.icon(
                 icon: const Icon(Icons.remove_red_eye),
                 label: const Text('View'),
                 onPressed: imageUrl.isNotEmpty
                     ? () => _viewImage(context, title, imageUrl)
+                    : null,
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.remove_red_eye),
+                label: const Text('Text'),
+                onPressed: imageUrl.isNotEmpty
+                    ? () => _viewProcessText(context, title, processText)
                     : null,
               ),
               TextButton.icon(
@@ -143,15 +149,14 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder:(context) => Scaffold(
-          appBar: AppBar(title: Text(title),
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text(title),
           ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Column(
-                children: [
-                  Text(processText)
-                ],
+                children: [Text(processText)],
               ),
             ),
           ),
@@ -303,12 +308,11 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                 ),
               ),
             _buildImageCard(
-              title: 'Medical Report',
-              imageUrl: widget.sympton.medicalReportImage ?? '',
-              downloadName: 'medical_report_${widget.sympton.name}',
-              type: 'medical',
-              processText: widget.sympton.medicalProccessText ??''
-            ),
+                title: 'Medical Report',
+                imageUrl: widget.sympton.medicalReportImage ?? '',
+                downloadName: 'medical_report_${widget.sympton.name}',
+                type: 'medical',
+                processText: widget.sympton.medicalProccessText ?? ''),
             _buildImageCard(
               title: 'Doctor\'s Note',
               imageUrl: widget.sympton.doctorNoteImage ?? '',
@@ -324,12 +328,11 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               processText: widget.sympton.clinicalProccessText ?? '',
             ),
             _buildImageCard(
-              title: 'Prescriptions',
-              imageUrl: widget.sympton.precriptionsImage ?? '',
-              downloadName: 'prescription_${widget.sympton.name}',
-              type: 'prescription',
-              processText: widget.sympton.precriptionsProcessText ?? ''
-            ),
+                title: 'Prescriptions',
+                imageUrl: widget.sympton.precriptionsImage ?? '',
+                downloadName: 'prescription_${widget.sympton.name}',
+                type: 'prescription',
+                processText: widget.sympton.precriptionsProcessText ?? ''),
             const SizedBox(height: 16),
           ],
         ),
