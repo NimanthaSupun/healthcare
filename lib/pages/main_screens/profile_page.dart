@@ -81,7 +81,8 @@ class _ProfilePageState extends State<ProfilePage> {
                           ),
                           Card(
                             elevation: 4,
-                            shadowColor: mainLandMarksColor,
+                            // ignore: deprecated_member_use
+                            shadowColor: mainLandMarksColor.withOpacity(0.5),
                             child: Container(
                               width: double.infinity,
                               height: 100,
