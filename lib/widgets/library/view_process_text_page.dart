@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 
 class ViewProcessTextPage extends StatelessWidget {
   final String title;
@@ -69,14 +70,20 @@ class ViewProcessTextPage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
-              horizontal:10,
+              horizontal: 10,
             ),
             child: Column(
               children: [
                 Container(
-                  
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: subLandMarksCardBg,
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 10,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
