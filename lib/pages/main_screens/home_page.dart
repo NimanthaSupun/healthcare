@@ -175,6 +175,7 @@ class _HomePageState extends State<HomePage> {
                   height: 35,
                 ),
                 ShowUserhealthCategory(),
+                SizedBox(height: 10,),
               ],
             ),
           ),
