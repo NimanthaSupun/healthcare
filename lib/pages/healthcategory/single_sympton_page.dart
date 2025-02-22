@@ -98,13 +98,15 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
           OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
-              TextButton.icon(
-                icon: const Icon(Icons.text_fields_sharp),
-                label: const Text('Text'),
-                onPressed: imageUrl.isNotEmpty
-                    ? () => _viewProcessText(context, title, processText)
-                    : null,
-              ),
+              processText.isNotEmpty
+                  ? TextButton.icon(
+                      icon: const Icon(Icons.text_fields_sharp),
+                      label: const Text('Text'),
+                      onPressed: imageUrl.isNotEmpty
+                          ? () => _viewProcessText(context, title, processText)
+                          : null,
+                    )
+                  : Text(""),
               TextButton.icon(
                 icon: const Icon(Icons.remove_red_eye),
                 label: const Text('View'),
