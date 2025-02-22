@@ -67,8 +67,8 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
       elevation: 4,
       shadowColor: mainLandMarksColor,
       margin: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 8,
+        horizontal: 10,
+        vertical: 10,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +112,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                   ? TextButton.icon(
                       icon: const Icon(Icons.text_fields_sharp),
                       label: const Text(
-                        'Text',
+                        'process Text',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
