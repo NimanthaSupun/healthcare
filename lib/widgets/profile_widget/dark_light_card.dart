@@ -9,7 +9,7 @@ class DarkLightCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 1),
       child: Container(
         width: double.infinity,
         height: 60,

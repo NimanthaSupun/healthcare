@@ -54,62 +54,69 @@ class _SettingPageState extends State<SettingPage> {
                 SizedBox(
                   height: 30,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 25),
-                  child: Card(
-                    child: ListTile(
-                      title: Theme.of(context).brightness == Brightness.light
-                          ? Text(
-                              "Dark Mode",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            )
-                          : Text(
-                              "Light Mode",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                      trailing: GestureDetector(
-                        onTap: _toggle,
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 500),
-                          width: Theme.of(context).brightness == Brightness.dark
-                              ? 50
-                              : 100,
-                          height:
-                              Theme.of(context).brightness == Brightness.dark
-                                  ? 50
-                                  : 50,
-                          decoration: BoxDecoration(
-                            borderRadius:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? BorderRadius.circular(100)
-                                    : BorderRadius.circular(10),
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.black
-                                    : Colors.transparent,
-                          ),
-                          curve: Curves.easeInOut,
-                          child: Icon(
-                            Theme.of(context).brightness == Brightness.dark
-                                ? Icons.lightbulb
-                                : Icons.dark_mode_rounded,
-                            color:
-                                Theme.of(context).brightness == Brightness.dark
-                                    ? Colors.white
-                                    : Colors.black,
-                          ),
-                        ),
-                      ),
-                    ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 25),
+                //   child: Card(
+                //     child: ListTile(
+                //       title: Theme.of(context).brightness == Brightness.light
+                //           ? Text(
+                //               "Dark Mode",
+                //               style: TextStyle(
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //             )
+                //           : Text(
+                //               "Light Mode",
+                //               style: TextStyle(
+                //                 fontWeight: FontWeight.bold,
+                //               ),
+                //             ),
+                //       trailing: GestureDetector(
+                //         onTap: _toggle,
+                //         child: AnimatedContainer(
+                //           duration: Duration(milliseconds: 500),
+                //           width: Theme.of(context).brightness == Brightness.dark
+                //               ? 50
+                //               : 100,
+                //           height:
+                //               Theme.of(context).brightness == Brightness.dark
+                //                   ? 50
+                //                   : 50,
+                //           decoration: BoxDecoration(
+                //             borderRadius:
+                //                 Theme.of(context).brightness == Brightness.dark
+                //                     ? BorderRadius.circular(100)
+                //                     : BorderRadius.circular(10),
+                //             color:
+                //                 Theme.of(context).brightness == Brightness.dark
+                //                     ? Colors.black
+                //                     : Colors.transparent,
+                //           ),
+                //           curve: Curves.easeInOut,
+                //           child: Icon(
+                //             Theme.of(context).brightness == Brightness.dark
+                //                 ? Icons.lightbulb
+                //                 : Icons.dark_mode_rounded,
+                //             color:
+                //                 Theme.of(context).brightness == Brightness.dark
+                //                     ? Colors.white
+                //                     : Colors.black,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                GestureDetector(
+                  onTap: _toggle,
+                  child: DarkLightCard(
+                    title: Theme.of(context).brightness == Brightness.light
+                        ? "Dark Mode"
+                        : "Light Mode",
+                    imageUrl: Theme.of(context).brightness == Brightness.light
+                        ? "assets/images/moon_11976034.png"
+                        : "assets/images/sun_11312227.png",
                   ),
-                ),
-                DarkLightCard(
-                  title: "",
-                  imageUrl: "",
                 ),
                 SizedBox(
                   height: 300,
