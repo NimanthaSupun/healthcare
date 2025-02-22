@@ -143,6 +143,10 @@ class SymtonService {
       // Update the symptom details
       await symptonDocRef.update({
         'name': symptonModel.name,
+        'medicalProccessText':symptonModel.medicalProccessText,
+        'doctorProcessText':symptonModel.doctorProcessText,
+        'precriptionsProcessText':symptonModel.precriptionsProcessText,
+        'clinicalProccessText':symptonModel.clinicalProccessText,
       });
 
       // Update images in the first collection (images1)
