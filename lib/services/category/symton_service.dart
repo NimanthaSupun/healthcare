@@ -15,7 +15,10 @@ class SymtonService {
           .collection("symptons");
 
       final SymptonModel newSympton = SymptonModel(
-          id: "", name: symptonModel.name, dueDate: symptonModel.dueDate);
+        id: "",
+        name: symptonModel.name,
+        dueDate: symptonModel.dueDate,
+      );
 
       final Map<String, dynamic> data = newSympton.toJson();
 
@@ -78,6 +81,7 @@ class SymtonService {
             doctorNoteImage: images1Data['doctorNoteImage'] ?? '',
             clinicNoteImage: images2Data['clinicNoteImage'] ?? '',
             precriptionsImage: images2Data['precriptionsImage'] ?? '',
+            
           ));
         }
 
