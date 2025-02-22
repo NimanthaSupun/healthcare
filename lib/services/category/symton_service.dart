@@ -79,6 +79,10 @@ class SymtonService {
           symptoms.add(SymptonModel(
             id: symptomId,
             name: symptomData['name'] ?? '',
+            medicalProccessText:symptomData['medicalProccessText'] ?? '',
+            doctorProcessText:symptomData['doctorProcessText'] ?? '',
+            precriptionsProcessText:symptomData['precriptionsProcessText'] ?? '',
+            clinicalProccessText:symptomData['clinicalProccessText'] ?? '',
             dueDate: dueDate,
             medicalReportImage: images1Data['medicalReportImage'] ?? '',
             doctorNoteImage: images1Data['doctorNoteImage'] ?? '',
