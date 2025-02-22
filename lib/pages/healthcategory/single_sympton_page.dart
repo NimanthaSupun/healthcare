@@ -17,10 +17,10 @@ class SingleSymptonPage extends StatefulWidget {
   final HealthCategory healthCategory;
 
   const SingleSymptonPage({
-    Key? key,
+    super.key,
     required this.sympton,
     required this.healthCategory,
-  }) : super(key: key);
+  });
 
   @override
   State<SingleSymptonPage> createState() => _SingleSymptonPageState();
@@ -42,10 +42,12 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
     try {
       final bytes = base64Decode(base64String);
       await ImageService.saveBytes(bytes, fileName);
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Image saved successfully')),
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to save image: $e')),
       );
@@ -92,7 +94,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               color: Colors.grey[200],
               child: const Center(child: Text('No image available')),
             ),
-          ButtonBar(
+          OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
               TextButton.icon(
