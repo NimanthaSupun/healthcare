@@ -10,6 +10,7 @@ import 'package:healthcare/pages/responsive/responsive_layout.dart';
 import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/services/category/image_saver_service.dart';
 import 'package:healthcare/services/category/symton_service.dart';
+import 'package:healthcare/widgets/library/view_process_text_page.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
 
 class SingleSymptonPage extends StatefulWidget {
@@ -134,7 +135,14 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                         ),
                         onPressed: imageUrl.isNotEmpty
                             ? () =>
-                                _viewProcessText(context, title, processText)
+                                // _viewProcessText(context, title, processText)
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ViewProcessTextPage(
+                                        title: title, processText: processText,
+                                    ),
+                                  ),
+                                )
                             : null,
                       )
                     : Text(""),
