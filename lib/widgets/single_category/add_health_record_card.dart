@@ -9,34 +9,35 @@ class AddHealthRecordCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.45,
-      height: 250,
-      decoration: BoxDecoration(
+    return Card(
+      shadowColor: Colors.black,
+      elevation: 4,
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.45,
+        height: 250,
+        decoration: BoxDecoration(
           color: subLandMarksCardBg,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: Colors.black54,
-          ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          Image.asset(
-            imageUrl,
-            fit: BoxFit.cover,
-            width: 120,
-            height: 120,
-          ),
-        ],
+            Image.asset(
+              imageUrl,
+              fit: BoxFit.cover,
+              width: 120,
+              height: 120,
+            ),
+          ],
+        ),
       ),
     );
   }
