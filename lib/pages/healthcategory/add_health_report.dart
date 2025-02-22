@@ -125,6 +125,10 @@ class _AddHealthReportState extends State<AddHealthReport> {
         doctorNoteImage: _base64DoctorNoteImage,
         precriptionsImage: _base64PrescriptionImage,
         clinicNoteImage: _base64ClinicNoteImage,
+        medicalProccessText: medicalRecognizedText,
+        doctorProcessText: doctorRecognizedText,
+        precriptionsProcessText: prescriptionRecognizedText,
+        clinicalProccessText: clinicRecognizedText,
       );
 
       await SymtonService().addNewSympton(
