@@ -176,21 +176,18 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 SizedBox(
-                  height: 200,
+                  height: 300,
                   child: ClipRRect(
                     child: Center(
                       child: Image.asset(
-                        "assets/images/undraw_online-resume_z4sp.png",
+                        "assets/images/nurse-wearing-protection-equipment-while-fighting-corona-virus-with-syringe.png",
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
