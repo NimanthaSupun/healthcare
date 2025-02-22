@@ -111,7 +111,13 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
               processText.isNotEmpty
                   ? TextButton.icon(
                       icon: const Icon(Icons.text_fields_sharp),
-                      label: const Text('Text'),
+                      label: const Text(
+                        'Text',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
                       onPressed: imageUrl.isNotEmpty
                           ? () => _viewProcessText(context, title, processText)
                           : null,
@@ -119,7 +125,13 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                   : Text(""),
               TextButton.icon(
                 icon: const Icon(Icons.remove_red_eye),
-                label: const Text('View'),
+                label: const Text(
+                  'View',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
                 onPressed: imageUrl.isNotEmpty
                     ? () => _viewImage(context, title, imageUrl)
                     : null,
