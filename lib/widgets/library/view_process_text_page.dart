@@ -11,6 +11,31 @@ class ViewProcessTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal:16,
+            ),
+            child: Column(
+              children: [
+                
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
