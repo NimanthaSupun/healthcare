@@ -118,12 +118,13 @@ class ViewProcessTextPage extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.description_outlined,
+                                size: 22,
                               ),
                               const SizedBox(width: 12),
                               Text(
                                 'copy to clipboard',
                                 style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 19,
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
@@ -137,13 +138,11 @@ class ViewProcessTextPage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: 5,
                               ),
                             ],
                           ),
                         ),
                         const SizedBox(height: 24),
-
                         // Main content
                         SelectableText.rich(
                           TextSpan(
