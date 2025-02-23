@@ -154,7 +154,6 @@ class ViewProcessTextPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 // Bottom padding
                 const SizedBox(
                   height: 10,
