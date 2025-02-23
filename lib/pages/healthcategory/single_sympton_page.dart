@@ -139,7 +139,8 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) => ViewProcessTextPage(
-                                        title: title, processText: processText,
+                                      title: title,
+                                      processText: processText,
                                     ),
                                   ),
                                 )
@@ -204,6 +205,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
       ),
     );
   }
+
   void _deleteSympton(BuildContext context) async {
     try {
       SymtonService().deleteSympton(
@@ -239,7 +241,12 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Symptom Details'),
+        title: const Text(
+          'Symptom Details',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
