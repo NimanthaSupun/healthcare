@@ -11,55 +11,82 @@ class MedicationService {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<void> initialize() async {
-    // Initialize timezone
-    tz.initializeTimeZones();
+    try {
+      tz.initializeTimeZones();
+      
+      // Request notification permissions
+      await _requestNotificationPermissions();
 
-    // Request notification permissions
-    await _requestNotificationPermissions();
+      const AndroidInitializationSettings androidSettings =
+          AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    // Initialize notifications
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+      final DarwinInitializationSettings iOSSettings = DarwinInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+      );
 
-    final DarwinInitializationSettings iOSSettings =
-        DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
+      final InitializationSettings settings = InitializationSettings(
+        android: androidSettings,
+        iOS: iOSSettings,
+      );
+
+      bool? initialized = await _notificationsPlugin.initialize(
+        settings,
+        onDidReceiveNotificationResponse: (NotificationResponse details) {
+          debugPrint('Notification tapped: ${details.payload}');
+        },
+      );
+
+      debugPrint('Notifications initialized: $initialized');
+
+      // Create the notification channel for Android
+      await _createNotificationChannel();
+
+      // Load stored reminders and reschedule them
+      await _loadAndScheduleReminders();
+    } catch (e, stackTrace) {
+      debugPrint('Error initializing notifications: $e');
+      debugPrint('Stack trace: $stackTrace');
+    }
+  }
+
+  static Future<void> _createNotificationChannel() async {
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'medication_channel',
+      'Medication Reminders',
+      description: 'Notifications for medication reminders',
+      importance: Importance.max,
+      enableVibration: true,
+      enableLights: true,
     );
 
-    final InitializationSettings settings = InitializationSettings(
-      android: androidSettings,
-      iOS: iOSSettings,
-    );
-
-    await _notificationsPlugin.initialize(
-      settings,
-      onDidReceiveNotificationResponse: (NotificationResponse details) {
-        // Handle notification tap
-        debugPrint('Notification tapped: ${details.payload}');
-      },
-    );
-
-    // Load stored reminders and reschedule them
-    await _loadAndScheduleReminders();
+    await _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
   }
 
   static Future<void> _requestNotificationPermissions() async {
-    // Request permissions for Android 13 and above
-    if (await Permission.notification.isDenied) {
-      await Permission.notification.request();
-    }
+    try {
+      if (await Permission.notification.isDenied) {
+        final status = await Permission.notification.request();
+        debugPrint('Notification permission status: $status');
+      }
 
-    // Request permissions for iOS
-    await _notificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
+      final iOS = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>();
+      if (iOS != null) {
+        await iOS.requestPermissions(
           alert: true,
           badge: true,
           sound: true,
         );
+      }
+    } catch (e) {
+      debugPrint('Error requesting permissions: $e');
+    }
   }
 
   static Future<void> scheduleRecurringMedicationReminder({
@@ -74,6 +101,8 @@ class MedicationService {
       await _notificationsPlugin.cancelAll();
 
       List<Map<String, dynamic>> reminders = [];
+      int idCounter = 0;
+      
       for (var time in times) {
         final reminder = {
           'medicationName': medicationName,
@@ -81,82 +110,119 @@ class MedicationService {
           'frequency': frequency,
           'hour': time.hour,
           'minute': time.minute,
-          'id': time.hashCode,
+          'id': idCounter,
         };
         reminders.add(reminder);
-        await _scheduleNotification(medicationName, dosage, frequency, time);
+        await _scheduleNotification(
+          medicationName, 
+          dosage, 
+          frequency, 
+          time,
+          idCounter,
+        );
+        idCounter++;
       }
 
       // Store reminders in Firestore
       await _firestore.collection('medication_reminders').doc(userId).set({
         'reminders': reminders,
-        'lastUpdated': tz.TZDateTime.now(tz.local),
+        'lastUpdated': tz.TZDateTime.now(tz.local).toIso8601String(),
       });
 
       debugPrint('Reminders scheduled successfully');
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint('Error scheduling reminders: $e');
+      debugPrint('Stack trace: $stackTrace');
       rethrow;
     }
   }
 
-  static Future<void> _scheduleNotification(String medicationName,
-      String dosage, String frequency, TimeOfDay time) async {
-    final now = tz.TZDateTime.now(tz.local);
-    var scheduleTime = tz.TZDateTime(
-      tz.local,
-      now.year,
-      now.month,
-      now.day,
-      time.hour,
-      time.minute,
-    );
+  static Future<void> _scheduleNotification(
+    String medicationName,
+    String dosage,
+    String frequency,
+    TimeOfDay time,
+    int notificationId,
+  ) async {
+    try {
+      final now = tz.TZDateTime.now(tz.local);
+      var scheduleTime = tz.TZDateTime(
+        tz.local,
+        now.year,
+        now.month,
+        now.day,
+        time.hour,
+        time.minute,
+      );
 
-    // If the time has already passed today, schedule for next occurrence
-    if (scheduleTime.isBefore(now)) {
-      scheduleTime = scheduleTime.add(const Duration(days: 1));
-    }
+      // If the time has already passed today, schedule for next occurrence
+      if (scheduleTime.isBefore(now)) {
+        scheduleTime = scheduleTime.add(const Duration(days: 1));
+      }
 
-    final notificationDetails = NotificationDetails(
-      android: AndroidNotificationDetails(
-        'medication_channel',
-        'Medication Reminders',
-        channelDescription: 'Notifications for medication reminders',
-        importance: Importance.max,
-        priority: Priority.high,
-        sound: RawResourceAndroidNotificationSound('notification_sound'),
-        enableVibration: true,
-        enableLights: true,
-        category: AndroidNotificationCategory.reminder,
-        visibility: NotificationVisibility.public,
-      ),
-      iOS: DarwinNotificationDetails(
-        sound: 'notification_sound.aiff',
-        presentAlert: true,
-        presentBadge: true,
-        presentSound: true,
-      ),
-    );
+      debugPrint('Scheduling notification for: ${scheduleTime.toIso8601String()}');
 
-    switch (frequency.toLowerCase()) {
-      case "daily":
-        await _scheduleDaily(
-            medicationName, dosage, scheduleTime, notificationDetails);
-        break;
-      case "twice daily":
-        await _scheduleDaily(
-            medicationName, dosage, scheduleTime, notificationDetails);
-        break;
-      case "three times daily":
-        await _scheduleDaily(
-            medicationName, dosage, scheduleTime, notificationDetails);
-        break;
-      case "weekly":
-        await _scheduleWeekly(
-            medicationName, dosage, scheduleTime, notificationDetails);
-        break;
-      default:
-        throw Exception('Unsupported frequency: $frequency');
+      final notificationDetails = NotificationDetails(
+        android: AndroidNotificationDetails(
+          'medication_channel',
+          'Medication Reminders',
+          channelDescription: 'Notifications for medication reminders',
+          importance: Importance.max,
+          priority: Priority.high,
+          enableVibration: true,
+          enableLights: true,
+        ),
+        iOS: const DarwinNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+        ),
+      );
+
+      switch (frequency.toLowerCase()) {
+        case "daily":
+          await _scheduleDaily(
+            medicationName,
+            dosage,
+            scheduleTime,
+            notificationDetails,
+            notificationId,
+          );
+          break;
+        case "twice daily":
+          await _scheduleDaily(
+            medicationName,
+            dosage,
+            scheduleTime,
+            notificationDetails,
+            notificationId,
+          );
+          break;
+        case "three times daily":
+          await _scheduleDaily(
+            medicationName,
+            dosage,
+            scheduleTime,
+            notificationDetails,
+            notificationId,
+          );
+          break;
+        case "weekly":
+          await _scheduleWeekly(
+            medicationName,
+            dosage,
+            scheduleTime,
+            notificationDetails,
+            notificationId,
+          );
+          break;
+        default:
+          throw Exception('Unsupported frequency: $frequency');
+      }
+    } catch (e, stackTrace) {
+      debugPrint('Error in _scheduleNotification: $e');
+      debugPrint('Stack trace: $stackTrace');
+      rethrow;
     }
   }
 
@@ -165,19 +231,27 @@ class MedicationService {
     String dosage,
     tz.TZDateTime scheduleTime,
     NotificationDetails notificationDetails,
+    int notificationId,
   ) async {
-    await _notificationsPlugin.zonedSchedule(
-      scheduleTime.millisecondsSinceEpoch ~/ 1000,
-      "Time for your medication",
-      "Please take $medicationName - $dosage",
-      scheduleTime,
-      notificationDetails,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.time,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: 'medication_$medicationName',
-    );
+    try {
+      await _notificationsPlugin.zonedSchedule(
+        notificationId,
+        "Time for your medication",
+        "Please take $medicationName - $dosage",
+        scheduleTime,
+        notificationDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        payload: 'medication_$medicationName',
+      );
+      debugPrint('Daily notification scheduled for ID: $notificationId');
+    } catch (e, stackTrace) {
+      debugPrint('Error in _scheduleDaily: $e');
+      debugPrint('Stack trace: $stackTrace');
+      rethrow;
+    }
   }
 
   static Future<void> _scheduleWeekly(
@@ -185,19 +259,27 @@ class MedicationService {
     String dosage,
     tz.TZDateTime scheduleTime,
     NotificationDetails notificationDetails,
+    int notificationId,
   ) async {
-    await _notificationsPlugin.zonedSchedule(
-      scheduleTime.millisecondsSinceEpoch ~/ 1000,
-      "Time for your weekly medication",
-      "Please take $medicationName - $dosage",
-      scheduleTime,
-      notificationDetails,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
-      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      payload: 'medication_$medicationName',
-    );
+    try {
+      await _notificationsPlugin.zonedSchedule(
+        notificationId,
+        "Time for your weekly medication",
+        "Please take $medicationName - $dosage",
+        scheduleTime,
+        notificationDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        payload: 'medication_$medicationName',
+      );
+      debugPrint('Weekly notification scheduled for ID: $notificationId');
+    } catch (e, stackTrace) {
+      debugPrint('Error in _scheduleWeekly: $e');
+      debugPrint('Stack trace: $stackTrace');
+      rethrow;
+    }
   }
 
   static Future<void> _loadAndScheduleReminders() async {
@@ -214,12 +296,14 @@ class MedicationService {
             reminder['dosage'],
             reminder['frequency'],
             time,
+            reminder['id'],
           );
         }
       }
       debugPrint('Existing reminders loaded and scheduled');
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint('Error loading reminders: $e');
+      debugPrint('Stack trace: $stackTrace');
     }
   }
 }
