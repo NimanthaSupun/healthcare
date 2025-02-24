@@ -31,8 +31,8 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 8,
-      shadowColor: Colors.black,
+      elevation: 4,
+      shadowColor: mobileBackgroundColor,
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
