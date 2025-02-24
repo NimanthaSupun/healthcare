@@ -197,6 +197,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
+                                    color: mainOrangeColor,
                                   ),
                                 ),
                               ),
@@ -205,7 +206,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
                                 icon: const Icon(
                                   Icons.calendar_today,
                                   size: 30,
-                                  color: mainLandMarksColor,
+                                  color: mainOrangeColor,
                                 ),
                               ),
                             ],
