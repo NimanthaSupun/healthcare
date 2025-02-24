@@ -84,7 +84,10 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
               SizedBox(
                 height: 5,
               ),
-              Divider(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Divider(),
+              ),
               SizedBox(
                 height: 5,
               ),
