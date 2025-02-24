@@ -202,12 +202,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     );
                   },
                 ),
-
-                // ElevatedButton(
-                //   onPressed: () =>
-                //       _openGoogleMaps(6.932689343470935, 79.84423838339256),
-                //   child: Text("Map"),
-                // )
               ],
             ),
           ),
