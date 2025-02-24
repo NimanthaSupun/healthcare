@@ -179,17 +179,6 @@ class _AddHealthReportState extends State<AddHealthReport> {
               key: _formKey,
               child: Column(
                 children: [
-                  Text(
-                    "Upload Your symptom Records",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Column(
