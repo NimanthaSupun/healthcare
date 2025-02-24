@@ -53,7 +53,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                 Text(
                   widget.title,
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: mainLandMarksColor,
                   ),
