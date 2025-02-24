@@ -1,136 +1,201 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthcare/services/notification/meditation_remender_service.dart';
-import 'package:healthcare/widgets/reusable/custom_button.dart';
-import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddMedicationPage extends StatefulWidget {
   const AddMedicationPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _AddMedicationPageState createState() => _AddMedicationPageState();
+  State<AddMedicationPage> createState() => _AddMedicationPageState();
 }
 
 class _AddMedicationPageState extends State<AddMedicationPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _medicationNameController = TextEditingController();
-  final TextEditingController _dosageController = TextEditingController();
-  final ValueNotifier<List<TimeOfDay>> _selectedTimes = ValueNotifier<List<TimeOfDay>>([]);
-  String _selectedFrequency = "Daily";
+  final _medicationNameController = TextEditingController();
+  final _dosageController = TextEditingController();
+  final List<TimeOfDay> _selectedTimes = [];
+  String _selectedFrequency = 'Daily';
+  bool _isLoading = false;
 
-  final List<String> _frequencyOptions = [
-    "Daily",
-    "Twice Daily",
-    "Three Times Daily",
-    "Weekly"
-  ];
+  final List<String> _frequencyOptions = ['Daily', 'Weekly'];
 
-  Future<void> _pickTime(BuildContext context) async {
+  @override
+  void dispose() {
+    _medicationNameController.dispose();
+    _dosageController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _addTime() async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
     );
-    if (picked != null && !_selectedTimes.value.contains(picked)) {
-      _selectedTimes.value = [..._selectedTimes.value, picked];
+
+    if (picked != null && !_selectedTimes.contains(picked)) {
+      setState(() {
+        _selectedTimes.add(picked);
+      });
     }
   }
 
-  void _submitForm() async {
-    if (!_formKey.currentState!.validate()) {
+  void _removeTime(TimeOfDay time) {
+    setState(() {
+      _selectedTimes.remove(time);
+    });
+  }
+
+  Future<void> _submitForm() async {
+    if (!_formKey.currentState!.validate()) return;
+    if (_selectedTimes.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select at least one time')),
+      );
       return;
     }
 
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    await MedicationService.scheduleRecurringMedicationReminder(
-      userId: userId,
-      medicationName: _medicationNameController.text,
-      dosage: _dosageController.text,
-      frequency: _selectedFrequency,
-      times: _selectedTimes.value,
-    );
+    setState(() => _isLoading = true);
 
-    // ignore: use_build_context_synchronously
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Medication reminder set successfully!")),
-    );
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).pop();
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) throw Exception('User not authenticated');
+
+      await MedicationNotificationService.scheduleMedicationReminder(
+        userId: userId,
+        medicationName: _medicationNameController.text,
+        dosage: _dosageController.text,
+        frequency: _selectedFrequency,
+        times: _selectedTimes,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Medication reminder set successfully!')),
+        );
+        Navigator.of(context).pop();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Medication")),
-      body: Padding(
+      appBar: AppBar(
+        title: const Text('Add Medication'),
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              CustomInput(
+              TextFormField(
                 controller: _medicationNameController,
-                labelText: "Medication Name",
-                hintText: "Enter medication name",
-                icon: Icons.medical_services_outlined,
-                obsecureText: false,
+                decoration: const InputDecoration(
+                  labelText: 'Medication Name',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.medication),
+                ),
                 validator: (value) =>
-                    value!.isEmpty ? "Please enter medication name" : null,
+                    value?.isEmpty == true ? 'Please enter medication name' : null,
               ),
-              SizedBox(height: 16),
-              CustomInput(
+              const SizedBox(height: 16),
+              TextFormField(
                 controller: _dosageController,
-                labelText: "Dosage (mg)",
-                hintText: "Enter dosage",
-                icon: Icons.format_list_numbered,
-                obsecureText: false,
+                decoration: const InputDecoration(
+                  labelText: 'Dosage',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.scale),
+                ),
                 validator: (value) =>
-                    value!.isEmpty ? "Please enter dosage" : null,
+                    value?.isEmpty == true ? 'Please enter dosage' : null,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedFrequency,
-                decoration: InputDecoration(labelText: "Frequency"),
-                items: _frequencyOptions.map((String option) {
+                decoration: const InputDecoration(
+                  labelText: 'Frequency',
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.calendar_today),
+                ),
+                items: _frequencyOptions.map((String frequency) {
                   return DropdownMenuItem<String>(
-                    value: option,
-                    child: Text(option),
+                    value: frequency,
+                    child: Text(frequency),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedFrequency = newValue!;
-                    _selectedTimes.value = [];
-                  });
+                  if (newValue != null) {
+                    setState(() {
+                      _selectedFrequency = newValue;
+                    });
+                  }
                 },
               ),
-              SizedBox(height: 16),
-              Text("Select Time(s)"),
-              ValueListenableBuilder<List<TimeOfDay>>(
-                valueListenable: _selectedTimes,
-                builder: (context, times, child) {
-                  return Column(
-                    children: [
-                      Wrap(
-                        spacing: 10,
-                        children: times
-                            .map((time) => Chip(label: Text(time.format(context))))
-                            .toList(),
-                      ),
-                      TextButton(
-                        onPressed: () => _pickTime(context),
-                        child: Text("Pick a Time"),
-                      ),
-                    ],
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  const Text(
+                    'Reminder Times',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  TextButton.icon(
+                    onPressed: _addTime,
+                    icon: const Icon(Icons.add),
+                    label: const Text('Add Time'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: _selectedTimes.map((time) {
+                  return Chip(
+                    label: Text(time.format(context)),
+                    deleteIcon: const Icon(Icons.close),
+                    onDeleted: () => _removeTime(time),
                   );
-                },
+                }).toList(),
               ),
-              SizedBox(height: 16),
-              CustomButton(
-                title: "Set Reminder",
-                width: double.infinity,
-                onPressed: _submitForm,
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _isLoading ? null : _submitForm,
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: _isLoading
+                    ? const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          ),
+                          SizedBox(width: 12),
+                          Text('Saving...'),
+                        ],
+                      )
+                    : const Text('Save Medication'),
               ),
             ],
           ),

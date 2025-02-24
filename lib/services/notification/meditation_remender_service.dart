@@ -1,95 +1,81 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:flutter/material.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class MedicationService {
-  static final FlutterLocalNotificationsPlugin _notificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+class MedicationNotificationService {
+  static final FlutterLocalNotificationsPlugin _localNotifications = FlutterLocalNotificationsPlugin();
+  static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  
+  static const String CHANNEL_ID = 'medication_reminders';
+  static const String CHANNEL_NAME = 'Medication Reminders';
 
-  static Future<void> initialize() async {
-    try {
-      tz.initializeTimeZones();
-      
-      // Request notification permissions
-      await _requestNotificationPermissions();
+  static Future<void> init() async {
+    tz.initializeTimeZones();
 
-      const AndroidInitializationSettings androidSettings =
-          AndroidInitializationSettings('@mipmap/ic_launcher');
+    // Initialize local notifications
+    const AndroidInitializationSettings androidSettings = 
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const DarwinInitializationSettings iosSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
 
-      final DarwinInitializationSettings iOSSettings = DarwinInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
-      );
+    await _localNotifications.initialize(
+      const InitializationSettings(android: androidSettings, iOS: iosSettings),
+      onDidReceiveNotificationResponse: _handleNotificationTap,
+    );
 
-      final InitializationSettings settings = InitializationSettings(
-        android: androidSettings,
-        iOS: iOSSettings,
-      );
+    // Create notification channel
+    await _createNotificationChannel();
 
-      bool? initialized = await _notificationsPlugin.initialize(
-        settings,
-        onDidReceiveNotificationResponse: (NotificationResponse details) {
-          debugPrint('Notification tapped: ${details.payload}');
-        },
-      );
+    // Request permissions
+    await _requestPermissions();
 
-      debugPrint('Notifications initialized: $initialized');
-
-      // Create the notification channel for Android
-      await _createNotificationChannel();
-
-      // Load stored reminders and reschedule them
-      await _loadAndScheduleReminders();
-    } catch (e, stackTrace) {
-      debugPrint('Error initializing notifications: $e');
-      debugPrint('Stack trace: $stackTrace');
-    }
+    // Handle FCM messages
+    FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
+    FirebaseMessaging.onMessage.listen(_handleForegroundMessage);
   }
 
   static Future<void> _createNotificationChannel() async {
     const AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'medication_channel',
-      'Medication Reminders',
-      description: 'Notifications for medication reminders',
+      CHANNEL_ID,
+      CHANNEL_NAME,
       importance: Importance.max,
       enableVibration: true,
-      enableLights: true,
+      playSound: true,
     );
 
-    await _notificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+    await _localNotifications
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
 
-  static Future<void> _requestNotificationPermissions() async {
-    try {
-      if (await Permission.notification.isDenied) {
-        final status = await Permission.notification.request();
-        debugPrint('Notification permission status: $status');
-      }
+  static Future<void> _requestPermissions() async {
+    // Local notifications permissions
+    // No permission request needed for Android local notifications
 
-      final iOS = _notificationsPlugin
-          .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin>();
-      if (iOS != null) {
-        await iOS.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
-      }
-    } catch (e) {
-      debugPrint('Error requesting permissions: $e');
+    // FCM permissions
+    await _firebaseMessaging.requestPermission(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+
+    // Store FCM token
+    final token = await _firebaseMessaging.getToken();
+    if (token != null) {
+      await _firestore.collection('fcm_tokens').doc(token).set({
+        'timestamp': FieldValue.serverTimestamp(),
+      });
     }
   }
 
-  static Future<void> scheduleRecurringMedicationReminder({
+  static Future<void> scheduleMedicationReminder({
     required String userId,
     required String medicationName,
     required String dosage,
@@ -97,213 +83,204 @@ class MedicationService {
     required List<TimeOfDay> times,
   }) async {
     try {
-      // Cancel existing notifications before scheduling new ones
-      await _notificationsPlugin.cancelAll();
+      // Generate unique IDs for each reminder time
+      final List<Map<String, dynamic>> reminders = [];
+      int baseId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-      List<Map<String, dynamic>> reminders = [];
-      int idCounter = 0;
-      
-      for (var time in times) {
-        final reminder = {
+      for (int i = 0; i < times.length; i++) {
+        final TimeOfDay time = times[i];
+        final int notificationId = baseId + i;
+        
+        // Create reminder data
+        final Map<String, dynamic> reminder = {
+          'id': notificationId,
           'medicationName': medicationName,
           'dosage': dosage,
           'frequency': frequency,
           'hour': time.hour,
           'minute': time.minute,
-          'id': idCounter,
+          'createdAt': FieldValue.serverTimestamp(),
         };
         reminders.add(reminder);
-        await _scheduleNotification(
-          medicationName, 
-          dosage, 
-          frequency, 
-          time,
-          idCounter,
+
+        // Schedule local notification
+        await _scheduleRecurringNotification(
+          notificationId: notificationId,
+          medicationName: medicationName,
+          dosage: dosage,
+          frequency: frequency,
+          time: time,
         );
-        idCounter++;
       }
 
-      // Store reminders in Firestore
+      // Store in Firestore
       await _firestore.collection('medication_reminders').doc(userId).set({
         'reminders': reminders,
-        'lastUpdated': tz.TZDateTime.now(tz.local).toIso8601String(),
-      });
+        'lastUpdated': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
 
-      debugPrint('Reminders scheduled successfully');
-    } catch (e, stackTrace) {
-      debugPrint('Error scheduling reminders: $e');
-      debugPrint('Stack trace: $stackTrace');
+      // Schedule backup FCM notifications
+      await _scheduleCloudNotifications(userId, reminders);
+
+    } catch (e, stack) {
+      debugPrint('Error scheduling medication reminder: $e');
+      debugPrint('Stack trace: $stack');
       rethrow;
     }
   }
 
-  static Future<void> _scheduleNotification(
+  static Future<void> _scheduleRecurringNotification({
+    required int notificationId,
+    required String medicationName,
+    required String dosage,
+    required String frequency,
+    required TimeOfDay time,
+  }) async {
+    final now = tz.TZDateTime.now(tz.local);
+    var scheduledDate = tz.TZDateTime(
+      tz.local,
+      now.year,
+      now.month,
+      now.day,
+      time.hour,
+      time.minute,
+    );
+
+    // If time has passed today, start from tomorrow
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
+    }
+
+    final NotificationDetails details = NotificationDetails(
+      android: AndroidNotificationDetails(
+        CHANNEL_ID,
+        CHANNEL_NAME,
+        importance: Importance.max,
+        priority: Priority.high,
+        enableVibration: true,
+        playSound: true,
+        category: AndroidNotificationCategory.reminder,
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+
+    // Schedule based on frequency
+    switch (frequency.toLowerCase()) {
+      case 'daily':
+        await _scheduleDailyNotification(
+          notificationId,
+          scheduledDate,
+          medicationName,
+          dosage,
+          details,
+        );
+        break;
+      case 'weekly':
+        await _scheduleWeeklyNotification(
+          notificationId,
+          scheduledDate,
+          medicationName,
+          dosage,
+          details,
+        );
+        break;
+      default:
+        await _scheduleDailyNotification(
+          notificationId,
+          scheduledDate,
+          medicationName,
+          dosage,
+          details,
+        );
+    }
+  }
+
+  static Future<void> _scheduleDailyNotification(
+    int id,
+    tz.TZDateTime scheduledDate,
     String medicationName,
     String dosage,
-    String frequency,
-    TimeOfDay time,
-    int notificationId,
+    NotificationDetails details,
   ) async {
-    try {
-      final now = tz.TZDateTime.now(tz.local);
-      var scheduleTime = tz.TZDateTime(
-        tz.local,
-        now.year,
-        now.month,
-        now.day,
-        time.hour,
-        time.minute,
-      );
+    await _localNotifications.zonedSchedule(
+      id,
+      'Medication Reminder',
+      'Time to take $medicationName - $dosage',
+      scheduledDate,
+      details,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+  }
 
-      // If the time has already passed today, schedule for next occurrence
-      if (scheduleTime.isBefore(now)) {
-        scheduleTime = scheduleTime.add(const Duration(days: 1));
-      }
+  static Future<void> _scheduleWeeklyNotification(
+    int id,
+    tz.TZDateTime scheduledDate,
+    String medicationName,
+    String dosage,
+    NotificationDetails details,
+  ) async {
+    await _localNotifications.zonedSchedule(
+      id,
+      'Weekly Medication Reminder',
+      'Time to take $medicationName - $dosage',
+      scheduledDate,
+      details,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+    );
+  }
 
-      debugPrint('Scheduling notification for: ${scheduleTime.toIso8601String()}');
+  static Future<void> _scheduleCloudNotifications(
+    String userId,
+    List<Map<String, dynamic>> reminders,
+  ) async {
+    final token = await _firebaseMessaging.getToken();
+    if (token != null) {
+      await _firestore.collection('users').doc(userId).set({
+        'fcmToken': token,
+        'medicationReminders': reminders,
+        'lastUpdated': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+    }
+  }
 
-      final notificationDetails = NotificationDetails(
-        android: AndroidNotificationDetails(
-          'medication_channel',
-          'Medication Reminders',
-          channelDescription: 'Notifications for medication reminders',
-          importance: Importance.max,
-          priority: Priority.high,
-          enableVibration: true,
-          enableLights: true,
+  static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
+    debugPrint('Handling background message: ${message.messageId}');
+  }
+
+  static void _handleForegroundMessage(RemoteMessage message) {
+    if (message.notification != null) {
+      _localNotifications.show(
+        message.hashCode,
+        message.notification!.title ?? '',
+        message.notification!.body ?? '',
+        const NotificationDetails(
+          android: AndroidNotificationDetails(
+            CHANNEL_ID,
+            CHANNEL_NAME,
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
         ),
-        iOS: const DarwinNotificationDetails(
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
-        ),
       );
-
-      switch (frequency.toLowerCase()) {
-        case "daily":
-          await _scheduleDaily(
-            medicationName,
-            dosage,
-            scheduleTime,
-            notificationDetails,
-            notificationId,
-          );
-          break;
-        case "twice daily":
-          await _scheduleDaily(
-            medicationName,
-            dosage,
-            scheduleTime,
-            notificationDetails,
-            notificationId,
-          );
-          break;
-        case "three times daily":
-          await _scheduleDaily(
-            medicationName,
-            dosage,
-            scheduleTime,
-            notificationDetails,
-            notificationId,
-          );
-          break;
-        case "weekly":
-          await _scheduleWeekly(
-            medicationName,
-            dosage,
-            scheduleTime,
-            notificationDetails,
-            notificationId,
-          );
-          break;
-        default:
-          throw Exception('Unsupported frequency: $frequency');
-      }
-    } catch (e, stackTrace) {
-      debugPrint('Error in _scheduleNotification: $e');
-      debugPrint('Stack trace: $stackTrace');
-      rethrow;
     }
   }
 
-  static Future<void> _scheduleDaily(
-    String medicationName,
-    String dosage,
-    tz.TZDateTime scheduleTime,
-    NotificationDetails notificationDetails,
-    int notificationId,
-  ) async {
-    try {
-      await _notificationsPlugin.zonedSchedule(
-        notificationId,
-        "Time for your medication",
-        "Please take $medicationName - $dosage",
-        scheduleTime,
-        notificationDetails,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        payload: 'medication_$medicationName',
-      );
-      debugPrint('Daily notification scheduled for ID: $notificationId');
-    } catch (e, stackTrace) {
-      debugPrint('Error in _scheduleDaily: $e');
-      debugPrint('Stack trace: $stackTrace');
-      rethrow;
-    }
+  static void _handleNotificationTap(NotificationResponse response) {
+    debugPrint('Notification tapped: ${response.payload}');
+    // Handle navigation here
   }
 
-  static Future<void> _scheduleWeekly(
-    String medicationName,
-    String dosage,
-    tz.TZDateTime scheduleTime,
-    NotificationDetails notificationDetails,
-    int notificationId,
-  ) async {
-    try {
-      await _notificationsPlugin.zonedSchedule(
-        notificationId,
-        "Time for your weekly medication",
-        "Please take $medicationName - $dosage",
-        scheduleTime,
-        notificationDetails,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        payload: 'medication_$medicationName',
-      );
-      debugPrint('Weekly notification scheduled for ID: $notificationId');
-    } catch (e, stackTrace) {
-      debugPrint('Error in _scheduleWeekly: $e');
-      debugPrint('Stack trace: $stackTrace');
-      rethrow;
-    }
-  }
-
-  static Future<void> _loadAndScheduleReminders() async {
-    try {
-      final remindersSnapshot =
-          await _firestore.collection('medication_reminders').get();
-      for (var doc in remindersSnapshot.docs) {
-        final reminders = doc['reminders'] as List<dynamic>;
-        for (var reminder in reminders) {
-          final time =
-              TimeOfDay(hour: reminder['hour'], minute: reminder['minute']);
-          await _scheduleNotification(
-            reminder['medicationName'],
-            reminder['dosage'],
-            reminder['frequency'],
-            time,
-            reminder['id'],
-          );
-        }
-      }
-      debugPrint('Existing reminders loaded and scheduled');
-    } catch (e, stackTrace) {
-      debugPrint('Error loading reminders: $e');
-      debugPrint('Stack trace: $stackTrace');
-    }
+  static Future<void> cancelAllReminders() async {
+    await _localNotifications.cancelAll();
   }
 }
