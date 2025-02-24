@@ -180,7 +180,7 @@ class _LibraryPageState extends State<LibraryPage> {
                         final categoryClinics =
                             clinicMap[healthCategory.name] ?? [];
                         return Card(
-                          elevation: 8,
+                          elevation: 4,
                           // ignore: deprecated_member_use
                           shadowColor: Colors.black,
                           margin: const EdgeInsets.only(
