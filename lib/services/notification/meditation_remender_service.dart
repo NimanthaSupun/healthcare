@@ -241,18 +241,18 @@ class MedicationNotificationService {
   }
 
   static Future<void> _scheduleCloudNotifications(
-    String userId,
-    List<Map<String, dynamic>> reminders,
-  ) async {
-    final token = await _firebaseMessaging.getToken();
-    if (token != null) {
-      await _firestore.collection('users').doc(userId).set({
-        'fcmToken': token,
-        'medicationReminders': reminders,
-        'lastUpdated': FieldValue.serverTimestamp(),
-      }, SetOptions(merge: true));
-    }
+  String userId,
+  List<Map<String, dynamic>> reminders,
+) async {
+  final token = await _firebaseMessaging.getToken();
+  if (token != null) {
+    await _firestore.collection('users').doc(userId).set({
+      'fcmToken': token,
+      'medicationReminders': reminders,
+      'lastUpdated': FieldValue.serverTimestamp(), // Keep serverTimestamp for the document level
+    }, SetOptions(merge: true));
   }
+}
 
   static Future<void> _handleBackgroundMessage(RemoteMessage message) async {
     debugPrint('Handling background message: ${message.messageId}');
