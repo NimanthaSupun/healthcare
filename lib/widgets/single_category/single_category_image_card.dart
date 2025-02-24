@@ -51,12 +51,12 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
-                    width: 10,
+                    width: 15,
                   ),
                   Text(
                     widget.title,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold,
                       color: mainLandMarksColor,
                     ),
@@ -85,7 +85,9 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
                 child: Divider(),
               ),
               SizedBox(
