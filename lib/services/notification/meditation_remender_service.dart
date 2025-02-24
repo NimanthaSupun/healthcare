@@ -10,7 +10,9 @@ class MedicationNotificationService {
   static final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   
+  // ignore: constant_identifier_names
   static const String CHANNEL_ID = 'medication_reminders';
+  // ignore: constant_identifier_names
   static const String CHANNEL_NAME = 'Medication Reminders';
 
   static Future<void> init() async {
