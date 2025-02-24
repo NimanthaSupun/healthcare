@@ -75,59 +75,60 @@ class MedicationNotificationService {
     }
   }
 
-  static Future<void> scheduleMedicationReminder({
-    required String userId,
-    required String medicationName,
-    required String dosage,
-    required String frequency,
-    required List<TimeOfDay> times,
-  }) async {
-    try {
-      // Generate unique IDs for each reminder time
-      final List<Map<String, dynamic>> reminders = [];
-      int baseId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+ static Future<void> scheduleMedicationReminder({
+  required String userId,
+  required String medicationName,
+  required String dosage,
+  required String frequency,
+  required List<TimeOfDay> times,
+}) async {
+  try {
+    // Generate unique IDs for each reminder time
+    final List<Map<String, dynamic>> reminders = [];
+    int baseId = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-      for (int i = 0; i < times.length; i++) {
-        final TimeOfDay time = times[i];
-        final int notificationId = baseId + i;
-        
-        // Create reminder data
-        final Map<String, dynamic> reminder = {
-          'id': notificationId,
-          'medicationName': medicationName,
-          'dosage': dosage,
-          'frequency': frequency,
-          'hour': time.hour,
-          'minute': time.minute,
-          'createdAt': FieldValue.serverTimestamp(),
-        };
-        reminders.add(reminder);
+    for (int i = 0; i < times.length; i++) {
+      final TimeOfDay time = times[i];
+      final int notificationId = baseId + i;
+      
+      // Create reminder data - removing serverTimestamp from the array
+      final Map<String, dynamic> reminder = {
+        'id': notificationId,
+        'medicationName': medicationName,
+        'dosage': dosage,
+        'frequency': frequency,
+        'hour': time.hour,
+        'minute': time.minute,
+        'createdAt': DateTime.now().millisecondsSinceEpoch, // Use regular timestamp instead
+      };
+      reminders.add(reminder);
 
-        // Schedule local notification
-        await _scheduleRecurringNotification(
-          notificationId: notificationId,
-          medicationName: medicationName,
-          dosage: dosage,
-          frequency: frequency,
-          time: time,
-        );
-      }
-
-      // Store in Firestore
-      await _firestore.collection('medication_reminders').doc(userId).set({
-        'reminders': reminders,
-        'lastUpdated': FieldValue.serverTimestamp(),
-      }, SetOptions(merge: true));
-
-      // Schedule backup FCM notifications
-      await _scheduleCloudNotifications(userId, reminders);
-
-    } catch (e, stack) {
-      debugPrint('Error scheduling medication reminder: $e');
-      debugPrint('Stack trace: $stack');
-      rethrow;
+      // Schedule local notification
+      await _scheduleRecurringNotification(
+        notificationId: notificationId,
+        medicationName: medicationName,
+        dosage: dosage,
+        frequency: frequency,
+        time: time,
+      );
     }
+
+    // Store in Firestore with serverTimestamp outside the array
+    await _firestore.collection('medication_reminders').doc(userId).set({
+      'reminders': reminders,
+      'lastUpdated': FieldValue.serverTimestamp(), // Keep serverTimestamp for the document level
+      'createdAt': FieldValue.serverTimestamp(),
+    }, SetOptions(merge: true));
+
+    // Schedule backup FCM notifications
+    await _scheduleCloudNotifications(userId, reminders);
+
+  } catch (e, stack) {
+    debugPrint('Error scheduling medication reminder: $e');
+    debugPrint('Stack trace: $stack');
+    rethrow;
   }
+}
 
   static Future<void> _scheduleRecurringNotification({
     required int notificationId,
