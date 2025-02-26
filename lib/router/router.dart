@@ -52,7 +52,7 @@ class RouterClass {
         },
       ),
 
-      // register page
+      //todo: register page
       GoRoute(
         name: "register",
         path: "/register",
