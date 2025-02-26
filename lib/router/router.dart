@@ -124,7 +124,8 @@ class RouterClass {
           return DailyUpdatePage();
         },
       ),
-
+      
+      // todo:profile data page
       GoRoute(
         name: "user profile data page",
         path: "/prfile-data-page",
