@@ -62,7 +62,7 @@ class RouterClass {
         },
       ),
 
-      // login page
+      // todo: login page
       GoRoute(
         name: "login",
         path: "/login",
