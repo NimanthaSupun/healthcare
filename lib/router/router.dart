@@ -124,7 +124,7 @@ class RouterClass {
           return DailyUpdatePage();
         },
       ),
-      
+
       // todo:profile data page
       GoRoute(
         name: "user profile data page",
@@ -134,7 +134,7 @@ class RouterClass {
           return ProfileDataPage(user: user);
         },
       ),
-
+      // todo: person category page
       GoRoute(
         name: "person category page",
         path: "/person-category-page",
