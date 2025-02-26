@@ -41,6 +41,7 @@ class RouterClass {
       );
     },
     routes: [
+      // todo: layout page
       GoRoute(
         path: "/",
         name: "nav_layout",
