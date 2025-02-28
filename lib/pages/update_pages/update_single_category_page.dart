@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
@@ -17,9 +20,61 @@ class UpdateSingleCategoryPage extends StatefulWidget {
 
 class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
   final _fromKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  void submit(BuildContext context) async {
+    try {
+      if (!_fromKey.currentState!.validate()) {
+        return;
+      }
+      setState(
+        () {
+          _isLoading = true;
+        },
+      );
+
+      final HealthCategory data = HealthCategory(
+        id: widget.healthCategory.id,
+        name: _nameController.text,
+        description: _descriptionController.text,
+      );
+
+      await HealthCategoryService().updateHealthCategory(
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.healthCategory.id,
+        data,
+      );
+
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Category update successfully",
+      );
+    } catch (error) {
+      print("Error: ${error}");
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text("$error"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("ok"),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
