@@ -14,6 +14,11 @@ class UpdateSingleCategoryPage extends StatefulWidget {
 }
 
 class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
+   final _fromKey = GlobalKey<FormState>();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
