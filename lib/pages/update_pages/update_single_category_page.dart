@@ -93,7 +93,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
           "Update Category",
           style: TextStyle(
             fontSize: 28,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
@@ -124,9 +124,6 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 30,
                   ),
                   CustomInput(
                     controller: _nameController,
