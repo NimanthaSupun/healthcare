@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/models/health_category_model.dart';
 
 class UpdateSingleCategoryPage extends StatefulWidget {
-  const UpdateSingleCategoryPage({super.key});
+  final HealthCategory healthCategory;
+  const UpdateSingleCategoryPage({
+    super.key,
+    required this.healthCategory,
+  });
 
   @override
-  State<UpdateSingleCategoryPage> createState() => _UpdateSingleCategoryPageState();
+  State<UpdateSingleCategoryPage> createState() =>
+      _UpdateSingleCategoryPageState();
 }
 
 class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
