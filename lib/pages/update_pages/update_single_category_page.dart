@@ -29,7 +29,15 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          "Update Category",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -41,7 +49,18 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
               key: _fromKey,
               child: Column(
                 children: [
-                  
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Center(
+                    child: ClipRect(
+                      child: Image.asset(
+                        "assets/images/paper-recycle_17044595.png",
+                        fit: BoxFit.cover,
+                        height: 150,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
