@@ -24,6 +24,7 @@ class SingleNavigateCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: Colors.black54,
+          width: 1.5,
         ),
       ),
       child: Row(
