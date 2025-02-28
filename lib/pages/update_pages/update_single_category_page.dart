@@ -151,11 +151,15 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  CustomButton(
-                    title: "Update",
-                    width: double.infinity,
-                    onPressed:() =>submit(context),
-                  ),
+                  _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomButton(
+                          title: "Update",
+                          width: double.infinity,
+                          onPressed: () => submit(context),
+                        ),
                 ],
               ),
             ),
