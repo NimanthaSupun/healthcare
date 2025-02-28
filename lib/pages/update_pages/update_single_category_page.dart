@@ -14,10 +14,17 @@ class UpdateSingleCategoryPage extends StatefulWidget {
 }
 
 class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
-   final _fromKey = GlobalKey<FormState>();
+  final _fromKey = GlobalKey<FormState>();
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.healthCategory.name;
+    _descriptionController.text = widget.healthCategory.description;
+  }
 
   @override
   Widget build(BuildContext context) {
