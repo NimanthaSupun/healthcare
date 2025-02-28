@@ -36,6 +36,7 @@ class CategoryBottonSheet extends StatelessWidget {
                 color: subLandMarksCardBg,
                 border: Border.all(
                   color: mainOrangeColor,
+                  width: 1.5,
                 ),
               ),
               child: Row(
@@ -71,6 +72,7 @@ class CategoryBottonSheet extends StatelessWidget {
                 color: subLandMarksCardBg,
                 border: Border.all(
                   color: mainLandMarksColor,
+                  width: 1.5,
                 ),
               ),
               child: Row(
