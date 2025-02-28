@@ -151,6 +151,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                       );
                     },
                     editCallback: () {
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
