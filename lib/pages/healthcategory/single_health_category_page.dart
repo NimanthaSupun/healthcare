@@ -6,6 +6,7 @@ import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/health_category_model.dart';
 import 'package:healthcare/pages/healthcategory/add_clinic_record_page.dart';
 import 'package:healthcare/pages/healthcategory/add_health_report.dart';
+import 'package:healthcare/pages/update_pages/update_single_category_page.dart';
 import 'package:healthcare/services/category/health_category_service.dart';
 import 'package:healthcare/widgets/single_category/add_health_record_card.dart';
 import 'package:healthcare/widgets/single_category/category_botton_sheet.dart';
@@ -149,7 +150,16 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                         },
                       );
                     },
-                    editCallback: () {},
+                    editCallback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => UpdateSingleCategoryPage(
+                            healthCategory: widget.healthCategory,
+                          ),
+                        ),
+                      );
+                    },
                   );
                 },
               );
