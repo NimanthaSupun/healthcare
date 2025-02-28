@@ -55,7 +55,6 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
       );
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
-      
     } catch (error) {
       print("Error: ${error}");
       showDialog(
@@ -93,7 +92,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
         title: Text(
           "Update Category",
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 28,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -113,11 +112,16 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                     height: 10,
                   ),
                   Center(
-                    child: ClipRect(
-                      child: Image.asset(
-                        "assets/images/paper-recycle_17044595.png",
-                        fit: BoxFit.cover,
-                        height: 200,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 30,
+                        horizontal: 30,
+                      ),
+                      child: ClipRect(
+                        child: Image.asset(
+                          "assets/images/paper_16624848.png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
