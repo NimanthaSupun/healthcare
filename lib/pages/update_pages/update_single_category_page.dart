@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class UpdateSingleCategoryPage extends StatefulWidget {
   final HealthCategory healthCategory;
@@ -60,6 +61,30 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                         height: 150,
                       ),
                     ),
+                  ),
+                  CustomInput(
+                    controller: _nameController,
+                    labelText: "Name",
+                    icon: Icons.notes,
+                    obsecureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter category name";
+                      }
+                      return null;
+                    },
+                  ),
+                  CustomInput(
+                    controller: _descriptionController,
+                    labelText: "Description",
+                    icon: Icons.notes,
+                    obsecureText: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Please enter category description";
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
