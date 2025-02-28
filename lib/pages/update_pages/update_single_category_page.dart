@@ -93,7 +93,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
           "Update Category",
           style: TextStyle(
             fontSize: 28,
-            fontWeight: FontWeight.w700,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ),
@@ -121,6 +121,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                         child: Image.asset(
                           "assets/images/paper_16624848.png",
                           fit: BoxFit.cover,
+                          height: 200,
                         ),
                       ),
                     ),
