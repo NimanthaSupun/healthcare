@@ -62,6 +62,9 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 22,
+                  ),
                   CustomInput(
                     controller: _nameController,
                     labelText: "Name",
@@ -73,6 +76,9 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                       }
                       return null;
                     },
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   CustomInput(
                     controller: _descriptionController,
