@@ -37,8 +37,13 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
               vertical: 10,
               horizontal: 10,
             ),
-            child: Column(
-              children: [],
+            child: Form(
+              key: _fromKey,
+              child: Column(
+                children: [
+                  
+                ],
+              ),
             ),
           ),
         ),
