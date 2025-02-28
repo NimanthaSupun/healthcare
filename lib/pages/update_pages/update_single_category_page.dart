@@ -154,7 +154,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                   CustomButton(
                     title: "Update",
                     width: double.infinity,
-                    onPressed: () {},
+                    onPressed:() =>submit(context),
                   ),
                 ],
               ),
