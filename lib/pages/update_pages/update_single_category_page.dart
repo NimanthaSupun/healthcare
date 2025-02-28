@@ -30,6 +30,19 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 10,
+            ),
+            child: Column(
+              children: [],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
