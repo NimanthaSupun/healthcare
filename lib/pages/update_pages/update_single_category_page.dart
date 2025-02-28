@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/models/health_category_model.dart';
+import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class UpdateSingleCategoryPage extends StatefulWidget {
@@ -58,12 +59,12 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                       child: Image.asset(
                         "assets/images/paper-recycle_17044595.png",
                         fit: BoxFit.cover,
-                        height: 150,
+                        height: 200,
                       ),
                     ),
                   ),
                   SizedBox(
-                    height: 22,
+                    height: 30,
                   ),
                   CustomInput(
                     controller: _nameController,
@@ -83,7 +84,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                   CustomInput(
                     controller: _descriptionController,
                     labelText: "Description",
-                    icon: Icons.notes,
+                    icon: Icons.description,
                     obsecureText: false,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -91,6 +92,14 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
                       }
                       return null;
                     },
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomButton(
+                    title: "Update",
+                    width: double.infinity,
+                    onPressed: () {},
                   ),
                 ],
               ),
