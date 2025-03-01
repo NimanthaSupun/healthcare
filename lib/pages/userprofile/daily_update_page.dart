@@ -42,7 +42,6 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
         trackUserData,
       );
 
-
       UtilFunctions().showSnackBarWdget(
         // ignore: use_build_context_synchronously
         context,
@@ -61,14 +60,6 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            GoRouter.of(context).go("/");
-          },
-          icon: Icon(
-            Icons.arrow_back,
-          ),
-        ),
         title: Text(
           "monitor your health",
           style: TextStyle(
@@ -120,7 +111,6 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       CustomInput(
                         controller: _sugarLevelController,
                         labelText: "Blood Sugar Level",
@@ -138,13 +128,11 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
                       SizedBox(
                         height: 15,
                       ),
-
                       CustomInput(
                         controller: _notesController,
                         labelText: "Notes (Optional)",
                         icon: Icons.note,
                         obsecureText: false,
-                        
                       ),
                       SizedBox(
                         height: 15,
