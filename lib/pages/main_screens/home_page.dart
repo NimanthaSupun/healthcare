@@ -137,7 +137,6 @@ class _HomePageState extends State<HomePage> {
                                             fit: BoxFit.cover,
                                           ),
                                   ),
-                                  // child: Icon(Icons.person),
                                 ),
                               ),
                             ],
