@@ -134,7 +134,7 @@ class ProfileDataPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 15,
                 ),
                 Stack(
                   children: [
@@ -145,7 +145,7 @@ class ProfileDataPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         // ignore: deprecated_member_use
-                        color: mainYellowColor.withOpacity(0.1),
+                        color: mainWhiteColor,
                         border: Border.all(
                           color: Colors.black54,
                         ),
