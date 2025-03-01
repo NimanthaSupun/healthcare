@@ -36,18 +36,6 @@ class _HomePageState extends State<HomePage> {
     String formatterDay = dayFormat.format(now);
 
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              GoRouter.of(context).go("/daily-update");
-            },
-            child: Icon(Icons.add),
-          ),
-        ],
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -123,7 +111,6 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100),
-
                                     child: user.imageUrl != null &&
                                             user.imageUrl!.isNotEmpty
                                         ? Image.memory(
