@@ -186,9 +186,9 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+                // SizedBox(
+                //   height: 10,
+                // ),
                 SizedBox(
                   height: 300,
                   child: ClipRRect(
