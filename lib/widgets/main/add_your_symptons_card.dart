@@ -13,7 +13,7 @@ class AddYourSymptonsCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Card(
-        elevation: 6,
+        elevation: 3,
         shadowColor: mainLandMarksColor,
         child: Stack(
           children: [
