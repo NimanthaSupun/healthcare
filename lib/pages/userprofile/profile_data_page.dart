@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
+import 'package:healthcare/pages/userprofile/daily_update_page.dart';
 import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:healthcare/widgets/profile_data_page/single_profile_data_card.dart';
 
@@ -21,6 +22,12 @@ class ProfileDataPage extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DailyUpdatePage(),
+                ),
+              );
             },
             child: Icon(Icons.add),
           ),
