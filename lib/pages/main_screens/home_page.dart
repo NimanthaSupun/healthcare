@@ -136,11 +136,6 @@ class _HomePageState extends State<HomePage> {
                                             "https://i.stack.imgur.com/l60Hf.png",
                                             fit: BoxFit.cover,
                                           ),
-
-                                    // child: Image.network(
-                                    //   "https://i.stack.imgur.com/l60Hf.png",
-                                    //   fit: BoxFit.cover,
-                                    // ),
                                   ),
                                   // child: Icon(Icons.person),
                                 ),
