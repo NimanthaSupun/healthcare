@@ -15,6 +15,17 @@ class ProfileDataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          FloatingActionButton(
+            onPressed: () {
+            },
+            child: Icon(Icons.add),
+          ),
+        ],
+      ),
       appBar: AppBar(
         // title: Text(user.name),
         leading: IconButton(
