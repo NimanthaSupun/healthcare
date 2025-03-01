@@ -76,7 +76,6 @@ class ProfileDataPage extends StatelessWidget {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    // color: subLandMarksCardBg.withOpacity(0.9),
                     // ignore: deprecated_member_use
                     color: Colors.black.withOpacity(0.4),
                   ),
