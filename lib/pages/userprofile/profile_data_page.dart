@@ -147,7 +147,7 @@ class ProfileDataPage extends StatelessWidget {
                         width: 10,
                       ),
                       Icon(
-                        Icons.person_3_outlined,
+                        Icons.edit,
                         size: 23,
                       ),
                     ],
