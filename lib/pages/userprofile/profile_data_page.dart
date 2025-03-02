@@ -132,11 +132,15 @@ class ProfileDataPage extends StatelessWidget {
                         "Edit your profile",
                         style: TextStyle(
                           fontWeight: FontWeight.w700,
-                          fontSize: 20,
+                          fontSize: 18,
                         ),
+                      ),
+                      SizedBox(
+                        width: 10,
                       ),
                       Icon(
                         Icons.person_3_outlined,
+                        size: 23,
                       ),
                     ],
                   ),
