@@ -122,6 +122,26 @@ class ProfileDataPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
+                  height: 5,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Row(
+                    children: [
+                      Text(
+                        "Edit your profile",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 20,
+                        ),
+                      ),
+                      Icon(
+                        Icons.person_3_outlined,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
                   height: 30,
                 ),
                 Text(
