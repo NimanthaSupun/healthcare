@@ -37,7 +37,7 @@ class CustomInput extends StatelessWidget {
         filled: true,
         prefixIcon: Icon(
           icon,
-          size: 20,
+          size: 25,
         ),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

@@ -85,7 +85,10 @@ class _PersonCategoryPageState extends State<PersonCategoryPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+            padding: EdgeInsets.symmetric(
+              vertical: 10,
+              horizontal: 8,
+            ),
             child: Form(
               key: _fromKey,
               child: Column(
@@ -93,7 +96,7 @@ class _PersonCategoryPageState extends State<PersonCategoryPage> {
                   Text(
                     "Create Your Own Health Category",
                     style: TextStyle(
-                      fontSize: 30,
+                      fontSize: 27,
                       fontWeight: FontWeight.bold,
                     ),
                     textAlign: TextAlign.center,
@@ -106,7 +109,7 @@ class _PersonCategoryPageState extends State<PersonCategoryPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
-                      color: mainLandMarksColor,
+                      color: button1,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -114,6 +117,7 @@ class _PersonCategoryPageState extends State<PersonCategoryPage> {
                     child: Image.asset(
                       "assets/images/undraw_profile-data_xkr9.png",
                       fit: BoxFit.cover,
+                      height: 200,
                     ),
                   ),
                   SizedBox(
