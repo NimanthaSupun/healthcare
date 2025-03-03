@@ -16,7 +16,14 @@ class ProfileDataPage extends StatelessWidget {
   });
 
   void _createCategory(BuildContext context) {
-    try {} catch (error) {
+    try {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog();
+        },
+      );
+    } catch (error) {
       print("error: ${error}");
     }
   }
