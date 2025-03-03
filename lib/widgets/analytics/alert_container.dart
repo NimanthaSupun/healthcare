@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AlertContainer extends StatelessWidget {
   AlertContainer({super.key});
@@ -15,12 +16,31 @@ class AlertContainer extends StatelessWidget {
       ),
       child: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            Text(
-              "Enter category name",
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 5,
+          ),
+          child: Column(
+            children: [
+              Text(
+                "Enter category name",
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              CustomInput(
+                controller: _nameController,
+                labelText: "category Name",
+                icon: Icons.category,
+                obsecureText: false,
+              ),
+            ],
+          ),
         ),
       ),
     );
