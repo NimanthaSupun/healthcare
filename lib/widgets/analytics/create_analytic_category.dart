@@ -32,6 +32,14 @@ class CreateAnalyticCategory extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.add,
+                size: 20,
+                color: mainPurpleColor,
+              ),
+            ),
           ],
         ),
       ),
