@@ -11,8 +11,8 @@ class AlertContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 180,
-      width: MediaQuery.of(context).size.width * 0.8,
+      height: 175,
+      width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -27,7 +27,7 @@ class AlertContainer extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Enter category name",
+                "Analytic category name",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 19,
@@ -39,7 +39,7 @@ class AlertContainer extends StatelessWidget {
               ),
               CustomInput(
                 controller: _nameController,
-                labelText: "category Name",
+                labelText: "Name",
                 icon: Icons.category,
                 obsecureText: false,
               ),
