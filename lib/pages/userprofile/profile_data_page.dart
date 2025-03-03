@@ -15,6 +15,12 @@ class ProfileDataPage extends StatelessWidget {
     required this.user,
   });
 
+  void _createCategory(BuildContext context) {
+    try {} catch (error) {
+      print("error: ${error}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
