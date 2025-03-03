@@ -40,25 +40,29 @@ class AlertContainer extends StatelessWidget {
               CustomInput(
                 controller: _nameController,
                 labelText: "Name",
-                icon: Icons.category,
+                icon: Icons.category_outlined,
                 obsecureText: false,
               ),
               SizedBox(
                 height: 8,
               ),
-              TextButton.icon(
-                onPressed: () {},
-                label: Text(
-                  "Create",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+              Row(
+                children: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    label: Text(
+                      "Create",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.create,
+                      size: 25,
+                    ),
                   ),
-                ),
-                icon: Icon(
-                  Icons.create,
-                  size: 25,
-                ),
+                ],
               ),
             ],
           ),
