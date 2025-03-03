@@ -20,7 +20,23 @@ class ProfileDataPage extends StatelessWidget {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog();
+          return AlertDialog(
+            elevation: 5,
+            shadowColor: mobileBackgroundColor,
+            content: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "Enter category name",
+                  ),
+                ],
+              ),
+            ),
+          );
         },
       );
     } catch (error) {
