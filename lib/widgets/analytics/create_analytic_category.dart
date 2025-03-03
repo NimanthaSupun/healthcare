@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
 
-class CreateAnalyticCategory extends StatelessWidget {
+class CreateAnalyticCategoryCard extends StatelessWidget {
   final VoidCallback onPressed;
-  const CreateAnalyticCategory({
+  const CreateAnalyticCategoryCard({
     super.key,
     required this.onPressed,
   });
