@@ -24,7 +24,7 @@ class ProfileDataPage extends StatelessWidget {
             elevation: 5,
             shadowColor: mobileBackgroundColor,
             content: Container(
-              height: 200,
+              height: 150,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -33,6 +33,7 @@ class ProfileDataPage extends StatelessWidget {
                   Text(
                     "Enter category name",
                   ),
+
                 ],
               ),
             ),
