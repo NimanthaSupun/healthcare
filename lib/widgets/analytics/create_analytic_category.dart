@@ -7,7 +7,7 @@ class CreateAnalyticCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 8,
+      elevation: 4,
       shadowColor: mobileBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -36,7 +36,7 @@ class CreateAnalyticCategory extends StatelessWidget {
               onPressed: () {},
               icon: Icon(
                 Icons.add,
-                size: 20,
+                size: 30,
                 color: mainPurpleColor,
               ),
             ),
