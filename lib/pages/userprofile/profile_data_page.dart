@@ -136,6 +136,7 @@ class ProfileDataPage extends StatelessWidget {
                   },
                   child: Row(
                     children: [
+                      Spacer(),
                       Text(
                         "Edit your profile",
                         style: TextStyle(
