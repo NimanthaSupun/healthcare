@@ -5,6 +5,19 @@ class AlertContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return  Container(
+              height: 150,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "Enter category name",
+                  ),
+
+                ],
+              ),
+            );
   }
 }
