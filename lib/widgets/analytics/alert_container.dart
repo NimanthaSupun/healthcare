@@ -47,6 +47,7 @@ class AlertContainer extends StatelessWidget {
                 height: 8,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton.icon(
                     onPressed: () {},
@@ -59,6 +60,22 @@ class AlertContainer extends StatelessWidget {
                     ),
                     icon: Icon(
                       Icons.create,
+                      size: 25,
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    label: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.close,
                       size: 25,
                     ),
                   ),
