@@ -4,6 +4,7 @@ import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/pages/userprofile/daily_update_page.dart';
+import 'package:healthcare/widgets/analytics/create_analytic_category.dart';
 import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:healthcare/widgets/profile_data_page/single_profile_data_card.dart';
 
@@ -158,7 +159,7 @@ class ProfileDataPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                
+                CreateAnalyticCategory(),
                 SizedBox(
                   height: 50,
                 ),
