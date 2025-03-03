@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AlertContainer extends StatelessWidget {
@@ -10,7 +11,7 @@ class AlertContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
+      height: 200,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -29,7 +30,8 @@ class AlertContainer extends StatelessWidget {
                 "Enter category name",
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
-                  fontSize: 18,
+                  fontSize: 19,
+                  color: mainPurpleColor,
                 ),
               ),
               SizedBox(
@@ -40,6 +42,18 @@ class AlertContainer extends StatelessWidget {
                 labelText: "category Name",
                 icon: Icons.category,
                 obsecureText: false,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextButton.icon(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.create,
+                ),
+                label: Text(
+                  "Create",
+                ),
               ),
             ],
           ),
