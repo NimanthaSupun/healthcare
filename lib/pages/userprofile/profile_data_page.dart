@@ -67,6 +67,7 @@ class ProfileDataPage extends StatelessWidget {
                   "This information ensures Fitnes and Health data are as accurate as possible",
                   style: TextStyle(
                     fontSize: 15,
+                    fontWeight: FontWeight.w600,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -155,7 +156,11 @@ class ProfileDataPage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 20,
+                ),
+                
+                SizedBox(
+                  height: 50,
                 ),
                 Text(
                   "Analytics about blood suger level",
