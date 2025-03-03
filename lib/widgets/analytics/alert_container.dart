@@ -1,12 +1,69 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/functions/function_dart';
+import 'package:healthcare/models/analytic_model.dart';
+import 'package:healthcare/services/analytic/analytic_category_service.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
-class AlertContainer extends StatelessWidget {
-  AlertContainer({super.key});
+class AlertContainer extends StatefulWidget {
+  const AlertContainer({super.key});
 
+  @override
+  State<AlertContainer> createState() => _AlertContainerState();
+}
+
+class _AlertContainerState extends State<AlertContainer> {
   final TextEditingController _nameController = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
+
+  void _submitButton(BuildContext context) async {
+    try {
+      if (!_formKey.currentState!.validate()) {
+        return;
+      }
+      setState(() {
+        _isLoading = true;
+      });
+      final AnalyticModel data = AnalyticModel(
+        id: "",
+        name: _nameController.text,
+      );
+      await AnalyticCategoryService().createCategory(
+        FirebaseAuth.instance.currentUser!.uid,
+        data,
+      );
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Your category has been created!",
+      );
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    } catch (error) {
+      print("error: ${error}");
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text("Error"),
+          content: Text("$error"),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text("ok"),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +100,7 @@ class AlertContainer extends StatelessWidget {
                 icon: Icons.category_outlined,
                 obsecureText: false,
                 validator: (value) {
-                  if(value == null || value.isEmpty){
+                  if (value == null || value.isEmpty) {
                     return "Please enter category name";
                   }
                   return null;
@@ -55,20 +112,22 @@ class AlertContainer extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  TextButton.icon(
-                    onPressed: () {},
-                    label: Text(
-                      "Create",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.create,
-                      size: 25,
-                    ),
-                  ),
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : TextButton.icon(
+                          onPressed: () => _submitButton(context),
+                          label: Text(
+                            "Create",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                          icon: Icon(
+                            Icons.create,
+                            size: 25,
+                          ),
+                        ),
                   TextButton.icon(
                     onPressed: () {
                       Navigator.of(context).pop();
