@@ -13,12 +13,15 @@ class AlertContainer extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        children: [
-          Text(
-            "Enter category name",
-          ),
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            Text(
+              "Enter category name",
+            ),
+          ],
+        ),
       ),
     );
   }
