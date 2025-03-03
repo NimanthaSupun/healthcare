@@ -13,7 +13,7 @@ class AnalyticCategoryService {
 
       final Map<String, dynamic> data = analyticModel.toJson();
 
-      final DocumentReference docRec = await analyticCollection.add(data);
+      DocumentReference docRec = await analyticCollection.add(data);
       await docRec.update({'id': docRec.id});
     } catch (error) {
       print("error create Analytic on service");

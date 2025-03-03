@@ -42,6 +42,12 @@ class AlertContainer extends StatelessWidget {
                 labelText: "Name",
                 icon: Icons.category_outlined,
                 obsecureText: false,
+                validator: (value) {
+                  if(value == null || value.isEmpty){
+                    return "Please enter category name";
+                  }
+                  return null;
+                },
               ),
               SizedBox(
                 height: 8,
