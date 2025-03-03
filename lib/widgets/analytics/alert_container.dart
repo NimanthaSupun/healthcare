@@ -11,7 +11,7 @@ class AlertContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 180,
       width: MediaQuery.of(context).size.width * 0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -35,7 +35,7 @@ class AlertContainer extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 15,
               ),
               CustomInput(
                 controller: _nameController,
@@ -44,15 +44,20 @@ class AlertContainer extends StatelessWidget {
                 obsecureText: false,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextButton.icon(
                 onPressed: () {},
-                icon: Icon(
-                  Icons.create,
-                ),
                 label: Text(
                   "Create",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
+                ),
+                icon: Icon(
+                  Icons.create,
+                  size: 25,
                 ),
               ),
             ],
