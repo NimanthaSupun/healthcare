@@ -159,7 +159,9 @@ class ProfileDataPage extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                CreateAnalyticCategory(),
+                CreateAnalyticCategory(
+                  onPressed: () {},
+                ),
                 SizedBox(
                   height: 50,
                 ),

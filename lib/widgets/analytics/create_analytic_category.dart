@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
 
 class CreateAnalyticCategory extends StatelessWidget {
-  const CreateAnalyticCategory({super.key});
+  final VoidCallback onPressed;
+  const CreateAnalyticCategory({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class CreateAnalyticCategory extends StatelessWidget {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: onPressed,
               icon: Icon(
                 Icons.add,
                 size: 30,
