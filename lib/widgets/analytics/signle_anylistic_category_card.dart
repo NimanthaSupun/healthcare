@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
@@ -41,7 +40,9 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
 
                     // Create a square card for each category
                     return Container(
-                      margin: const EdgeInsets.only(right: 12),
+                      margin: const EdgeInsets.only(
+                        right: 5,
+                      ),
                       width: 120, // Fixed width for square
                       height: 120, // Fixed height for square
                       child: Card(
@@ -50,14 +51,11 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: InkWell(
-                          onTap: () {
-                            // Handle category tap
-                            // You can navigate to detail page here
-                          },
-                          child: Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
+                          onTap: () {},
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
                                 category.name, // Display category name
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
@@ -65,7 +63,7 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                                   fontSize: 16,
                                 ),
                               ),
-                            ),
+                            ],
                           ),
                         ),
                       ),
