@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
 
 class SignleAnylisticCategoryCard extends StatelessWidget {
@@ -57,12 +58,19 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                             children: [
                               Text(
                                 category.name, // Display category name
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
+                                  // ignore: deprecated_member_use
+                                  color: mainPurpleColor.withOpacity(0.8),
                                 ),
                               ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Icon(
+                                Icons.category_sharp,
+                              )
                             ],
                           ),
                         ),
