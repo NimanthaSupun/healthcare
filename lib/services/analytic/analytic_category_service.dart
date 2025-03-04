@@ -19,4 +19,21 @@ class AnalyticCategoryService {
       print("error create Analytic on service");
     }
   }
+
+  Stream<List<AnalyticModel>> getAnalyticCategory(String userId) {
+    try {
+      final CollectionReference analyticCollection =
+          userCollection.doc(userId).collection('analyticsCategory');
+
+      return analyticCollection.snapshots().map((snapshot) {
+        return snapshot.docs
+            .map((doc) =>
+                AnalyticModel.fromJson(doc.data() as Map<String, dynamic>))
+            .toList();
+      });
+    } catch (error) {
+      print("Error Fetching data: ${error}");
+      return Stream.empty();
+    }
+  }
 }

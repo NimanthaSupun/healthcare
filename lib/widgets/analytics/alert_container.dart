@@ -68,7 +68,7 @@ class _AlertContainerState extends State<AlertContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 175,
+      height: 190,
       width: MediaQuery.of(context).size.width * 0.9,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -82,6 +82,7 @@ class _AlertContainerState extends State<AlertContainer> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 "Analytic category name",
@@ -92,7 +93,7 @@ class _AlertContainerState extends State<AlertContainer> {
                 ),
               ),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
               CustomInput(
                 controller: _nameController,
