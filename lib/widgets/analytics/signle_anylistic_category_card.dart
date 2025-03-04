@@ -29,7 +29,10 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
 
           // Using SingleChildScrollView with Row for horizontal scrolling
           return Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 5,
+              horizontal: 1,
+            ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -48,6 +51,7 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                       height: 120, // Fixed height for square
                       child: Card(
                         elevation: 4,
+                        shadowColor: mobileBackgroundColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -62,15 +66,20 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
                                   // ignore: deprecated_member_use
-                                  color: mainPurpleColor.withOpacity(0.8),
+                                  color: mainLandMarksColor,
                                 ),
                               ),
                               SizedBox(
                                 height: 5,
                               ),
-                              Icon(
-                                Icons.category_sharp,
-                              )
+                              ClipRect(
+                                child: Image.asset(
+                                  "assets/images/graph_16783454.png",
+                                  fit: BoxFit.cover,
+                                  width: 50,
+                                  height: 50,
+                                ),
+                              ),
                             ],
                           ),
                         ),

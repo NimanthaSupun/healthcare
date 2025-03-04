@@ -72,17 +72,6 @@ class ProfileDataPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Text(
-                //   "Personalize Fitness and Health",
-                //   style: TextStyle(
-                //     fontSize: 30,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
-                // SizedBox(
-                //   height: 10,
-                // ),
                 Text(
                   "This information ensures Fitnes and Health data are as accurate as possible",
                   style: TextStyle(
@@ -92,7 +81,7 @@ class ProfileDataPage extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 18,
                 ),
                 Container(
                   width: double.infinity,
