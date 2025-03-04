@@ -6,6 +6,7 @@ import 'package:healthcare/pages/main_screens/profile_page.dart';
 import 'package:healthcare/pages/userprofile/daily_update_page.dart';
 import 'package:healthcare/widgets/analytics/alert_container.dart';
 import 'package:healthcare/widgets/analytics/create_analytic_category.dart';
+import 'package:healthcare/widgets/analytics/signle_anylistic_category_card.dart';
 import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:healthcare/widgets/profile_data_page/single_profile_data_card.dart';
 
@@ -180,6 +181,7 @@ class ProfileDataPage extends StatelessWidget {
                 CreateAnalyticCategoryCard(
                   onPressed: () => _createCategory(context),
                 ),
+                SignleAnylisticCategoryCard(),
                 SizedBox(
                   height: 50,
                 ),

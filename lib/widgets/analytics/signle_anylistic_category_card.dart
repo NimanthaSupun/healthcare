@@ -1,6 +1,6 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
 
 class SignleAnylisticCategoryCard extends StatelessWidget {
@@ -13,7 +13,7 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
           .getAnalyticCategory(FirebaseAuth.instance.currentUser!.uid),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasError) {
@@ -21,35 +21,59 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
             child: Text("Error: ${snapshot.error}"),
           );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
+          return const Center(
             child: Text("Not create category yet"),
           );
         } else {
           final analytics = snapshot.data;
-          return GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              childAspectRatio: 1,
-              mainAxisExtent: 8,
-              crossAxisSpacing: 8,
-            ),
-            itemBuilder: (context, index) {
-              final analytic = analytics![index];
-              return Card(
-                elevation: 4,
-                shadowColor: mobileBackgroundColor,
-                child: Column(
-                  children: [
-                    Text(
-                      analytic.name,
-                    )
-                  ],
+
+          // Using SingleChildScrollView with Row for horizontal scrolling
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: List.generate(
+                  analytics!.length,
+                  (index) {
+                    // Get the analytic category item
+                    final category = analytics[index];
+
+                    // Create a square card for each category
+                    return Container(
+                      margin: const EdgeInsets.only(right: 12),
+                      width: 120, // Fixed width for square
+                      height: 120, // Fixed height for square
+                      child: Card(
+                        elevation: 4,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            // Handle category tap
+                            // You can navigate to detail page here
+                          },
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                category.name, // Display category name
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ),
           );
         }
       },
