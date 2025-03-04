@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
 
 class SignleAnylisticCategoryCard extends StatelessWidget {
@@ -24,12 +25,30 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
             child: Text("Not create category yet"),
           );
         } else {
+          final analytics = snapshot.data;
           return GridView.builder(
-            gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
+              childAspectRatio: 1,
+              mainAxisExtent: 8,
+              crossAxisSpacing: 8,
             ),
             itemBuilder: (context, index) {
-              
+              final analytic = analytics![index];
+              return Card(
+                elevation: 4,
+                shadowColor: mobileBackgroundColor,
+                child: Column(
+                  children: [
+                    Text(
+                      analytic.name,
+                    )
+                  ],
+                ),
+              );
             },
           );
         }
