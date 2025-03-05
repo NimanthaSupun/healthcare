@@ -18,7 +18,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // initialize the notification(Loacal notification)
+  //todo: initialize the notification(Loacal notification)
   await LocalNotificationsService.init();
   tz.initializeTimeZones();
 
