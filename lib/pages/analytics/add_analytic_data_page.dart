@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/functions/function_dart';
 import 'package:healthcare/models/analytic_model.dart';
+import 'package:healthcare/models/blood_suger_data_model.dart';
+import 'package:healthcare/services/analytic/analytic_category_service.dart';
+import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddAnalyticDataPage extends StatefulWidget {
@@ -14,11 +19,52 @@ class AddAnalyticDataPage extends StatefulWidget {
   State<AddAnalyticDataPage> createState() => _AddAnalyticDataPageState();
 }
 
-final _formKey = GlobalKey<FormState>();
-final TextEditingController _sugarLevelController = TextEditingController();
-final TextEditingController _notesController = TextEditingController();
-
 class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _sugarLevelController = TextEditingController();
+  final TextEditingController _notesController = TextEditingController();
+  bool _isLoading = false;
+
+  void _addData(BuildContext context) async {
+    try {
+      if (!_formKey.currentState!.validate()) {
+        return;
+      }
+      setState(() {
+        _isLoading = true;
+      });
+
+      final BloodSugerDataModel data = BloodSugerDataModel(
+        date: DateTime.now(),
+        sugerLevel: double.parse(_sugarLevelController.text),
+        notes: _notesController.text.isNotEmpty ? _notesController.text : null,
+      );
+
+      AnalyticCategoryService().addAnalyticCategoryData(
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.analyticModel.id,
+        data,
+      );
+      UtilFunctions().showSnackBarWdget(
+        // ignore: use_build_context_synchronously
+        context,
+        "Data is saved",
+      );
+
+      Navigator.of(context).pop();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +161,15 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
                       SizedBox(
                         height: 15,
                       ),
+                      _isLoading
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : CustomButton(
+                              title: "Save",
+                              width: double.infinity,
+                              onPressed: () => _addData(context),
+                            ),
                     ],
                   ),
                 ),
