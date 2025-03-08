@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:healthcare/models/analytic_model.dart';
 import 'package:healthcare/models/blood_suger_data_model.dart';
 
@@ -51,6 +52,24 @@ class AnalyticCategoryService {
       await analyticCategoryData.add(data);
     } catch (error) {
       print("error adding data on service: ${error}");
+    }
+  }
+
+  Future<void> deleteCategory(String userId, String categoryId) async {
+    try {
+      final DocumentReference categoryDoc = userCollection
+          .doc(userId)
+          .collection("analyticsCategory")
+          .doc(categoryId);
+
+      final categoryData =
+          await categoryDoc.collection("analyticsCategoryData").get();
+
+      for (final doc in categoryData.docs) {
+        await doc.reference.delete();
+      }
+    } catch (error) {
+      print("Error deleteting category on service: ${error}");
     }
   }
 }
