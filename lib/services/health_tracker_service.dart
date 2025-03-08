@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthcare/models/blood_suger_data_model.dart';
 
 class HealthTrackerService {
+  
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 

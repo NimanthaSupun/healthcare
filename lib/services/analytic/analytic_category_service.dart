@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:healthcare/models/analytic_model.dart';
+import 'package:healthcare/models/blood_suger_data_model.dart';
 
 class AnalyticCategoryService {
   final CollectionReference userCollection =
@@ -34,6 +35,22 @@ class AnalyticCategoryService {
     } catch (error) {
       print("Error Fetching data: ${error}");
       return Stream.empty();
+    }
+  }
+
+  Future<void> addAnalyticCategoryData(
+      String userId, String categoryId, BloodSugerDataModel trackData) async {
+    try {
+      final CollectionReference analyticCategoryData = userCollection
+          .doc(userId)
+          .collection("analyticsCategory")
+          .doc(categoryId)
+          .collection("analyticsCategoryData");
+
+      final Map<String, dynamic> data = trackData.toJson();
+      await analyticCategoryData.add(data);
+    } catch (error) {
+      print("error adding data on service: ${error}");
     }
   }
 }
