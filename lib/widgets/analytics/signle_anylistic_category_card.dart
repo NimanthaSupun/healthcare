@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
+import 'package:healthcare/pages/analytics/add_analytic_data_page.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
 
 class SignleAnylisticCategoryCard extends StatelessWidget {
@@ -56,7 +57,13 @@ class SignleAnylisticCategoryCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => AddAnalyticDataPage(analyticModel: category),
+                              ),
+                            );
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

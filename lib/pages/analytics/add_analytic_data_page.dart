@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:healthcare/models/analytic_model.dart';
 
 class AddAnalyticDataPage extends StatefulWidget {
-  const AddAnalyticDataPage({super.key});
+  final AnalyticModel analyticModel;
+  const AddAnalyticDataPage({
+    super.key,
+    required this.analyticModel,
+  });
 
   @override
   State<AddAnalyticDataPage> createState() => _AddAnalyticDataPageState();
