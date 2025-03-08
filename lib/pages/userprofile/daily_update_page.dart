@@ -149,6 +149,7 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
                     ],
                   ),
                 ),
+                
               ],
             ),
           ),
