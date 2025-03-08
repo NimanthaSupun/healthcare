@@ -16,7 +16,16 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.delete,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
