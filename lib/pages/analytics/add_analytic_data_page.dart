@@ -44,8 +44,8 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 8,
+              vertical: 8,
+              horizontal: 12,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,6 +102,18 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
                           }
                           return null;
                         },
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      CustomInput(
+                        controller: _notesController,
+                        labelText: "Notes (Optional)",
+                        icon: Icons.note,
+                        obsecureText: false,
+                      ),
+                      SizedBox(
+                        height: 15,
                       ),
                     ],
                   ),
