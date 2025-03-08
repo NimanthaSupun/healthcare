@@ -4,18 +4,18 @@ import 'package:healthcare/models/analytic_model.dart';
 
 class AddAnalyticDataPage extends StatefulWidget {
   final AnalyticModel analyticModel;
-  AddAnalyticDataPage({
+  const AddAnalyticDataPage({
     super.key,
     required this.analyticModel,
   });
 
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _sugarLevelController = TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
-
   @override
   State<AddAnalyticDataPage> createState() => _AddAnalyticDataPageState();
 }
+
+final _formKey = GlobalKey<FormState>();
+final TextEditingController _sugarLevelController = TextEditingController();
+final TextEditingController _notesController = TextEditingController();
 
 class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
   @override
@@ -82,6 +82,12 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
                 ),
                 SizedBox(
                   height: 20,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [],
+                  ),
                 ),
               ],
             ),
