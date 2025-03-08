@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/analytic_model.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddAnalyticDataPage extends StatefulWidget {
   final AnalyticModel analyticModel;
@@ -86,7 +87,23 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
                 Form(
                   key: _formKey,
                   child: Column(
-                    children: [],
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomInput(
+                        controller: _sugarLevelController,
+                        labelText: "${widget.analyticModel.name} Level",
+                        icon: Icons.data_usage,
+                        obsecureText: false,
+                        hintText: "Enter level (e.g., 120.5 mg/dL)",
+                        keyboardType: TextInputType.number,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Please enter your ${widget.analyticModel.name} level";
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
