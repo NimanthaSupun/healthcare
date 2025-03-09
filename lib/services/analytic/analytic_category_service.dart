@@ -54,23 +54,28 @@ class AnalyticCategoryService {
     }
   }
 
-  Future<void> deleteCategory(String userId, String categoryId) async {
-    try {
-      final DocumentReference categoryDoc = userCollection
-          .doc(userId)
-          .collection("analyticsCategory")
-          .doc(categoryId);
+ Future<void> deleteCategory(String userId, String categoryId) async {
+  try {
+    final DocumentReference categoryDoc = userCollection
+        .doc(userId)
+        .collection("analyticsCategory")
+        .doc(categoryId);
 
-      final categoryData =
-          await categoryDoc.collection("analyticsCategoryData").get();
+    // First, delete all documents in the subcollection
+    final categoryData =
+        await categoryDoc.collection("analyticsCategoryData").get();
 
-      for (final doc in categoryData.docs) {
-        await doc.reference.delete();
-      }
-    } catch (error) {
-      print("Error deleteting category on service: ${error}");
+    for (final doc in categoryData.docs) {
+      await doc.reference.delete();
     }
+    
+    // Then delete the category document itself
+    await categoryDoc.delete();
+    
+  } catch (error) {
+    print("Error deleting category on service: ${error}");
   }
+}
 
   Stream<List<BloodSugerDataModel>> getAnalyticData(
       String userId, String categoryId) {
