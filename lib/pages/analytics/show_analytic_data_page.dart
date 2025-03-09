@@ -65,6 +65,15 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
                   itemBuilder: (context, index) {
                     final category = categories[index];
                     final categoryAnalytic = analyticDataMap[category];
+                    return Card(
+                      child: Column(
+                        children: [
+                          Text(
+                            category.name,
+                          )
+                        ],
+                      ),
+                    );
                   },
                 );
               }
