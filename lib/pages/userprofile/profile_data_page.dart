@@ -177,6 +177,12 @@ class ProfileDataPage extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
+                TextButton(
+                  onPressed: (){
+                    
+                  },
+                  child: Text("Show Data"),
+                ),
                 Text(
                   "Analytics about blood suger level",
                   style: TextStyle(
