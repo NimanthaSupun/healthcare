@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:healthcare/models/analytic_model.dart';
 import 'package:healthcare/models/blood_suger_data_model.dart';
 import 'package:healthcare/services/analytic/analytic_category_service.dart';
+import 'package:healthcare/widgets/analytics/analytic_data_charts.dart';
 
 class ShowAnalyticDataPage extends StatefulWidget {
   const ShowAnalyticDataPage({super.key});
@@ -64,12 +65,19 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final category = categories[index];
+                    // ignore: collection_methods_unrelated_type
                     final categoryAnalytic = analyticDataMap[category];
                     return Card(
                       child: Column(
                         children: [
                           Text(
                             category.name,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          AnalyticDataCharts(
+                            entries: categoryAnalytic ?? [],
                           )
                         ],
                       ),
