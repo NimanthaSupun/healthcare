@@ -92,4 +92,29 @@ class AnalyticCategoryService {
       return Stream.empty();
     }
   }
+
+  Future<Map<String, List<BloodSugerDataModel>>> getAnalyticDataByCategoryName(
+      String userId) async {
+    try {
+      final QuerySnapshot snapshot = await userCollection
+          .doc(userId)
+          .collection('analyticsCategory')
+          .get();
+
+      final Map<String, List<BloodSugerDataModel>> dataMap = {};
+
+      for (final doc in snapshot.docs) {
+        String categoryId = doc.id;
+
+        final List<BloodSugerDataModel> data =
+            await getAnalyticData(userId, categoryId).first;
+
+        dataMap[doc['name']] = data;
+      }
+      return dataMap;
+    } catch (error) {
+      print("Error: ${error}");
+      return {};
+    }
+  }
 }
