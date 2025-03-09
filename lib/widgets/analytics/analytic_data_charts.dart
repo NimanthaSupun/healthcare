@@ -1,15 +1,56 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/blood_suger_data_model.dart';
 
 class AnalyticDataCharts extends StatelessWidget {
-  const AnalyticDataCharts({super.key});
+  final List<BloodSugerDataModel> entries;
+  const AnalyticDataCharts({
+    super.key,
+    required this.entries,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return AspectRatio(
+      aspectRatio: 1.7,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: LineChart(
+          LineChartData(
+            lineTouchData: LineTouchData(
+              handleBuiltInTouches: true,
+            ),
+            lineBarsData: [
+              LineChartBarData(
+                spots: _convertEntriesToSpots(
+                  entries,
+                ),
+                isCurved: true,
+                color: selectionColor,
+                barWidth: 3,
+                belowBarData: BarAreaData(
+                  show: true,
+                  gradient: LinearGradient(
+                    colors: [
+                      selectionColor.withOpacity(0.5),
+                      Colors.transparent,
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+              ),
+            ],
+            titlesData: _buildTitlesData(entries),
+            gridData: FlGridData(show: false),
+            borderData: FlBorderData(show: false),
+          ),
+        ),
+      ),
+    );
   }
-  
+
   List<FlSpot> _convertEntriesToSpots(List<BloodSugerDataModel> entries) {
     return entries.asMap().entries.map((entry) {
       final index = entry.key;
