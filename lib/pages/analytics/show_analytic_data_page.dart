@@ -26,9 +26,10 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
         'analyticData': analyticData,
       };
     } catch (error) {
+      print("Error fetching data: $error");
       return {
-        'categories': [],
-        'analyticData': [],
+        'categories': <AnalyticModel>[],
+        'analyticData': <String, List<BloodSugerDataModel>>{},
       };
     }
   }
@@ -36,10 +37,12 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Analytics"),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: FutureBuilder(
+          child: FutureBuilder<Map<String, dynamic>>(
             future: _fetchData(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -50,36 +53,51 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
                 return Center(
                   child: Text("Error: ${snapshot.error}"),
                 );
-              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+              } else if (!snapshot.hasData ||
+                  (snapshot.data!['categories'] as List).isEmpty) {
                 return Center(
-                  child: Text("No AnalyticData available"),
+                  child: Text("No Analytics data available"),
                 );
               } else {
                 final categories =
                     snapshot.data!['categories'] as List<AnalyticModel>;
                 final analyticDataMap = snapshot.data!['analyticData']
                     as Map<String, List<BloodSugerDataModel>>;
+
                 return ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final category = categories[index];
-                    // ignore: collection_methods_unrelated_type
-                    final categoryAnalytic = analyticDataMap[category];
+                    final categoryAnalytic = analyticDataMap[category.name];
+
                     return Card(
-                      child: Column(
-                        children: [
-                          Text(
-                            category.name,
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          AnalyticDataCharts(
-                            entries: categoryAnalytic ?? [],
-                          )
-                        ],
+                      margin: EdgeInsets.all(10),
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              category.name,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            if (categoryAnalytic == null ||
+                                categoryAnalytic.isEmpty)
+                              Center(
+                                  child: Text(
+                                      "No data available for this category"))
+                            else
+                              AnalyticDataCharts(
+                                entries: categoryAnalytic,
+                              )
+                          ],
+                        ),
                       ),
                     );
                   },

@@ -65,6 +65,21 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
     }
   }
 
+  void _deleteCateogry(BuildContext context) async {
+    try {
+      await AnalyticCategoryService().deleteCategory(
+        FirebaseAuth.instance.currentUser!.uid,
+        widget.analyticModel.id,
+      );
+      // ignore: use_build_context_synchronously
+      UtilFunctions().showSnackBarWdget(context, "Category delete successfull");
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pop();
+    } catch (error) {
+      print("Error: ${error}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +94,7 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => _deleteCateogry(context),
             icon: Icon(
               Icons.delete,
             ),
