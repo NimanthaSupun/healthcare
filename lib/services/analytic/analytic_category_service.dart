@@ -71,4 +71,25 @@ class AnalyticCategoryService {
       print("Error deleteting category on service: ${error}");
     }
   }
+
+  Stream<List<BloodSugerDataModel>> getAnalyticData(
+      String userId, String categoryId) {
+    try {
+      final CollectionReference analyticCategoryData = userCollection
+          .doc(userId)
+          .collection("analyticsCategory")
+          .doc(categoryId)
+          .collection("analyticsCategoryData");
+
+      return analyticCategoryData.snapshots().map((snapshot) {
+        return snapshot.docs
+            .map((doc) => BloodSugerDataModel.fromJson(
+                doc.data() as Map<String, dynamic>))
+            .toList();
+      });
+    } catch (error) {
+      print("error fetching data as Streem: ${error}");
+      return Stream.empty();
+    }
+  }
 }
