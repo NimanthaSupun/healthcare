@@ -117,4 +117,20 @@ class AnalyticCategoryService {
       return {};
     }
   }
+
+  Future<List<AnalyticModel>> getAnalyticCategoryAsFuture(String userId) async {
+    try {
+      final QuerySnapshot snapshot = await userCollection
+          .doc(userId)
+          .collection('analyticsCategory')
+          .get();
+
+      return snapshot.docs.map((doc) {
+        return AnalyticModel.fromJson(doc.data() as Map<String, dynamic>);
+      }).toList();
+    } catch (error) {
+      print("error: ${error}");
+      return [];
+    }
+  }
 }
