@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.healthcare"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = "25.1.8937393"
 
     compileOptions {
