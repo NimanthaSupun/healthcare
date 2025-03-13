@@ -16,7 +16,11 @@ class AnalyticDataCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            
+            ClipRRect(
+              child: Image.asset(
+                "assets/images/analytic-chart_3954775.png",
+              ),
+            ),
           ],
         ),
       ),
