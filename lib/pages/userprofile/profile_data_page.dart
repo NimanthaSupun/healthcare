@@ -179,17 +179,6 @@ class ProfileDataPage extends StatelessWidget {
                   height: 20,
                 ),
                 AnalyticDataCard(),
-                Text(
-                  "Analytics about blood suger level",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: mainLandMarksColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                ),
                 Stack(
                   children: [
                     Container(
