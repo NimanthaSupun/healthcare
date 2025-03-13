@@ -38,7 +38,12 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Analytics"),
+        title: Text(
+          "Analytics",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -82,16 +87,20 @@ class _ShowAnalyticDataPageState extends State<ShowAnalyticDataPage> {
                             Text(
                               category.name,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(
+                              height: 15,
+                            ),
                             if (categoryAnalytic == null ||
                                 categoryAnalytic.isEmpty)
                               Center(
-                                  child: Text(
-                                      "No data available for this category"))
+                                child: Text(
+                                  "No data available for this category",
+                                ),
+                              )
                             else
                               AnalyticDataCharts(
                                 entries: categoryAnalytic,
