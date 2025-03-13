@@ -135,8 +135,8 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                         });
                       },
                       child: Container(
-                        width: 200,
-                        height: 35,
+                        width: 130,
+                        height: 30,
                         margin: EdgeInsets.only(bottom: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
@@ -147,10 +147,10 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              "Clear this",
+                              "Clear ",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 15,
@@ -159,7 +159,7 @@ class _SingleCategoryImageCardState extends State<SingleCategoryImageCard> {
                             ),
                             Icon(
                               Icons.clear,
-                              size: 28,
+                              size: 25,
                               color: mainOrangeColor,
                             ),
                           ],
