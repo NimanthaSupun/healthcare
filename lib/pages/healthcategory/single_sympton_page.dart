@@ -126,10 +126,10 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                           color: mainPurpleColor,
                         ),
                         label: const Text(
-                          'process Text',
+                          'Recognized Text',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 13,
                             color: mainPurpleColor,
                           ),
                         ),
@@ -153,7 +153,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                     'View',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 12,
                     ),
                   ),
                   onPressed: imageUrl.isNotEmpty
@@ -168,7 +168,7 @@ class _SingleSymptonPageState extends State<SingleSymptonPage> {
                   label: const Text(
                     'Download',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
