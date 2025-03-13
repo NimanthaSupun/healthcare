@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:healthcare/constants/colors.dart';
 import 'package:healthcare/models/user_model.dart';
 import 'package:healthcare/pages/main_screens/profile_page.dart';
-import 'package:healthcare/pages/userprofile/daily_update_page.dart';
 import 'package:healthcare/widgets/analytics/alert_container.dart';
 import 'package:healthcare/widgets/analytics/analytic_data_card.dart';
 import 'package:healthcare/widgets/analytics/create_analytic_category.dart';
@@ -37,23 +36,6 @@ class ProfileDataPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DailyUpdatePage(),
-                ),
-              );
-            },
-            child: Icon(Icons.add),
-          ),
-        ],
-      ),
       appBar: AppBar(
         // title: Text(user.name),
         leading: IconButton(
