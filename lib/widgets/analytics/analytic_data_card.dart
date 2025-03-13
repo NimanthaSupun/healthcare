@@ -12,8 +12,8 @@ class AnalyticDataCard extends StatelessWidget {
       shadowColor: mobileBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          vertical: 8,
-          horizontal: 10,
+          vertical: 10,
+          horizontal: 8,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

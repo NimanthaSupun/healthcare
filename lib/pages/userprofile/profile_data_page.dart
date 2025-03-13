@@ -180,16 +180,6 @@ class ProfileDataPage extends StatelessWidget {
                   height: 50,
                 ),
                 AnalyticDataCard(),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ShowAnalyticDataPage(),
-                      ),
-                    );
-                  },
-                  child: Text("Show Data"),
-                ),
                 Text(
                   "Analytics about blood suger level",
                   style: TextStyle(
