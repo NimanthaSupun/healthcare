@@ -22,8 +22,8 @@ class AnalyticDataCard extends StatelessWidget {
               child: Image.asset(
                 "assets/images/analytic-chart_3954775.png",
                 fit: BoxFit.cover,
-                height: 60,
-                width: 60,
+                height: 50,
+                width: 50,
               ),
             ),
             Text(
@@ -32,6 +32,9 @@ class AnalyticDataCard extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 fontSize: 18,
               ),
+            ),
+            SizedBox(
+              width: 2,
             ),
             IconButton(
               onPressed: () {
@@ -43,6 +46,8 @@ class AnalyticDataCard extends StatelessWidget {
               },
               icon: Icon(
                 Icons.arrow_forward_ios,
+                size: 30,
+                color: mainLandMarksColor,
               ),
             ),
           ],
