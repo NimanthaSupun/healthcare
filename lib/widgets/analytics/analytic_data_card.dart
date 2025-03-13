@@ -12,7 +12,7 @@ class AnalyticDataCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 8,
-          horizontal: 5,
+          horizontal: 10,
         ),
         child: Row(
           children: [
@@ -20,8 +20,15 @@ class AnalyticDataCard extends StatelessWidget {
               child: Image.asset(
                 "assets/images/analytic-chart_3954775.png",
                 fit: BoxFit.cover,
-                height: 50,
-                width: 50,
+                height: 60,
+                width: 60,
+              ),
+            ),
+            Text(
+              "View All Analytic Data",
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
               ),
             ),
           ],
