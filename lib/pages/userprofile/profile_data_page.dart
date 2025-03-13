@@ -8,7 +8,6 @@ import 'package:healthcare/widgets/analytics/alert_container.dart';
 import 'package:healthcare/widgets/analytics/analytic_data_card.dart';
 import 'package:healthcare/widgets/analytics/create_analytic_category.dart';
 import 'package:healthcare/widgets/analytics/signle_anylistic_category_card.dart';
-import 'package:healthcare/widgets/charts/show_blood_suger_chart.dart';
 import 'package:healthcare/widgets/profile_data_page/single_profile_data_card.dart';
 
 class ProfileDataPage extends StatelessWidget {
@@ -179,24 +178,6 @@ class ProfileDataPage extends StatelessWidget {
                   height: 20,
                 ),
                 AnalyticDataCard(),
-                Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 212,
-                      padding: EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        // ignore: deprecated_member_use
-                        color: mainWhiteColor,
-                        border: Border.all(
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ),
-                    ShowBloodSugerChart(),
-                  ],
-                ),
                 SizedBox(
                   height: 20,
                 ),
