@@ -70,7 +70,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Medication reminder set successfully!')),
+          const SnackBar(
+              content: Text('Medication reminder set successfully!')),
         );
         Navigator.of(context).pop();
       }
@@ -91,7 +92,13 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Medication'),
+        title: const Text(
+          'Add Medication',
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 22,
+          ),
+        ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -108,8 +115,9 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                   border: OutlineInputBorder(),
                   prefixIcon: Icon(Icons.medication),
                 ),
-                validator: (value) =>
-                    value?.isEmpty == true ? 'Please enter medication name' : null,
+                validator: (value) => value?.isEmpty == true
+                    ? 'Please enter medication name'
+                    : null,
               ),
               const SizedBox(height: 16),
               TextFormField(
