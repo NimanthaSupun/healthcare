@@ -97,7 +97,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           'Add Medication',
           style: TextStyle(
             fontWeight: FontWeight.w600,
-            fontSize: 22,
+            fontSize: 24,
           ),
         ),
         elevation: 0,
@@ -109,17 +109,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              TextFormField(
-                controller: _medicationNameController,
-                decoration: const InputDecoration(
-                  labelText: 'Medication Name',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.medication),
-                ),
-                validator: (value) => value?.isEmpty == true
-                    ? 'Please enter medication name'
-                    : null,
-              ),
               CustomInput(
                 controller: _medicationNameController,
                 labelText: "Medication Name",
