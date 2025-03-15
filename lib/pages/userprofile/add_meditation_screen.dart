@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthcare/services/notification/meditation_remender_service.dart';
+import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddMedicationPage extends StatefulWidget {
   const AddMedicationPage({super.key});
@@ -118,6 +119,18 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                 validator: (value) => value?.isEmpty == true
                     ? 'Please enter medication name'
                     : null,
+              ),
+              CustomInput(
+                controller: _medicationNameController,
+                labelText: "Medication Name",
+                icon: Icons.medication,
+                obsecureText: false,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter medication name";
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               TextFormField(
