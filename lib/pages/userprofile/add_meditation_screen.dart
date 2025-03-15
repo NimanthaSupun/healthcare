@@ -109,6 +109,9 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              SizedBox(
+                height: 15,
+              ),
               CustomInput(
                 controller: _medicationNameController,
                 labelText: "Medication Name",
