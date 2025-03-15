@@ -125,29 +125,18 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                 },
               ),
               const SizedBox(height: 16),
-              TextFormField(
-                controller: _dosageController,
-                decoration: const InputDecoration(
-                  labelText: 'Dosage',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.scale),
-                ),
-                validator: (value) =>
-                    value?.isEmpty == true ? 'Please enter dosage' : null,
-              ),
               CustomInput(
                 controller: _dosageController,
                 labelText: "Dosage",
                 icon: Icons.scale,
                 obsecureText: false,
-                 validator: (value) {
+                validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "Please enter dosage";
                   }
                   return null;
                 },
               ),
-
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
                 value: _selectedFrequency,
