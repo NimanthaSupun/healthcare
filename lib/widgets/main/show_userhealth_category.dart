@@ -45,7 +45,7 @@ class _ShowUserhealthCategoryState extends State<ShowUserhealthCategory> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Your Health Categories >",
+                  "Your Health Categories",
                   style: TextStyle(
                     fontSize: 22,
                     color: mainLandMarksColor,
