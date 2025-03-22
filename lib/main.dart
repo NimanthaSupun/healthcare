@@ -22,14 +22,14 @@ void main() async {
   await LocalNotificationsService.init();
   tz.initializeTimeZones();
 
-  //initialize the push notification service (PushNotificationsService)
+  //todo: initialize the push notification service (PushNotificationsService)
   await PushNotificationsService.init();
 
   await ClinicNotificationService.init();
 
   await MedicationNotificationService.init();
 
-  //listen for incoming messages in background
+  //todo: listen for incoming messages in background
 
   FirebaseMessaging.onBackgroundMessage(
       PushNotificationsService.onBackgroundMessage);
