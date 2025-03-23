@@ -6,6 +6,7 @@ class AnalyticCategoryService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
 
+// todo: Create analytic category service
   Future<void> createCategory(
       String userId, AnalyticModel analyticModel) async {
     try {
