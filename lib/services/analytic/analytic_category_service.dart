@@ -124,6 +124,7 @@ class AnalyticCategoryService {
     }
   }
 
+  // todo: get analytic data as a future
   Future<List<AnalyticModel>> getAnalyticCategoryAsFuture(String userId) async {
     try {
       final QuerySnapshot snapshot = await userCollection
