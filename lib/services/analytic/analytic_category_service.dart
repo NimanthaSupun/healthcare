@@ -98,7 +98,7 @@ class AnalyticCategoryService {
       return Stream.empty();
     }
   }
-
+  // todo: get analytic data their category name
   Future<Map<String, List<BloodSugerDataModel>>> getAnalyticDataByCategoryName(
       String userId) async {
     try {
