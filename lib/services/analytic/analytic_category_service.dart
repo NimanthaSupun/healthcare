@@ -54,7 +54,7 @@ class AnalyticCategoryService {
       print("error adding data on service: ${error}");
     }
   }
-
+// todo: delete Category
  Future<void> deleteCategory(String userId, String categoryId) async {
   try {
     final DocumentReference categoryDoc = userCollection
