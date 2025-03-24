@@ -77,7 +77,7 @@ class AnalyticCategoryService {
     print("Error deleting category on service: ${error}");
   }
 }
-
+// todo: get analytic category as stream
   Stream<List<BloodSugerDataModel>> getAnalyticData(
       String userId, String categoryId) {
     try {
