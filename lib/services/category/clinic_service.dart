@@ -46,7 +46,7 @@ class ClinicService {
     }
   }
 
-  // todo: get Clinic with category name
+  // todo: get Clinic as future
 
   // get Clinic
 
@@ -68,7 +68,7 @@ class ClinicService {
       return Stream.empty();
     }
   }
-
+  // todo: get Clinic with their Categoty name
   Future<Map<String, List<Clinic>>> getClinicWithCategoryName(
       String userId) async {
     try {
