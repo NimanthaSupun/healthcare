@@ -219,7 +219,7 @@ class _LibraryPageState extends State<LibraryPage> {
                                       style: TextStyle(
                                         fontSize: 21,
                                         fontWeight: FontWeight.w700,
-                                        color: mainGreenColor,
+                                        color: Color.fromARGB(255, 84, 180, 54),
                                       ),
                                     ),
                                     children: [

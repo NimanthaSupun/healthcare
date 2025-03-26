@@ -109,7 +109,7 @@ class _PersonCategoryPageState extends State<PersonCategoryPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
-                      color: button1,
+                      color: button1.withOpacity(0.9),
                     ),
                     textAlign: TextAlign.center,
                   ),
