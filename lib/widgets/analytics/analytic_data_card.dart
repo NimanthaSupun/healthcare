@@ -27,7 +27,7 @@ class AnalyticDataCard extends StatelessWidget {
               ),
             ),
             Text(
-              "View All Analytic Data",
+              "View All Vital Data",
               style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 18,

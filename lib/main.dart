@@ -30,7 +30,6 @@ void main() async {
   await MedicationNotificationService.init();
 
   //todo: listen for incoming messages in background
-
   FirebaseMessaging.onBackgroundMessage(
       PushNotificationsService.onBackgroundMessage);
 

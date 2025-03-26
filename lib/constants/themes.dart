@@ -5,7 +5,7 @@ import 'package:healthcare/constants/colors.dart';
 class ThemesModeData {
   final ThemeData lightMode = ThemeData(
     brightness: Brightness.light,
-    fontFamily: GoogleFonts.poppins().fontFamily,
+    fontFamily: GoogleFonts.actor().fontFamily,
     primaryColor: const Color(0xFF0D70E6),
     scaffoldBackgroundColor: const Color(0xFFF5FAFB),
     cardColor: const Color(0xFFF5FAFB),

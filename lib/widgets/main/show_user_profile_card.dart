@@ -18,7 +18,8 @@ class ShowUserProfileCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           // ignore: deprecated_member_use
-          color: subLandMarksCardBg.withOpacity(0.5),
+          // color: subLandMarksCardBg.withOpacity(0.5),
+          color: mainWhiteColor,
           border: Border.all(
             color: Colors.black54,
             width: 2,
@@ -30,8 +31,8 @@ class ShowUserProfileCard extends StatelessWidget {
             ClipRRect(
               child: Image.asset(
                 "assets/images/man_4140048.png",
-                width: 58,
-                height: 58,
+                width: 50,
+                height: 50,
                 fit: BoxFit.cover,
               ),
             ),

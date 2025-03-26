@@ -21,7 +21,8 @@ class SingleNavigateCard extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
         // ignore: deprecated_member_use
-        color: subLandMarksCardBg.withOpacity(0.5),
+        // color: subLandMarksCardBg.withOpacity(0.9),
+        color: mainWhiteColor,
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
           color: Colors.black54,
