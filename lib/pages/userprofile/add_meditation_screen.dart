@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthcare/services/notification/meditation_remender_service.dart';
+import 'package:healthcare/widgets/reusable/custom_button.dart';
 import 'package:healthcare/widgets/reusable/custom_input.dart';
 
 class AddMedicationPage extends StatefulWidget {
@@ -187,31 +188,40 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                 }).toList(),
               ),
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: _isLoading ? null : _submitForm,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.all(16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                child: _isLoading
-                    ? const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                            ),
-                          ),
-                          SizedBox(width: 12),
-                          Text('Saving...'),
-                        ],
-                      )
-                    : const Text('Save Medication'),
-              ),
+              // ElevatedButton(
+              //   onPressed: _isLoading ? null : _submitForm,
+              //   style: ElevatedButton.styleFrom(
+              //     padding: const EdgeInsets.all(16),
+              //     shape: RoundedRectangleBorder(
+              //       borderRadius: BorderRadius.circular(8),
+              //     ),
+              //   ),
+              //   child: _isLoading
+              //       ? const Row(
+              //           mainAxisAlignment: MainAxisAlignment.center,
+              //           children: [
+              //             SizedBox(
+              //               width: 20,
+              //               height: 20,
+              //               child: CircularProgressIndicator(
+              //                 strokeWidth: 2,
+              //               ),
+              //             ),
+              //             SizedBox(width: 12),
+              //             Text('Saving...'),
+              //           ],
+              //         )
+              //       : const Text('Save Medication'),
+              // ),
+              _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : CustomButton(
+                      title: "Save Medication",
+                      width: double.infinity,
+                      onPressed: _submitForm,
+                    ),
             ],
           ),
         ),

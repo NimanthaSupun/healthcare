@@ -19,9 +19,9 @@ class SingleProfileDataCard extends StatelessWidget {
       width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: subLandMarksCardBg.withOpacity(0.9),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          // color: subLandMarksCardBg.withOpacity(0.6),
+          color: const Color.fromARGB(255, 247, 247, 247)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

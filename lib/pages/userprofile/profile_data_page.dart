@@ -68,10 +68,10 @@ class ProfileDataPage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // ignore: deprecated_member_use
-                    color: Colors.black.withOpacity(0.4),
-                  ),
+                      borderRadius: BorderRadius.circular(10),
+                      // ignore: deprecated_member_use
+                      // color: Colors.black.withOpacity(0.4),
+                      color: const Color.fromARGB(255, 194, 187, 187)),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
