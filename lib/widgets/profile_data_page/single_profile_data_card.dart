@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthcare/constants/colors.dart';
+// import 'package:healthcare/constants/colors.dart';
 
 class SingleProfileDataCard extends StatelessWidget {
   final String title;
