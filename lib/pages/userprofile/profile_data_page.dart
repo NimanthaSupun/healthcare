@@ -68,14 +68,14 @@ class ProfileDataPage extends StatelessWidget {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      // ignore: deprecated_member_use
-                      // color: Colors.black.withOpacity(0.4),
-                      color: const Color.fromARGB(255, 194, 187, 187)),
+                    borderRadius: BorderRadius.circular(10),
+                    // ignore: deprecated_member_use
+                    color: subLandMarksCardBg.withOpacity(0.9),
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                       vertical: 10,
-                      horizontal: 10,
+                      horizontal: 2,
                     ),
                     child: Column(
                       children: [

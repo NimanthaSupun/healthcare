@@ -15,39 +15,37 @@ class SingleProfileDataCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 10),
+      height: 70,
       width: double.infinity,
-      height: 60,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          // color: subLandMarksCardBg.withOpacity(0.6),
-          color: const Color.fromARGB(255, 247, 247, 247)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset(
-              imageUrl,
-              fit: BoxFit.cover,
-              width: 50,
-              height: 50,
-            ),
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
+      decoration: BoxDecoration(),
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.asset(
+                imageUrl,
+                fit: BoxFit.cover,
+                width: 45,
+                height: 45,
               ),
-            ),
-            Text(
-              userData,
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+              Text(
+                userData,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

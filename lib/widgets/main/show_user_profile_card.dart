@@ -18,8 +18,8 @@ class ShowUserProfileCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           // ignore: deprecated_member_use
-          // color: subLandMarksCardBg.withOpacity(0.5),
-          color: mainWhiteColor,
+          color: subLandMarksCardBg.withOpacity(0.00001),
+          // color: mainWhiteColor,
           border: Border.all(
             color: Colors.black54,
             width: 2,
