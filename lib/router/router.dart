@@ -16,10 +16,13 @@ import 'package:healthcare/pages/responsive/web_layout.dart';
 import 'package:healthcare/pages/setting_page.dart';
 import 'package:healthcare/pages/healthcategory/single_health_category_page.dart';
 import 'package:healthcare/pages/userprofile/update_profile_page.dart';
+import 'package:healthcare/welcome/SplashScreen.dart';
 
 class RouterClass {
   final router = GoRouter(
-    initialLocation: "/",
+    // initialLocation: "/",
+    initialLocation: "/splash",
+
     errorPageBuilder: (context, state) {
       return MaterialPage(
         child: Scaffold(
@@ -41,6 +44,14 @@ class RouterClass {
       );
     },
     routes: [
+      GoRoute(
+        path: "/splash",
+        name: "splash",
+        builder: (context, state) {
+          return const SplashScreen();
+        },
+      ),
+
       // todo: layout page
       GoRoute(
         path: "/",
@@ -153,7 +164,6 @@ class RouterClass {
           return SingleHealthCategoryPage(healthCategory: healthCategory);
         },
       ),
-      
     ],
   );
 }

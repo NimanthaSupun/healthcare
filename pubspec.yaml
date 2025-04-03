@@ -62,6 +62,7 @@ dependencies:
   google_mlkit_text_recognition: ^0.14.0
   google_mlkit_document_scanner: ^0.3.0
   uuid: ^4.5.1
+  flutter_native_splash: ^2.4.5
 
 dev_dependencies:
   flutter_test:
@@ -138,3 +139,10 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "assets/app_icons/web.png"
+
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/app_icons/splash.png
+  android: true
+  ios: true
