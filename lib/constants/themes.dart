@@ -70,7 +70,7 @@ class ThemesModeData {
 
   final ThemeData darkMode = ThemeData(
     brightness: Brightness.dark,
-    fontFamily: GoogleFonts.poppins().fontFamily,
+    fontFamily: GoogleFonts.actor().fontFamily,
     primaryColor: const Color(0xFF111418),
     scaffoldBackgroundColor: const Color(0xFF111418),
     cardColor: const Color(0xFF111418),
