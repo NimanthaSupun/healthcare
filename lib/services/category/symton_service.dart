@@ -100,7 +100,7 @@ class SymtonService {
     }
   }
 
-  // Get all symptoms with their category names
+  //todo:--------- Get all symptoms with their category names---------------
   Future<Map<String, List<SymptonModel>>> getSymptomsWithCategoryName(
       String userId) async {
     try {
