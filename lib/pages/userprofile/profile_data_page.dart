@@ -29,7 +29,7 @@ class ProfileDataPage extends StatelessWidget {
         },
       );
     } catch (error) {
-      print("error: ${error}");
+      print("error: $error");
     }
   }
 

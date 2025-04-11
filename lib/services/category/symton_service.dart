@@ -40,7 +40,7 @@ class SymtonService {
         'precriptionsImage': symptonModel.precriptionsImage,
       });
     } catch (error) {
-      print("error add symptons on servie: ${error}");
+      print("error add symptons on servie: $error");
     }
   }
 

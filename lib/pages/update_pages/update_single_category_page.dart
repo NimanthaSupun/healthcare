@@ -56,7 +56,7 @@ class _UpdateSingleCategoryPageState extends State<UpdateSingleCategoryPage> {
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,

@@ -87,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Error"),
-            content: Text("${error}"),
+            content: Text("$error"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),

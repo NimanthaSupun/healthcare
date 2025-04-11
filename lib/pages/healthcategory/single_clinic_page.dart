@@ -48,7 +48,7 @@ class SingleClinicPage extends StatelessWidget {
         ),
       );
     } catch (error) {
-      print("${error}");
+      print("$error");
     }
   }
 

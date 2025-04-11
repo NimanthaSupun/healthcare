@@ -45,7 +45,7 @@ class _SingleHealthCategoryPageState extends State<SingleHealthCategoryPage> {
       // ignore: use_build_context_synchronously
       GoRouter.of(context).go("/");
     } catch (error) {
-      print("error: ${error}");
+      print("error: $error");
     } finally {
       setState(() {
         _isLoading = false;

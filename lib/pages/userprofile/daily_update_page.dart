@@ -50,7 +50,7 @@ class _DailyUpdatePageState extends State<DailyUpdatePage> {
       // ignore: use_build_context_synchronously
       GoRouter.of(context).go("/");
     } catch (e) {
-      print("Error: ${e}");
+      print("Error: $e");
     } finally {
       _isLoading = false;
     }

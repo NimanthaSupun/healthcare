@@ -16,7 +16,7 @@ class HealthTrackerService {
 
       await trackUserDataCollection.add(data);
     } catch (error) {
-      print("error ons service: ${error}");
+      print("error ons service: $error");
     }
   }
 
@@ -32,7 +32,7 @@ class HealthTrackerService {
             .toList();
       });
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       return Stream.empty();
     }
   }

@@ -54,7 +54,7 @@ class UserService {
       final Map<String, dynamic> updateJsonUser = updateUser.toJson();
       await userCollection.doc(userId).update(updateJsonUser);
     } catch (error) {
-      print("Error updating user on service: ${error}");
+      print("Error updating user on service: $error");
     }
   }
 }

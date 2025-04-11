@@ -43,7 +43,7 @@ class _AlertContainerState extends State<AlertContainer> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } catch (error) {
-      print("error: ${error}");
+      print("error: $error");
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,

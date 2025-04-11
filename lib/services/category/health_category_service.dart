@@ -39,7 +39,7 @@ class HealthCategoryService {
             .toList();
       });
     } catch (error) {
-      print("Error fetching category on service: ${error}");
+      print("Error fetching category on service: $error");
       return Stream.empty();
     }
   }
@@ -56,7 +56,7 @@ class HealthCategoryService {
         return HealthCategory.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
     } catch (error) {
-      print("Error feching category on service: ${error}");
+      print("Error feching category on service: $error");
       return [];
     }
   }
@@ -71,7 +71,7 @@ class HealthCategoryService {
           .doc(healthCategoryId)
           .delete();
     } catch (error) {
-      print("Error deleting category on service: ${error}");
+      print("Error deleting category on service: $error");
     }
   }
 

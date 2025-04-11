@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
           context: context,
           builder: (context) => AlertDialog(
             title: Text("Error"),
-            content: Text("${error}"),
+            content: Text("$error"),
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(),
@@ -69,7 +69,7 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (context) => AlertDialog(
           title: Text("Error"),
-          content: Text("${error}"),
+          content: Text("$error"),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),

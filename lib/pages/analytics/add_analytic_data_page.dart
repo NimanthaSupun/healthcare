@@ -76,7 +76,7 @@ class _AddAnalyticDataPageState extends State<AddAnalyticDataPage> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
     }
   }
 

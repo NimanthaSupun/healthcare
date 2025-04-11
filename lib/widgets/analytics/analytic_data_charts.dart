@@ -13,7 +13,7 @@ class AnalyticDataCharts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
-      return Container(
+      return SizedBox(
         height: 200,
         child: Center(
           child: Text("No data to display"),

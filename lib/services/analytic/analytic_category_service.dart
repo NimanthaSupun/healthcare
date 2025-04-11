@@ -34,7 +34,7 @@ class AnalyticCategoryService {
             .toList();
       });
     } catch (error) {
-      print("Error Fetching data: ${error}");
+      print("Error Fetching data: $error");
       return Stream.empty();
     }
   }
@@ -51,7 +51,7 @@ class AnalyticCategoryService {
       final Map<String, dynamic> data = trackData.toJson();
       await analyticCategoryData.add(data);
     } catch (error) {
-      print("error adding data on service: ${error}");
+      print("error adding data on service: $error");
     }
   }
 // todo: delete Category
@@ -74,7 +74,7 @@ class AnalyticCategoryService {
     await categoryDoc.delete();
     
   } catch (error) {
-    print("Error deleting category on service: ${error}");
+    print("Error deleting category on service: $error");
   }
 }
 // todo: get analytic category as stream
@@ -94,7 +94,7 @@ class AnalyticCategoryService {
             .toList();
       });
     } catch (error) {
-      print("error fetching data as Streem: ${error}");
+      print("error fetching data as Streem: $error");
       return Stream.empty();
     }
   }
@@ -119,7 +119,7 @@ class AnalyticCategoryService {
       }
       return dataMap;
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       return {};
     }
   }
@@ -136,7 +136,7 @@ class AnalyticCategoryService {
         return AnalyticModel.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
     } catch (error) {
-      print("error: ${error}");
+      print("error: $error");
       return [];
     }
   }

@@ -146,7 +146,7 @@ class _AddHealthReportState extends State<AddHealthReport> {
       // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,

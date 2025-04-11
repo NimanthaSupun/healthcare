@@ -41,8 +41,8 @@ class ClinicService {
 
       return docRef.id; // Return the generated document ID
     } catch (error) {
-      print("Error add Clinic on service: ${error}");
-      throw error; // Rethrow the error to handle it in the UI
+      print("Error add Clinic on service: $error");
+      rethrow; // Rethrow the error to handle it in the UI
     }
   }
 
@@ -64,7 +64,7 @@ class ClinicService {
             .toList();
       });
     } catch (error) {
-      print("error: ${error}");
+      print("error: $error");
       return Stream.empty();
     }
   }
@@ -87,7 +87,7 @@ class ClinicService {
       }
       return clinicMap;
     } catch (error) {
-      print("Error fetching clinic map onservice: ${error}");
+      print("Error fetching clinic map onservice: $error");
       return {};
     }
   }
@@ -104,7 +104,7 @@ class ClinicService {
           .doc(clinicId)
           .delete();
     } catch (error) {
-      print("Error deleting Clinic on service: ${error}");
+      print("Error deleting Clinic on service: $error");
     }
   }
 
@@ -120,7 +120,7 @@ class ClinicService {
           .doc(clinicId)
           .update(clinic.toJson());
     } catch (error) {
-      print("error updating Clinic on service: ${error}");
+      print("error updating Clinic on service: $error");
     }
   }
 }

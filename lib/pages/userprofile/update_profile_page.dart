@@ -115,7 +115,7 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
       // ignore: use_build_context_synchronously
       GoRouter.of(context).go("/");
     } catch (error) {
-      print("Error: ${error}");
+      print("Error: $error");
       showDialog(
         // ignore: use_build_context_synchronously
         context: context,
