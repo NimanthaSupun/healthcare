@@ -190,7 +190,7 @@ class SymtonService {
           .collection("symptons")
           .doc(symptonId);
 
-      // Delete images in the first collection (images1)
+      //todo---- Delete images in the first collection (images1)
       final QuerySnapshot images1Snapshot =
           await symptonDocRef.collection("images1").get();
       for (final doc in images1Snapshot.docs) {
@@ -204,7 +204,7 @@ class SymtonService {
         await doc.reference.delete();
       }
 
-      // Delete the symptom document
+      //todo--- Delete the symptom document
       await symptonDocRef.delete();
     } catch (error) {
       print("error deleting symptom: $error");
