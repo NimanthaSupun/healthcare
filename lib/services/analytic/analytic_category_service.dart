@@ -22,6 +22,7 @@ class AnalyticCategoryService {
     }
   }
 
+  // todo: getAnalytic as streeam
   Stream<List<AnalyticModel>> getAnalyticCategory(String userId) {
     try {
       final CollectionReference analyticCollection =
