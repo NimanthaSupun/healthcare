@@ -62,7 +62,7 @@ class SymtonService {
           Map<String, dynamic> symptomData = doc.data() as Map<String, dynamic>;
           String symptomId = doc.id;
 
-          // Get images1 data
+          //todo:-- Get images1 data
           var images1Snapshot = await doc.reference.collection('images1').get();
           var images1Data = images1Snapshot.docs.isNotEmpty
               ? images1Snapshot.docs.first.data()
