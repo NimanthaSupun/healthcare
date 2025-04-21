@@ -58,7 +58,7 @@ class SymtonService {
         List<SymptonModel> symptoms = [];
 
         for (var doc in snapshot.docs) {
-          // Get base symptom data
+          //todo:-- Get base symptom data
           Map<String, dynamic> symptomData = doc.data() as Map<String, dynamic>;
           String symptomId = doc.id;
 
