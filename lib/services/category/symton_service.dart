@@ -68,7 +68,7 @@ class SymtonService {
               ? images1Snapshot.docs.first.data()
               : {};
 
-          // Get images2 data
+          //todo:-- Get images2 data
           var images2Snapshot = await doc.reference.collection('images2').get();
           var images2Data = images2Snapshot.docs.isNotEmpty
               ? images2Snapshot.docs.first.data()
