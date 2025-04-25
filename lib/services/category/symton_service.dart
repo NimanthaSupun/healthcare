@@ -197,7 +197,7 @@ class SymtonService {
         await doc.reference.delete();
       }
 
-      // Delete images in the second collection (images2)
+      //todo:-- Delete images in the second collection (images2)
       final QuerySnapshot images2Snapshot =
           await symptonDocRef.collection("images2").get();
       for (final doc in images2Snapshot.docs) {
