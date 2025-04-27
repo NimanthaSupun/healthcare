@@ -89,7 +89,7 @@ class HealthCategoryService {
       //todo:- 1. Delete all symptoms and their subcollections
       final symptonSnapshot = await categoryDoc.collection("symptons").get();
       for (var symptonDoc in symptonSnapshot.docs) {
-        // Delete images1 collection for this symptom
+        //todo:- Delete images1 collection for this symptom
         final images1Snapshot =
             await symptonDoc.reference.collection("images1").get();
         for (var imageDoc in images1Snapshot.docs) {
