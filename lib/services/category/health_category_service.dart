@@ -86,7 +86,7 @@ class HealthCategoryService {
           .collection("healthCategory")
           .doc(healthCategoryId);
 
-      // 1. Delete all symptoms and their subcollections
+      //todo:- 1. Delete all symptoms and their subcollections
       final symptonSnapshot = await categoryDoc.collection("symptons").get();
       for (var symptonDoc in symptonSnapshot.docs) {
         // Delete images1 collection for this symptom
