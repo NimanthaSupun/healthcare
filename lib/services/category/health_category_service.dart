@@ -96,7 +96,7 @@ class HealthCategoryService {
           await imageDoc.reference.delete();
         }
 
-        // Delete images2 collection for this symptom
+        //todo:- Delete images2 collection for this symptom
         final images2Snapshot =
             await symptonDoc.reference.collection("images2").get();
         for (var imageDoc in images2Snapshot.docs) {
