@@ -27,7 +27,7 @@ void main() async {
 
   await ClinicNotificationService.init();
 
-  await MedicationNotificationService.init();
+  // await MedicationNotificationService.init();
 
   //todo: listen for incoming messages in background
   FirebaseMessaging.onBackgroundMessage(
