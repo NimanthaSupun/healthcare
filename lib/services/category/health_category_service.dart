@@ -103,7 +103,7 @@ class HealthCategoryService {
           await imageDoc.reference.delete();
         }
 
-        // Delete the symptom document itself
+        //todo:- Delete the symptom document itself
         await symptonDoc.reference.delete();
       }
 
